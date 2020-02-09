@@ -13,7 +13,14 @@ module.exports = {
       }
     },
     devServer: {
-      disableHostCheck: true
+      disableHostCheck: true,
+      https: true
+    },
+    externals: {
+      'AMap': 'AMap',
     }
+  },
+  css: {
+    extract: true
   }
 };

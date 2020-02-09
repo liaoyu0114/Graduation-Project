@@ -1,0 +1,44 @@
+{
+  "id": "1631969",
+  "name": "project",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "33515",
+      "name": "profile",
+      "font_class": "profile",
+      "unicode": "e6b7",
+      "unicode_decimal": 59063
+    },
+    {
+      "icon_id": "338260",
+      "name": "外卖",
+      "font_class": "waimai",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "457370",
+      "name": "order",
+      "font_class": "emaxcitygerenxinxitubiaoji03",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "751120",
+      "name": "find",
+      "font_class": "0201chazhao",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "4682542",
+      "name": "find",
+      "font_class": "find",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    }
+  ]
+}
