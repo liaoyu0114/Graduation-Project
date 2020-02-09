@@ -1,6 +1,10 @@
 <template>
-  <tab-bar>
-    <tab-bar-item v-for="(item,index) in icons" :key="index" :path="item.path">
+  <tab-bar class="tab-bar">
+    <tab-bar-item class="tab-bar-item"
+                  v-for="(item,index) in icons"
+                  :key="index"
+                  :path="item.path"
+                  @click="itemClick(index)">
       <i slot="item-icon" class="iconfont" :class="item.icon"></i>
       <div slot="item-text">{{item.label}}</div>
     </tab-bar-item>
@@ -24,17 +28,28 @@
           { icon: "icon-find", label: "发现", path: "/discovery"},
           { icon: "icon-emaxcitygerenxinxitubiaoji03", label: "订单", path: "/order"},
           { icon: "icon-profile", label: "我的", path: "/profile"}
-        ]
+        ],
+        currentIndex: 0
       }
+    },
+    computed: {
+    },
+    methods: {
     }
   }
 </script>
 <style>
-  .icon-font {
-    font-size: 22px;
+  .iconfont {
+    font-size: 20px !important;
   }
 </style>
 
 <style scoped>
-
+  .tab-bar-item {
+    z-index: 2;
+  }
+  .tab-bar {
+    border-radius: 20px 20px 20px 20px;
+    overflow: hidden;
+  }
 </style>

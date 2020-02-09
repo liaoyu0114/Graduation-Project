@@ -4,7 +4,7 @@
       <router-view></router-view>
     </keep-alive>
 
-    <main-tab-bar></main-tab-bar>
+    <main-tab-bar class="main-tab-bar"></main-tab-bar>
   </div>
 </template>
 
@@ -20,4 +20,7 @@
 </script>
 <style>
   @import "./assets/css/base.css";
+  .main-tab-bar {
+    margin: 0 5px;
+  }
 </style>

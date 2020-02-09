@@ -1,8 +1,18 @@
 <template>
   <div class="tab-bar-item" @click="itemClick" :class="{active:isActive}">
-    <div><slot name="item-icon"></slot></div>
-    <div class="text"><slot name="item-text"></slot></div>
+
+      <div class="content">
+        <div><slot name="item-icon"></slot></div>
+        <transition name="fade">
+          <div class="text" v-if="isActive"><slot name="item-text"></slot></div>
+        </transition>
+
+      </div>
+    <transition name="fade">
+      <div class="overlay" v-if="isActive"></div>
+    </transition>
   </div>
+
 </template>
 
 <script>
@@ -17,14 +27,7 @@
     },
     computed: {
       isActive() {
-        //判断当前活跃route中是否有和传入的path的相同路径
-        // = -1 没有找到 = 1 找到了
-        //active时 style动态决定颜色，使用v-bind绑定 在使用item时需要传入颜色
         return this.$route.path.indexOf(this.path) !== -1
-      },
-      activeStyle() {
-        //如果处于活跃，添加{color: this.activeColor} 否则不添加
-        return this.isActive ? {color: this.activeColor} : {}
       }
     },
     methods: {
@@ -36,12 +39,45 @@
 </script>
 <style scoped>
   .tab-bar-item {
+    position: relative;
     flex: 1;
     flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     height: 44px;
+    cursor: pointer;
   }
   .active {
     color: #4298e7;
+  }
+  .content {
+    z-index: 2;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #e4f2ff;
+    border-radius: 20px;
+    transition: .5s;
+  }
+  .text {
+    font-size: 12px;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0
+  }
+  .fade-leave, .fade-enter-to {
+    opacity: 1
+  }
+  .fade-enter-active{
+    transition: all .5s
+  }
+  .fade-leave-active {
+    transition: all .1s;
   }
 </style>
