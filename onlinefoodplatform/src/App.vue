@@ -20,6 +20,7 @@
 </script>
 <style>
   @import "./assets/css/base.css";
+  @import url('//at.alicdn.com/t/font_1631969_9mn028p8lgp.css');
   .main-tab-bar {
     margin: 0 5px;
   }

@@ -1,10 +1,13 @@
 <template>
-  $END$
+  
 </template>
 
 <script>
   export default {
-    name: "Feature"
+    name: "Feature",
+    props: {
+
+    }
   }
 </script>
 

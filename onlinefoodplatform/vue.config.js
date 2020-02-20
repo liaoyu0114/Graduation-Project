@@ -14,7 +14,7 @@ module.exports = {
     },
     devServer: {
       disableHostCheck: true,
-      https: true
+      // https: true
     },
     externals: {
       'AMap': 'AMap',
@@ -22,5 +22,6 @@ module.exports = {
   },
   css: {
     extract: true
-  }
+  },
+  lintOnSave: false
 };

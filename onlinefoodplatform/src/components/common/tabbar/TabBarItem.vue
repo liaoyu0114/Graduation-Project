@@ -46,7 +46,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 44px;
+    height: 49px;
     cursor: pointer;
   }
   .active {

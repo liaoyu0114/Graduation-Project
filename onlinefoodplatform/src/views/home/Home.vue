@@ -1,23 +1,47 @@
 <template>
   <div class="home">
-    <h1>首页</h1>
-    <div class="amap-wrapper" v-if="locationData.Address">
-      {{locationData.Address}}
-    </div>
-    <div class="amap2" v-else>
-      {{userInfo.ProvinceName}} - {{userInfo.CCityName}} - {{userInfo.RegionName}}
-    </div>
+    <tab-control :titles="['流行', '新款', '精选']" class="tabcontrol-fixed"
+                 @tabClick="tabClick" ref="tabControlFixed" v-show="isShowTabControl"></tab-control>
+
+    <location :location-data="locationData" :user-info="userInfo"></location>
+    <scroll class="scroll" ref="scroll"
+            :probe-type="3"
+            :pull-up-load="true"
+            @scrollPosition="currentPosition">
+      <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"></home-swiper>
+      <tab-control :titles="['流行', '新款', '精选']"
+                   @tabClick="tabClick" ref="tabControl"></tab-control>
+      <goods-list :goods="goods"></goods-list>
+    </scroll>
+
   </div>
 </template>
 
 <script>
   import AMap from 'AMap'
+  import Location from './childComs/Location'
+  import HomeSwiper from './childComs/HomeSwiper'
+  import GoodsList from 'components/content/goods/GoodsList'
+  import Scroll from 'components/common/scroll/Scroll'
+  import TabControl from 'components/content/tabcontrol/TabControl';
 
   export default {
     name: "Home",
+    components: {
+      Location,
+      HomeSwiper,
+      GoodsList,
+      Scroll,
+      TabControl
+    },
     data() {
       // debugger
       return {
+        tabOffsetTop: 0,
+        //是否展示吸顶效果的tabControl
+        isShowTabControl: false,
+        //已滑动距离
+        scrolledPosition: 0,
         locationData: {
           // 用于定位相关信息提交
           lat: "", // 纬度
@@ -33,10 +57,92 @@
           ProvinceName: "",
           CCityName: "",
           RegionName: ""
-        }
+        },
+        banners: [
+          {
+            image: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ee2ecf4.jpg",
+            link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ee2ecf4.jpg"
+          },
+          {
+            image: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ec1c603.jpg",
+            link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ec1c603.jpg"
+          },
+          {
+            image: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ed215ff.jpg",
+            link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ed215ff.jpg"
+          },
+          {
+            image: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ef31513.jpg",
+            link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ef31513.jpg"
+          },
+          {
+            image: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234f02f89a.jpg",
+            link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234f02f89a.jpg"
+          }
+        ],
+        goods: [
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          },
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          },
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          },
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          },
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          },
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          },
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          },
+          {
+            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            title: "狗子们，情人节到了快来选个头像吧"
+          }
+        ]
       };
     },
     methods:{
+      currentPosition(position) {
+        // this.listenShowBackTop(position);
+
+        //吸顶TabControl的隐藏/显示，使用v-if。
+        this.isShowTabControl = -position.y > this.tabOffsetTop;
+      },
+      swiperImageLoad(){
+        // //所有组件都有$el ,用于获取组件内元素
+        this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
+      },
+      tabClick(index) {
+        // switch (index) {
+        //   case 0 :
+        //     this.currentType = 'pop';
+        //     break
+        //   case 1 :
+        //     this.currentType = 'new';
+        //     break
+        //   case 2 :
+        //     this.currentType = 'sell';
+        //     break
+        // }
+        //同步吸顶tabcontrol和滚动tabcontrol的选中状态
+        this.$refs.tabControl.currentIndex = index;
+        this.$refs.tabControlFixed.currentIndex = index;
+      },
       getLocation() {
         const self = this;
         AMap.plugin("AMap.Geolocation", function() {
@@ -70,14 +176,14 @@
         // 定位失败手动通过IP定位
         const self = this;
         AMap.plugin("AMap.CitySearch", function() {
-          var citySearch = new AMap.CitySearch();
+          const citySearch = new AMap.CitySearch();
           citySearch.getLocalCity(function(status, result) {
             if (status === "complete" && result.info === "OK") {
               // 查询成功，result即为当前所在城市信息
               console.log("通过ip获取当前城市：", result);
-              let lat = (result.bounds.wc.lat + result.bounds.nc.lat) / 2;
-              let lng = (result.bounds.southwest.lng + result.bounds.northeast.lng) / 2
-              self.newGetAddress(lat, lng)
+              // let lat = (result.bounds.wc.lat + result.bounds.nc.lat) / 2;
+              // let lng = (result.bounds.southwest.lng + result.bounds.northeast.lng) / 2
+              // self.newGetAddress(lat, lng)
               //逆向地理编码
               AMap.plugin("AMap.Geocoder", function() {
                 var geocoder = new AMap.Geocoder({
@@ -156,10 +262,24 @@
     },
     created() {
       this.getLocation();
+      console.log(typeof this.locationData);
     }
   }
 </script>
 
 <style scoped>
-
+  .scroll {
+    position: absolute;
+    top: 86px;
+    bottom: 53px;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  .tabcontrol-fixed {
+    position: absolute;
+    top: 86px;
+    width: 100vw;
+    z-index: 9;
+  }
 </style>

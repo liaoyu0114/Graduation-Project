@@ -1,12 +1,17 @@
 <template>
   <div class="profile">
-    <h1>我的</h1>
+    <tourists></tourists>
   </div>
 </template>
 
 <script>
+  import Tourists from './childComps/Tourists'
+
   export default {
-    name: "Profile"
+    name: "Profile",
+    components: {
+      Tourists
+    }
   }
 </script>
 

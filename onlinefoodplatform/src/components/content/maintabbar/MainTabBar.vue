@@ -45,6 +45,12 @@
 </style>
 
 <style scoped>
+  * {
+    -webkit-touch-callout:none;
+    -moz-touch-callout:none;
+    -ms-touch-callout:none;
+    touch-callout:none;
+  }
   .tab-bar-item {
     z-index: 2;
   }

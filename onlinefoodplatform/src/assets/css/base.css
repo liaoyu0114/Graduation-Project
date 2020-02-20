@@ -1,3 +1,10 @@
 @import "./normalize.css";
-@import "../iconfont/iconfont.css";
+/*@import "../iconfont/iconfont.css";*/
 
+:root {
+  --color-ele-blue: #4294f7;
+  --color-light-text: #6e6e6e;
+  --color-black-text: #686868;
+  --font-size: 14px;
+  --line-height: 1.5;
+}

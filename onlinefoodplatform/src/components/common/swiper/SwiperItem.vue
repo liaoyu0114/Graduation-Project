@@ -10,9 +10,8 @@
     methods: {
 		  swiperLoad() {
 		    this.$parent.startSwiper()
-        console.log(1);
       }
-    }
+		}
 	}
 </script>
 
@@ -21,7 +20,6 @@
     width: 100%;
     flex-shrink: 0;
   }
-
   .slide img {
     width: 100%;
   }

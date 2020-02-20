@@ -49,9 +49,9 @@
     flex: 1;
   }
   .active span{
-    border-bottom: 3px solid var(--color-high-text);
+    border-bottom: 3px solid #4294f7;
     padding: 5px;
-    color: var(--color-tint);
+    color: #4294f7;
   }
   @media screen and (max-device-width: 370px) {
 
