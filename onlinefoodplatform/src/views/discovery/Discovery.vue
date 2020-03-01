@@ -11,5 +11,7 @@
 </script>
 
 <style scoped>
-
+  .discovery {
+    background: white;
+  }
 </style>

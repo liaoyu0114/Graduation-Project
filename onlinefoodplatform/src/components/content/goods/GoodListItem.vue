@@ -61,7 +61,7 @@
   }
   .title-box {
     margin-left: 10px;
-    width: 260px;
+    width: calc(100% - 100px);
   }
   .good-title-text {
     color: black;

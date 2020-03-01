@@ -7,11 +7,12 @@ const Home = () => import('../views/home/Home');
 const Discovery = () => import('../views/discovery/Discovery');
 const Order = () => import('../views/order/Order');
 const Profile = () => import('../views/profile/Profile');
+const Sign = () => import('../views/sign/Sign');
 
 const routes = [
   {
     path: '',
-    redirect: '/home'
+    redirect: '/sign'
   },
   {
     path: '/home',
@@ -28,6 +29,10 @@ const routes = [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/sign',
+    component: Sign
   }
 ];
 

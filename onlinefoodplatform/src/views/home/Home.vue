@@ -82,39 +82,41 @@
         ],
         goods: [
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           },
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           },
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           },
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           },
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           },
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           },
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           },
           {
-            image: "https://img2.woyaogexing.com/2020/02/13/85b722fa53cb42f5ac828e3981760e94!400x400.jpeg",
+            image: "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
             title: "狗子们，情人节到了快来选个头像吧"
           }
         ]
       };
+    },
+    computed: {
     },
     methods:{
       currentPosition(position) {
@@ -268,13 +270,22 @@
 </script>
 
 <style scoped>
+  .home {
+
+  }
   .scroll {
-    position: absolute;
-    top: 86px;
-    bottom: 53px;
+    position: relative;
+    top: 0;
+    height: calc(100vh - 86px - 53px);
     right: 0;
     left: 0;
+    background: white;
     overflow: hidden;
+  }
+  @media screen and (min-width: 500px){
+    .scroll, .tabcontrol-fixed {
+      width: 500px !important;
+    }
   }
   .tabcontrol-fixed {
     position: absolute;

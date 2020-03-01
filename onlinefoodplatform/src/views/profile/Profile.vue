@@ -16,5 +16,7 @@
 </script>
 
 <style scoped>
-
+ .profile {
+   background: white;
+ }
 </style>

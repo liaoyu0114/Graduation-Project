@@ -1,14 +1,27 @@
 <template>
     <div id="hy-swiper">
-      <div class="swiper" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
+      <div class="swiper"
+           @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
         <slot></slot>
       </div>
       <slot name="indicator">
       </slot>
       <div class="indicator">
         <slot name="indicator" v-if="showIndicator && slideCount>1">
-          <div v-for="(item, index) in slideCount" class="indi-item" :class="{active: index === currentIndex-1}" :key="index"></div>
+          <div v-for="(item, index) in slideCount"
+               class="indi-item"
+               @click="itemClick(index)"
+               :class="{active: index === currentIndex-1}"
+               :key="index"></div>
         </slot>
+      </div>
+      <div class="button" v-if="isMobile">
+        <div class="left" @click="previous">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </div>
+        <div class="right" @click="next">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
       </div>
     </div>
 </template>
@@ -50,7 +63,25 @@
     mounted: function () {
       this.startSwiper();
     },
+    computed: {
+      isMobile(){
+        return !(navigator.userAgent.match(/Android/i)
+          || navigator.userAgent.match(/webOS/i)
+          || navigator.userAgent.match(/iPhone/i)
+          || navigator.userAgent.match(/iPad/i)
+          || navigator.userAgent.match(/iPod/i)
+          || navigator.userAgent.match(/BlackBerry/i)
+          || navigator.userAgent.match(/Windows Phone/i));
+      }
+    },
     methods: {
+      itemClick(index) {
+        this.stopTimer();
+        this.currentIndex = index + 1;
+
+        this.scrollContent(-this.currentIndex * this.totalWidth);
+        this.startTimer()
+      },
 		  startSwiper() {
         // 1.操作DOM, 在前后添加Slide
         setTimeout(() => {
@@ -192,7 +223,17 @@
         // 4.移动完成后重新开启定时器
         this.startTimer();
       },
-
+      mouseDown(e) {
+        if (this.scrolling) return;
+        this.stopTimer();
+        this.startX = e.screenX
+      },
+      // mouseMove(e) {
+      //   console.log(e);
+      // },
+      mouseUp(e) {
+        let currentMove = Math.abs(this.distance);
+      },
       /**
        * 控制上一个, 下一个
        */
@@ -239,9 +280,9 @@
 
   .indi-item {
     box-sizing: border-box;
-    width: 1.5vw;
-    height: 1.5vw;
-    border-radius: 1vw;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
     background-color: #fff;
     line-height: 8px;
     text-align: center;
@@ -251,5 +292,21 @@
 
   .indi-item.active {
     background-color: rgba(212,62,46,1.0);
+  }
+  .button {
+    width: 100%;
+    position: absolute;
+    top: calc((100% - 100px) / 2);
+    display: flex;
+    color: #e4f2ff;
+    justify-content: space-between;
+    font-size: 20px;
+  }
+  .left, .right {
+    height: 100px;
+    padding: 0 15px;
+    border-radius: 5px;
+    line-height: 100px;
+    background: rgba(0,0,0,0.2);
   }
 </style>

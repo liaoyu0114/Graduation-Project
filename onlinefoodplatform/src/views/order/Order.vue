@@ -11,5 +11,7 @@
 </script>
 
 <style scoped>
-
+  .order {
+    background: white;
+  }
 </style>
