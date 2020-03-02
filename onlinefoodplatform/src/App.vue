@@ -15,11 +15,6 @@
     name: 'app',
     components: {
       MainTabBar
-    },
-    mounted() {
-      this.$refs.app.style.height = window.innerHeight + 100;
-      window.scrollTo(0,1);
-      document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
     }
   }
 </script>
