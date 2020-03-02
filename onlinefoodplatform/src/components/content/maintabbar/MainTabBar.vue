@@ -57,5 +57,6 @@
   .tab-bar {
     border-radius: 20px 20px 20px 20px;
     overflow: hidden;
+    background: transparent;
   }
 </style>

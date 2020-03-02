@@ -44,9 +44,11 @@
 <style scoped>
   .goodsitem {
     margin: 10px 0;
+    width: 100vw;
   }
  .good-title {
    display: flex;
+   padding: 0 10px;
  }
   .good-image {
     width: 100px;
@@ -61,7 +63,7 @@
   }
   .title-box {
     margin-left: 10px;
-    width: calc(100% - 100px);
+    width: calc(100% - 130px);
   }
   .good-title-text {
     color: black;

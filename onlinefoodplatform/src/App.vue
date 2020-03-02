@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
     <keep-alive>
       <router-view class="view"></router-view>
     </keep-alive>
@@ -15,6 +15,11 @@
     name: 'app',
     components: {
       MainTabBar
+    },
+    mounted() {
+      this.$refs.app.style.height = window.innerHeight + 100;
+      window.scrollTo(0,1);
+      document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
     }
   }
 </script>
@@ -24,18 +29,16 @@
   .main-tab-bar {
     margin: 0 5px;
   }
-  #app {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-  }
   @media screen and (min-width: 500px) {
     .view {
       width: 500px;
     }
     #app {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 100vh;
+      width: 100vw;
       background: #6e6e6e;
     }
   }

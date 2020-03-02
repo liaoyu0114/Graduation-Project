@@ -12,7 +12,7 @@ const Sign = () => import('../views/sign/Sign');
 const routes = [
   {
     path: '',
-    redirect: '/sign'
+    redirect: '/home'
   },
   {
     path: '/home',
