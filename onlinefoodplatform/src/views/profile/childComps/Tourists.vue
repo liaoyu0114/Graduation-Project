@@ -1,15 +1,20 @@
 <template>
   <div class="tourist">
-    <div class="user-info" @click="infoClick">
-      <div class="user-name">
-        IUIYT<br>
-        <i class="iconfont icon-tubiao">18382389882</i>
-        <div class="user-name-tips">提示语</div>
-      </div>
-      <div class="user-icon">
-        <img src="https://img2.woyaogexing.com/2020/02/01/73588b8939b342efbcae09f708d7c7d9!400x400.png" alt="">
-      </div>
-    </div>
+    <el-row class="user-info" @click.native="infoClick">
+      <el-col :span="18">
+        <div class="user-name">
+          IUIYT<br>
+          <i class="iconfont icon-tubiao">18382389882</i>
+          <div class="user-name-tips">提示语</div>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="profile-avatar">
+          <el-avatar :size="75" :src="src"></el-avatar>
+        </div>
+
+      </el-col>
+    </el-row>
     <div class="list">
       <list-cell v-for="(item, index) in list" :key="index">
         <i class="iconfont" :class="item.iconName" slot="icon"></i>
@@ -28,6 +33,7 @@
     },
     data() {
       return {
+        src: "https://assets.hhh233.xyz/003%20%284%29.jpg?imageView2/1/w/200/h/200/format/webp/q/75",
         list: [
           {
             iconName: "icon-shoucang",
@@ -62,10 +68,10 @@
 
 <style scoped>
  .user-info {
-   display: flex;
+   /*display: flex;*/
    padding: 15px;
    background: var(--color-ele-blue);
-   justify-content: space-between;
+   /*justify-content: space-between;*/
  }
  .user-name {
    font-size: 20px;
