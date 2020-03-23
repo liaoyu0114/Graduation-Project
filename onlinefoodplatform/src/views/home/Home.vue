@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <nav-bar class="home-nav">
+      <div slot="center">在线点餐平台</div>
+    </nav-bar>
     <tab-control :titles="['流行', '新款', '精选']" class="tabcontrol-fixed"
                  @tabClick="tabClick" ref="tabControlFixed" v-show="isShowTabControl"></tab-control>
 
@@ -24,6 +27,7 @@
   import GoodsList from 'components/content/goods/GoodsList'
   import Scroll from 'components/common/scroll/Scroll'
   import TabControl from 'components/content/tabcontrol/TabControl';
+  import NavBar from 'components/common/navbar/NavBar'
 
   export default {
     name: "Home",
@@ -32,7 +36,8 @@
       HomeSwiper,
       GoodsList,
       Scroll,
-      TabControl
+      TabControl,
+      NavBar
     },
     data() {
       // debugger
@@ -116,7 +121,25 @@
         ]
       };
     },
-    computed: {
+    activated() {
+      /**
+       * 每次重新进入home组件，scrollerHeight都会被重置为0
+       * 于是使用vuex记录离开时的scrollerHeight
+       * 再次进入home组件时，将beterscroll的scrollerHeight设置为保存的scrollerHeight
+       */
+      this.$refs.scroll.scroll.scrollerHeight = this.$store.state.homeScrollHeight;
+      this.$refs.scroll.urefresh();
+      //返回离开前的位置，即保留用户以滑动的状态
+      this.$refs.scroll.uscrollTo(0, this.scrolledPosition, 0);
+      this.$refs.scroll.urefresh();
+    },
+    deactivated() {
+      //获取已经滑动的高度
+      this.scrolledPosition = this.$refs.scroll.getPositionY();
+      //记录此时可滚动区域高度
+      this.$store.commit('changeHomeScrollHeight', this.$refs.scroll.scroll.scrollerHeight);
+      //取消全局事件监听 事件名，响应方法名
+      this.$bus.$off('imageLoad', this.itemImgListener);
     },
     methods:{
       currentPosition(position) {
@@ -270,13 +293,14 @@
 </script>
 
 <style scoped>
-  .home {
-
+  .home-nav {
+    background: var(--color-ele-blue);
+    color: white;
   }
   .scroll {
     position: relative;
     top: 0;
-    height: calc(100vh - 86px - 53px);
+    height: calc(100vh - 86px - 93px);
     right: 0;
     left: 0;
     background: white;
@@ -289,7 +313,7 @@
   }
   .tabcontrol-fixed {
     position: absolute;
-    top: 86px;
+    top: 126px;
     width: 100vw;
     z-index: 9;
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="tourist">
-    <div class="user-info">
+    <div class="user-info" @click="infoClick">
       <div class="user-name">
         IUIYT<br>
         <i class="iconfont icon-tubiao">18382389882</i>
@@ -50,6 +50,11 @@
             text: "设置"
           }
         ]
+      }
+    },
+    methods: {
+      infoClick() {
+        this.$router.push('/sign')
       }
     }
   }

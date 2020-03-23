@@ -13,8 +13,7 @@ module.exports = {
       }
     },
     devServer: {
-      disableHostCheck: true,
-      // https: true
+      disableHostCheck: true
     },
     externals: {
       'AMap': 'AMap',
@@ -23,5 +22,6 @@ module.exports = {
   css: {
     extract: true
   },
-  lintOnSave: false
+  lintOnSave: false,
+  publicPath: './'
 };

@@ -1,5 +1,4 @@
 @import "./normalize.css";
-/*@import "../iconfont/iconfont.css";*/
 
 :root {
   --color-ele-blue: #4294f7;
@@ -7,4 +6,6 @@
   --color-black-text: #686868;
   --font-size: 14px;
   --line-height: 1.5;
+  --star-color: #ff9900;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }

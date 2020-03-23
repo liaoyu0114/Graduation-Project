@@ -13,57 +13,175 @@
             <i class="fa fa-weixin" aria-hidden="true"></i>
             <i class="fa fa-weibo" aria-hidden="true"></i>
           </div>
-          <form action="" class="input-group" id="login" ref="login">
-            <input type="text" class="input-field" placeholder="用户名">
-            <input type="password" class="input-field" placeholder="密码">
-            <input type="checkbox" class="check-box">
-            <span>记住密码</span>
-            <button class="submit-btn">Log In</button>
-          </form>
-          <form action="" class="input-group" id="register" ref="regster">
-            <input type="text" class="input-field" placeholder="手机号">
-            <input type="password" class="input-field" placeholder="密码">
-            <input type="password" class="input-field" placeholder="重复密码">
-            <input type="checkbox" class="check-box">
-            <span>记住密码</span>
-            <button class="submit-btn">Register</button>
-          </form>
+          <div id="login" class="input-group" ref="login">
+            <el-form :model="ruleFormLogin"
+                     status-icon
+                     v-loading="loading"
+                     :rules="rulesLogin"
+                     ref="ruleFormLogin">
+              <el-form-item prop="phone">
+                <el-input v-model="ruleFormLogin.phone" placeholder="输入账号/手机号"></el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input v-model="ruleFormLogin.password" placeholder="密码" type="password"></el-input>
+              </el-form-item>
+              <el-form-item prop="isSave" label="记住密码">
+                <el-switch v-model="ruleFormLogin.isSave"></el-switch>
+              </el-form-item>
+            </el-form>
+            <div class="button-box">
+              <el-button type="primary"
+                         class="button"
+                         @click="loginClick('ruleFormLogin')">登 录</el-button>
+            </div>
+
+          </div>
+
+          <div class="input-group" id="register" ref="register">
+            <el-form :model="ruleFormRegist"
+                     status-icon
+                     v-loading="loading"
+                     :rules="rulesRegist"
+                     ref="ruleFormRegist">
+              <el-form-item prop="rePhone">
+                <el-input v-model="ruleFormRegist.rePhone" placeholder="输入账号/手机号"></el-input>
+              </el-form-item>
+              <el-form-item prop="rePassword">
+                <el-input v-model="ruleFormRegist.rePassword" placeholder="输入6-16位密码" type="password"></el-input>
+              </el-form-item>
+              <el-form-item prop="repeat">
+                <el-input v-model="ruleFormRegist.repeat" placeholder="再次输入密码" type="password"></el-input>
+              </el-form-item>
+              <div class="button-box">
+                <el-button type="primary"
+                           class="button"
+                           @click="registClick('ruleFormRegist')">注 册</el-button>
+              </div>
+
+            </el-form>
+          </div>
         </div>
       </div>
     </div>
+    <transition name="show-form">
+      <div class="sign-form" ref="signForm" v-if="success">
+        <my-form></my-form>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+  import MyForm from "components/content/form/Form"
+  import {sign, regist} from "network/user";
+
   export default {
     name: "Sign",
+    components: {
+      MyForm
+    },
+    data() {
+      let validateName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入账号'))
+        } else if (!(/^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/.test(value))) {
+          callback('输入正确的手机号')
+        }
+        callback()
+      };
+      let validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'))
+        } else if (!/^.{6,16}$/.test(value)) {
+          callback('密码长度必须大于6位或者小于16位')
+        }
+        callback()
+      };
+      let validateRepeat = (rule, value, callback) => {
+        if (value !== this.ruleFormRegist.rePassword) {
+          callback(new Error('两次输入密码不正确'))
+        }
+        callback()
+      };
+      return {
+        ruleFormLogin: {
+          phone: "",
+          password: "",
+          isSave: false
+        },
+        ruleFormRegist: {
+          rePhone: "",
+          rePassword: "",
+          repeat: "",
+        },
+        rulesLogin: {
+          phone: [ { validator: validateName, trigger: 'blur'} ],
+          password: [ {validator: validatePass, trigger: 'blur'} ]
+        },
+        rulesRegist: {
+          rePhone: [ { validator: validateName, trigger: 'blur'} ],
+          rePassword: [ {validator: validatePass, trigger: 'blur'} ],
+          repeat: [ {validator: validateRepeat, trigger: 'blur'} ]
+        },
+        loading: false,
+        success: false
+      }
+    },
     methods: {
       login() {
-        let width = document.documentElement.clientWidth;
-        // if (width <= 375) {
-        //   this.$refs.btn.style.left = "0";
-        //   this.$refs.login.style.left = "10px";
-        //   this.$refs.regster.style.left = "410px"
-        // }  else {
-          this.$refs.btn.style.left = "0";
-          this.$refs.login.style.left = "10%";
-          this.$refs.regster.style.left = "100%"
-        // }
+        this.$refs.btn.style.left = "0";
+        this.$refs.login.style.left = "10%";
+        this.$refs.register.style.left = "100%";
 
       },
       regster() {
-        let width = document.documentElement.clientWidth;
-        console.log(width);
-        // if (width <= 375) {
-        //   this.$refs.btn.style.left = "0";
-        //   this.$refs.login.style.left = "10px";
-        //   this.$refs.regster.style.left = "410px"
-        // }  else {
-          this.$refs.btn.style.left = "110px";
-          this.$refs.login.style.left = "-100%";
-          this.$refs.regster.style.left = "10%"
-        // }
-
+        this.$refs.btn.style.left = "110px";
+        this.$refs.login.style.left = "-100%";
+        this.$refs.register.style.left = "10%";
+      },
+      loginClick(fromName) {
+        this.success = true
+        // this.saveClick();
+        // this.$refs[fromName].validate(valid => {
+        //   if (valid) {
+        //     this.$message("通过验证");
+        //     this.loading = true;
+        //     let data = {
+        //       user_phone: this.ruleFormLogin.phone,
+        //       user_password: this.ruleFormLogin.password
+        //     };
+        //     sign(data).then(res => {
+        //       console.log(res);
+        //       setTimeout(() => {
+        //         this.loading = false;
+        //       }, 1000)
+        //     })
+        //   } else {
+        //     return false
+        //   }
+        // });
+      },
+      registClick(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            this.$message("通过验证");
+            this.loading = true;
+            let data = {
+              user_phone: this.ruleFormRegist.rePhone,
+              user_password: this.ruleFormRegist.rePassword
+            };
+            regist(data).then(res => {
+              console.log(res);
+              setTimeout(() => {
+                this.loading = false;
+              }, 1000)
+            })
+          }
+        });
+      },
+      saveClick() {
+        localStorage.phone = this.isSave ? this.phone : "";
+        localStorage.password = this.password ? this.password : "";
       }
     }
   }
@@ -80,6 +198,7 @@
    display: flex;
    justify-content: center;
    align-items: flex-start;
+   overflow: hidden;
  }
  .hero-bg {
    height: calc(100% - 53px);
@@ -94,6 +213,9 @@
  @media screen and (min-width: 500px) {
    .hero {
      width: 500px;
+   }
+   .sign-form {
+     width: 500px !important;
    }
  }
 
@@ -119,6 +241,7 @@
     box-shadow: 0 0 20px 9px #ff61241f;
     border-radius: 30px;
     font-size: 14px;
+    overflow: hidden;
   }
   .toggle-btn {
     padding: 10px 30px;
@@ -160,41 +283,38 @@
     width: 80%;
     transition: .5s;
   }
-  .input-field {
-    width: 100%;
-    padding: 5px 0;
-    border-left: 0;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 1px solid #999;
-    outline: none;
-    height: 30px;
-    background: transparent;
-  }
-  .submit-btn {
-    width: 85%;
-    padding: 10px 30px;
-    cursor: pointer;
-    display: block;
-    margin: auto;
-    background: linear-gradient(to right, #ff105f, #ffad06);
-    border: 0;
-    outline: none;
-    border-radius: 30px;
-  }
-  .check-box {
-    margin: 30px 10px 30px 0;
-  }
-  label {
-    color: #777;
-    font-size: 12px;
-    bottom: 68px;
-    position: absolute;
-  }
   #login {
     left: 10%;
   }
   #register {
     left: 100%;
   }
+  .input-group span {
+    font-size: 14px;
+  }
+  .button {
+    margin: auto;
+    width: 100%;
+  }
+  .sign-form {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    transition: 1s;
+    z-index: 10;
+  }
+ .show-form-enter-active {
+   transition: all .3s ease;
+ }
+ .show-forme-leave-active {
+   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+ }
+ .show-form-enter, .show-form-leave-to
+   /* .slide-fade-leave-active for below version 2.1.8 */ {
+   transform: translateY(100vh);
+   opacity: 0;
+ }
+
 </style>

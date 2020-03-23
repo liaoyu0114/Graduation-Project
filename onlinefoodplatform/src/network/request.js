@@ -2,10 +2,12 @@ import axios from 'axios'
 
 export function request(config) {
 
+
   //1.创建axios实例
   const instance = axios.create({
-    baseURL: 'http://127.0.0.1:3000/api/v1',
-    timeout: 5000
+    baseURL: 'http://frp.hhh233.xyz:8081/onlineplatform',
+    timeout: 5000,
+    // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   });
 
 
@@ -26,7 +28,6 @@ export function request(config) {
   }, error => {
     console.log(error);
   });
-
 
   //3.发生网络请求
   return instance(config)

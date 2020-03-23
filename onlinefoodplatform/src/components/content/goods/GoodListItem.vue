@@ -1,14 +1,41 @@
 <template>
   <div class="goodsitem" @click="goodClick">
-     <div class="good-title">
-       <div class="good-image">
-         <img :src="goodsItem.image" alt="">
-       </div>
-      <div class="title-box">
-        <div class="good-title-text">{{goodsItem.title}}</div>
-        <div class="good-stars">stars</div>
-      </div>
-     </div>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-image :src="goodsItem.image" class="item-image">
+          <div slot="error" class="image-slot">
+            <i class="el-icon-picture-outline"></i>
+          </div>
+        </el-image>
+      </el-col>
+      <el-col :span="16">
+        <el-row>
+          <el-col :span="24">
+            <div class="good-title-text">{{goodsItem.title}}</div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-rate v-model="value"
+            class="stars"
+            disabled
+            show-score
+            score-template="{value}"
+            text-color="#ff9900"></el-rate>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-tag type="warning" size="mini">销量100</el-tag>
+            <el-tag type="warning" size="mini">标签二</el-tag>
+            <el-tag type="warning" size="mini">标签二</el-tag>
+            <el-tag type="warning" size="mini">标签二</el-tag>
+            <el-tag type="warning" size="mini">标签二</el-tag>
+          </el-col>
+        </el-row>
+      </el-col>
+
+    </el-row>
   </div>
 </template>
 
@@ -23,6 +50,11 @@
         }
       }
     },
+    data() {
+      return {
+        value: 4.6
+      }
+    },
     computed: {
 
     },
@@ -31,10 +63,10 @@
         //路由跳转
         // 1.使用query detail？xxx形式
         this.$router.push({
-          path: '/detail',
-          query: {
-            iid: this.goodsItem.iid
-          }
+          path: '/detail'
+          // query: {
+          //   iid: this.goodsItem.iid
+          // }
         });
       }
     }
@@ -46,32 +78,19 @@
     margin: 10px 0;
     width: 100vw;
   }
- .good-title {
-   display: flex;
-   padding: 0 10px;
- }
-  .good-image {
-    width: 100px;
-    height: 100px;
+  .item-image {
     border-radius: 10px;
-    border: solid 1px #999;
     overflow: hidden;
   }
-  .good-image img {
-    width: 100%;
-    height: 100%;
-  }
-  .title-box {
-    margin-left: 10px;
-    width: calc(100% - 130px);
-  }
   .good-title-text {
-    color: black;
+    color: var(--color-ele-blue);
     font-weight: 600;
-    font-size: 20px;
+    font-size: 17px;
     text-overflow: ellipsis;
     overflow:hidden;
     white-space:nowrap;
   }
-
+  .stars {
+    /*width: 50%;*/
+  }
 </style>

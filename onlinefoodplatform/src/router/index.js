@@ -8,6 +8,7 @@ const Discovery = () => import('../views/discovery/Discovery');
 const Order = () => import('../views/order/Order');
 const Profile = () => import('../views/profile/Profile');
 const Sign = () => import('../views/sign/Sign');
+const Detail = () => import('../views/detail/Detail');
 
 const routes = [
   {
@@ -33,6 +34,10 @@ const routes = [
   {
     path: '/sign',
     component: Sign
+  },
+  {
+    path: '/detail',
+    component: Detail
   }
 ];
 

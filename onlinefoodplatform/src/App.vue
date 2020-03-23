@@ -16,16 +16,16 @@
     components: {
       MainTabBar
     },
-    mounted() {
-      this.$refs.app.style.height = window.innerHeight + 100;
-      window.scrollTo(0,1);
-      document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    data() {
+      return {
+        list: ['/home']
+      }
     }
   }
 </script>
 <style>
   @import "./assets/css/base.css";
-  @import url('//at.alicdn.com/t/font_1631969_9mn028p8lgp.css');
+  @import url('https://at.alicdn.com/t/font_1631969_9mn028p8lgp.css');
   .main-tab-bar {
     margin: 0 5px;
   }
