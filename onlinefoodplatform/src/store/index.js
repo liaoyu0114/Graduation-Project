@@ -20,7 +20,7 @@ const state = {
   locationData: {
     // 用于定位相关信息提交
     lat: "", // 纬度
-    lon: "", // 经度
+    lng: "", // 经度
     province: "", // 省
     city: "", // 市
     district: "", // 区 县
@@ -30,6 +30,8 @@ const state = {
   },
   IPInfo: {
     // 通过IP获取的地址
+    lat: "",
+    lng: "",
     ProvinceName: "",
     CCityName: "",
     RegionName: ""

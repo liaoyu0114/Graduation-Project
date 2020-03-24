@@ -9,7 +9,7 @@ const Order = () => import('../views/order/Order');
 const Profile = () => import('../views/profile/Profile');
 const Sign = () => import('../views/sign/Sign');
 const Detail = () => import('../views/detail/Detail');
-
+const SearchLocal = () => import('components/content/search/SearchLocal')
 const routes = [
   {
     path: '',
@@ -38,6 +38,10 @@ const routes = [
   {
     path: '/detail',
     component: Detail
+  },
+  {
+    path: '/search-local',
+    component: SearchLocal
   }
 ];
 

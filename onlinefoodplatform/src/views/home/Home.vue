@@ -7,7 +7,6 @@
                  @tabClick="tabClick" ref="tabControlFixed" v-show="isShowTabControl"></tab-control>
 
     <location :location-data="$store.state.locationData" :i-p-info="$store.state.IPInfo"></location>
-    <!-- <div>{{locationData.test}}</div> -->
     <scroll class="scroll" ref="scroll"
             :probe-type="3"
             :pull-up-load="true"
@@ -153,115 +152,9 @@
         //同步吸顶tabcontrol和滚动tabcontrol的选中状态
         this.$refs.tabControl.currentIndex = index;
         this.$refs.tabControlFixed.currentIndex = index;
-      },
-      getLocation() {
-        const self = this;
-        AMap.plugin("AMap.Geolocation", function() {
-          var geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true, // 是否使用高精度定位，默认:true
-            timeout: 5000, // 超过10秒后停止定位，默认：无穷大
-            maximumAge: 0, // 定位结果缓存0毫秒，默认：0
-            convert: true // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
-          });
-
-          geolocation.getCurrentPosition();
-          AMap.event.addListener(geolocation, "complete", onComplete);
-          AMap.event.addListener(geolocation, "error", onError);
-
-          function onComplete(data) {
-            // data是具体的定位信息
-            // debugger
-            self.newGetAddress(data.position.lat, data.position.lng);
-          }
-
-          function onError(data) {
-            // debugger
-            // 定位出错
-            self.$message({
-              howClose: true,
-              message: '定位出错，将使用IP定位，可能不准确',
-              type: 'error'
-            });
-            self.getLngLatLocation();
-          }
-        });
-      },
-      getLngLatLocation() {
-        // 定位失败手动通过IP定位
-        const self = this;
-        AMap.plugin("AMap.CitySearch", function() {
-          const citySearch = new AMap.CitySearch();
-          citySearch.getLocalCity(function(status, result) {
-            if (status === "complete" && result.info === "OK") {
-              // 查询成功，result即为当前所在城市信息
-              //逆向地理编码
-              AMap.plugin("AMap.Geocoder", function() {
-                var geocoder = new AMap.Geocoder({
-                  // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
-                  city: result.adcode
-                });
-
-                var lnglat = result.rectangle.split(";")[0].split(",");
-
-                geocoder.getAddress(lnglat, function(status, data) {
-                  if (status === "complete" && data.info === "OK") {
-                    // result为对应的地理位置详细信息
-                    self.$store.commit('setIPInfo', data.regeocode.addressComponent);
-                  }
-                });
-              });
-            }
-          });
-        });
-      },
-      newGetAddress: function(latitude, longitude) {
-        const _thisSelf = this;
-        const mapObj = new AMap.Map("amap2");
-        mapObj.plugin("AMap.Geocoder", function() {
-          const geocoder = new AMap.Geocoder({
-            city: "全国", // city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
-            radius: 100 // 以已知坐标为中心点，radius为半径，返回范围内兴趣点和道路信息
-          });
-          const lnglat = [longitude, latitude]; // 倒序反写经纬度
-          // 天津120 北京110 上海310 重庆500 ,
-          const reg1 = /^[1][1][0][0-9][0-9][0-9]/;
-          const reg2 = /^[1][2][0][0-9][0-9][0-9]/;
-          const reg3 = /^[5][0][0][0-9][0-9][0-9]/;
-          const reg4 = /^[3][1][0][0-9][0-9][0-9]/;
-          geocoder.getAddress(lnglat, function(status, result) {
-            // console.log("getAddress", result);
-            if (status === "complete" && result.info === "OK") {
-              // result为对应的地理位置详细信息
-              let address = result.regeocode.addressComponent;
-
-              const adcode = address.adcode; // 省市编码
-
-              if ( reg1.test(adcode) || reg2.test(adcode) || reg3.test(adcode) || reg4.test(adcode) ) {
-                _thisSelf.locationData.city = result.regeocode.addressComponent.province;
-              } else {
-                _thisSelf.locationData.city = result.regeocode.addressComponent.city;
-              }
-             
-              let location = {
-                latitude,
-                longitude,
-                province: address.province,
-                district: address.district,
-                formattedAddress: result.regeocode.formattedAddress,
-                nowPlace: address.province + address.city + address.district,
-                needAddress: address.township + address.neighborhood + address.building
-              }
-              _thisSelf.$store.commit('setLocation', location);
-            } else {
-              console.log(_thisSelf.locationData); // 回调函数
-            }
-          });
-        });
       }
     },
-    created() {
-      this.getLocation();
-    }
+
   }
 </script>
 

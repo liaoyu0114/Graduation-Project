@@ -1,10 +1,10 @@
 <template>
   <div class="location">
-    <div class="location-address">
+    <div class="location-address" @click="localClick">
       <i class="iconfont icon-icon-dingwei"></i>
-      <div class="address-box" v-if="IPInfo.ProvinceName || locationData.Address">
-        <div v-if="locationData.Address">
-          {{locationData.Address}}
+      <div class="address-box" v-if="IPInfo.ProvinceName || locationData.needAddress">
+        <div v-if="locationData.needAddress">
+          {{locationData.needAddress}}
         </div>
         <div v-else> {{IPInfo.ProvinceName}} {{IPInfo.CCityName}} {{IPInfo.RegionName}}</div>
         <div class="icon-down-u"></div>
@@ -45,10 +45,17 @@
     },
     created() {
       setTimeout(function () {
-        if (this.IPInfo.ProvinceName.length === 0 && this.locationData.needAddress.length === 0) {
+      
+        if (this.IPInfo.ProvinceName.length === 0 || this.locationData.needAddress.length === 0) {
           this.isLoad = false
+            console.log(1)
         }
       }, 5000)
+    },
+    methods: {
+      localClick() {
+        this.$router.push("/search-local")
+      }
     }
   }
 </script>
@@ -67,6 +74,7 @@
     color: white;
     height: 20px;
     line-height: 20px;
+    cursor: pointer;
   }
   .search {
     display: flex;
