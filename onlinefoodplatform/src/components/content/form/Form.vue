@@ -2,7 +2,7 @@
   <div class="form">
 
     <div class="form-box">
-      <div class="title">完善个人信息</div>
+      <div class="title">上传头像（默认截取中间正方形区域）</div>
       <div class="upload">
         <el-upload
           class="avatar-uploader"
@@ -107,13 +107,9 @@
 <style scoped>
   .form {
     background: white;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-
   }
   .form-box {
-    margin: 10vh 20px 0 20px;
-    height: calc(90vh);
+    margin: 0 20px;
     background: white;
   }
   .upload {
@@ -157,5 +153,10 @@
   .button {
     margin: auto;
     width: 150px;
+  }
+  .title {
+    width: 100%;
+    text-align: center;
+    color: rgb(155, 158, 161);
   }
 </style>

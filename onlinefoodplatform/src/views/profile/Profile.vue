@@ -1,16 +1,16 @@
 <template>
   <div class="profile">
-    <!--<tologin v-if="userInfo"></tologin>-->
-    <tourists></tourists>
-    <el-button @click="signClick">sign</el-button>
-    <el-button @click="testClick">test</el-button>
+    <tologin v-if="userInfo"></tologin>
+    <tourists v-else></tourists>
+    <!-- <el-button @click="signClick">sign</el-button>
+    <el-button @click="testClick">test</el-button> -->
   </div>
 </template>
 
 <script>
   import Tourists from './childComps/Tourists'
   import Tologin from 'components/content/tologin/Tologin'
-  import {sign} from "../../network/user";
+  import {sign} from "network/user";
 
   export default {
     name: "Profile",
@@ -37,7 +37,7 @@
         })
       },
       testClick() {
-
+        console.log(1)
       }
     }
   }

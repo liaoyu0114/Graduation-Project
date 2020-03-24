@@ -16,3 +16,11 @@ export function regist(data) {
     data: qs.stringify(data)
   })
 }
+
+export function updateuser(data) {
+  return request({
+    method: "post",
+    url: "/updateuser",
+    data: qs.stringify(data)
+  })
+}

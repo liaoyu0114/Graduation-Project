@@ -13,7 +13,7 @@
     name: "Tologin",
     methods: {
       loginClick() {
-        this.$router.push('/login')
+        this.$router.push('/sign')
       }
     }
   }

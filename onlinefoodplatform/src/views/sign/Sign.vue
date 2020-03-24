@@ -9,7 +9,7 @@
             <button class="toggle-btn" type="button" @click="regster()">Register</button>
           </div>
           <div class="social-icons">
-            <i class="fa fa-qq" aria-hidden="true"></i>
+            <i class="fa fa-qq" aria-hidden="true" @click="test"></i>
             <i class="fa fa-weixin" aria-hidden="true"></i>
             <i class="fa fa-weibo" aria-hidden="true"></i>
           </div>
@@ -59,21 +59,28 @@
               </div>
 
             </el-form>
+           
           </div>
         </div>
       </div>
+       
     </div>
-    <transition name="show-form">
-      <div class="sign-form" ref="signForm" v-if="success">
-        <my-form></my-form>
-      </div>
-    </transition>
+    
+       <el-drawer
+        title="完善个人信息"
+        class="reg-drawer"
+        size="100%"
+        :visible.sync="drawer"
+        :direction="direction"
+        :before-close="handleClose">
+          <my-form></my-form>
+        </el-drawer>
   </div>
 </template>
 
 <script>
   import MyForm from "components/content/form/Form"
-  import {sign, regist} from "network/user";
+  import {sign, regist, updateuser} from "network/user";
 
   export default {
     name: "Sign",
@@ -124,10 +131,35 @@
           repeat: [ {validator: validateRepeat, trigger: 'blur'} ]
         },
         loading: false,
-        success: false
+        drawer: false,
+        direction: 'btt',
       }
     },
     methods: {
+      test() {
+        console.log(1)
+        let into = {
+          user_id: 7,
+          user_nickname: "HHH",
+          user_sex: 1,
+          user_pic: "sssssss"
+        }
+        updateuser(into).then(res => {
+          console.log(res)
+        }).catch( err => {
+          console.log(err)
+        })
+      },
+      handleClose(done) {
+         this.$confirm("邮箱必填！！！", {
+          confirmButtonText: '确定',
+          type: 'warning'
+         })
+          .then(_ => {
+            
+          })
+          .catch(_ => {});
+      },
       login() {
         this.$refs.btn.style.left = "0";
         this.$refs.login.style.left = "10%";
@@ -140,28 +172,29 @@
         this.$refs.register.style.left = "10%";
       },
       loginClick(fromName) {
-        this.success = true
-        // this.saveClick();
-        // this.$refs[fromName].validate(valid => {
-        //   if (valid) {
-        //     this.$message("通过验证");
-        //     this.loading = true;
-        //     let data = {
-        //       user_phone: this.ruleFormLogin.phone,
-        //       user_password: this.ruleFormLogin.password
-        //     };
-        //     sign(data).then(res => {
-        //       console.log(res);
-        //       setTimeout(() => {
-        //         this.loading = false;
-        //       }, 1000)
-        //     })
-        //   } else {
-        //     return false
-        //   }
-        // });
+        // this.success = true
+        this.saveClick();
+        this.$refs[fromName].validate(valid => {
+          if (valid) {
+            this.$message("通过验证");
+            this.loading = true;
+            let data = {
+              user_phone: this.ruleFormLogin.phone,
+              user_password: this.ruleFormLogin.password
+            };
+            sign(data).then(res => {
+              console.log(res);
+              setTimeout(() => {
+                this.loading = false;
+              }, 1000)
+            })
+          } else {
+            return false
+          }
+        });
       },
       registClick(formName) {
+        this.drawer = true
         this.$refs[formName].validate(valid => {
           if (valid) {
             this.$message("通过验证");
@@ -172,9 +205,8 @@
             };
             regist(data).then(res => {
               console.log(res);
-              setTimeout(() => {
                 this.loading = false;
-              }, 1000)
+                this.drawer = true
             })
           }
         });
@@ -316,5 +348,14 @@
    transform: translateY(100vh);
    opacity: 0;
  }
+ .drawer {
+   height: 100vh;
+ }
 
+</style>
+
+<style>
+ .el-message-box {
+   width: 100% !important;
+ }
 </style>
