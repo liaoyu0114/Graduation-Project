@@ -1,5 +1,11 @@
 <template>
   <div class="profile">
+    <profile-nav-bar class="profile-nav-bar">
+      <div class="order-title" slot="center">
+        我的
+      </div>
+    </profile-nav-bar>
+
     <tologin v-if="userInfo"></tologin>
     <tourists v-else></tourists>
     <!-- <el-button @click="signClick">sign</el-button>
@@ -10,6 +16,7 @@
 <script>
   import Tourists from './childComps/Tourists'
   import Tologin from 'components/content/tologin/Tologin'
+  import ProfileNavBar from 'components/common/navbar/NavBar'
   import {sign} from "network/user";
 
   export default {
@@ -21,7 +28,8 @@
     },
     components: {
       Tourists,
-      Tologin
+      Tologin,
+      ProfileNavBar
     },
     created() {
       this.userInfo = this.$store.state.userInfo
@@ -46,5 +54,9 @@
 <style scoped>
  .profile {
    background: white;
+ }
+ .profile-nav-bar {
+   background: var(--color-ele-blue);
+   color: white;
  }
 </style>

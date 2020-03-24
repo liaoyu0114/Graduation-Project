@@ -5,23 +5,29 @@
         订单
       </div>
     </order-nav-bar>
-    <scroll class="scroll">
-      <order-cell v-for="(item, index) in orders" :order-item="item" :key="index"></order-cell>
-    </scroll>
+    <tologin v-if="userInfo"></tologin>
+    <div v-else>
+      <scroll class="scroll">
+        <order-cell v-for="(item, index) in orders" :order-item="item" :key="index"></order-cell>
+      </scroll>
     </div>
+
+  </div>
 </template>
 
 <script>
   import OrderCell from './childComs/OrderCell'
   import Scroll from 'components/common/scroll/Scroll'
   import OrderNavBar from 'components/common/navbar/NavBar'
+  import Tologin from 'components/content/tologin/Tologin'
 
   export default {
     name: "Order",
     components: {
       OrderCell,
       Scroll,
-      OrderNavBar
+      OrderNavBar,
+      Tologin
     },
     data() {
       return {
@@ -138,11 +144,17 @@
           }
         ]
       }
+    },
+    created() {
+      this.userInfo = this.$store.state.userInfo
     }
   }
 </script>
 
 <style scoped>
+  .order {
+    background: white;
+  }
   .scroll {
     background: white;
     position: absolute;
