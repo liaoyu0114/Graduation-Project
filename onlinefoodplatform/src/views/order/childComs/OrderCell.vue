@@ -64,6 +64,7 @@
 
 <style scoped>
   .order-list {
+    width: 100%;
     padding: 5px;
   }
   .bottom-line {

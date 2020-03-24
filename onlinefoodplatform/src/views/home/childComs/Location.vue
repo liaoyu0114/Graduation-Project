@@ -2,11 +2,11 @@
   <div class="location">
     <div class="location-address">
       <i class="iconfont icon-icon-dingwei"></i>
-      <div class="address-box" v-if="userInfo.ProvinceName || locationData.Address">
+      <div class="address-box" v-if="IPInfo.ProvinceName || locationData.Address">
         <div v-if="locationData.Address">
           {{locationData.Address}}
         </div>
-        <div v-else> {{userInfo.ProvinceName}} {{userInfo.CCityName}} {{userInfo.RegionName}}</div>
+        <div v-else> {{IPInfo.ProvinceName}} {{IPInfo.CCityName}} {{IPInfo.RegionName}}</div>
         <div class="icon-down-u"></div>
       </div>
       <div class="address-box-2" v-else>
@@ -31,7 +31,7 @@
           return {}
         }
       },
-      userInfo: {
+      IPInfo: {
         type: Object,
         default() {
           return {}
@@ -45,7 +45,7 @@
     },
     created() {
       setTimeout(function () {
-        if (this.userInfo.ProvinceName.length === 0 && this.locationData.Address.length === 0) {
+        if (this.IPInfo.ProvinceName.length === 0 && this.locationData.needAddress.length === 0) {
           this.isLoad = false
         }
       }, 5000)
@@ -54,10 +54,9 @@
 </script>
 
 <style scoped>
-  .location {;
+  .location {
      background: #4294f7;
      padding: 10px 0;
-
   }
   .location-address {
     position: relative;

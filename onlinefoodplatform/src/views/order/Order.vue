@@ -154,4 +154,9 @@
     background: var(--color-ele-blue);
     color: white;
   }
+    @media screen and (min-width: 500px){
+    .scroll {
+      width: 500px !important;
+    }
+  }
 </style>

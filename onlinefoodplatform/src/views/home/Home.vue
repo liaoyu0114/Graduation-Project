@@ -6,7 +6,8 @@
     <tab-control :titles="['流行', '新款', '精选']" class="tabcontrol-fixed"
                  @tabClick="tabClick" ref="tabControlFixed" v-show="isShowTabControl"></tab-control>
 
-    <location :location-data="locationData" :user-info="userInfo"></location>
+    <location :location-data="$store.state.locationData" :i-p-info="$store.state.IPInfo"></location>
+    <!-- <div>{{locationData.test}}</div> -->
     <scroll class="scroll" ref="scroll"
             :probe-type="3"
             :pull-up-load="true"
@@ -43,26 +44,11 @@
       // debugger
       return {
         tabOffsetTop: 0,
+        result: {},
         //是否展示吸顶效果的tabControl
         isShowTabControl: false,
         //已滑动距离
         scrolledPosition: 0,
-        locationData: {
-          // 用于定位相关信息提交
-          lat: "", // 纬度
-          lon: "", // 经度
-          province: "", // 省
-          city: "", // 市
-          district: "", // 区 县
-          nowPlace: "", // 省-市-区
-          Address: "", // 详细地址
-        },
-        userInfo: {
-          // 通过IP获取的地址
-          ProvinceName: "",
-          CCityName: "",
-          RegionName: ""
-        },
         banners: [
           {
             image: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ee2ecf4.jpg",
@@ -185,14 +171,17 @@
           function onComplete(data) {
             // data是具体的定位信息
             // debugger
-            console.log("定位成功信息：", data);
             self.newGetAddress(data.position.lat, data.position.lng);
           }
 
           function onError(data) {
             // debugger
             // 定位出错
-            console.log("定位失败错误：", data);
+            self.$message({
+              howClose: true,
+              message: '定位出错，将使用IP定位，可能不准确',
+              type: 'error'
+            });
             self.getLngLatLocation();
           }
         });
@@ -205,10 +194,6 @@
           citySearch.getLocalCity(function(status, result) {
             if (status === "complete" && result.info === "OK") {
               // 查询成功，result即为当前所在城市信息
-              console.log("通过ip获取当前城市：", result);
-              // let lat = (result.bounds.wc.lat + result.bounds.nc.lat) / 2;
-              // let lng = (result.bounds.southwest.lng + result.bounds.northeast.lng) / 2
-              // self.newGetAddress(lat, lng)
               //逆向地理编码
               AMap.plugin("AMap.Geocoder", function() {
                 var geocoder = new AMap.Geocoder({
@@ -221,10 +206,7 @@
                 geocoder.getAddress(lnglat, function(status, data) {
                   if (status === "complete" && data.info === "OK") {
                     // result为对应的地理位置详细信息
-                    // console.log(data);
-                    self.userInfo.ProvinceName = data.regeocode.addressComponent.province.toString();
-                    self.userInfo.CCityName = data.regeocode.addressComponent.city;
-                    self.userInfo.RegionName = data.regeocode.addressComponent.district;
+                    self.$store.commit('setIPInfo', data.regeocode.addressComponent);
                   }
                 });
               });
@@ -234,8 +216,6 @@
       },
       newGetAddress: function(latitude, longitude) {
         const _thisSelf = this;
-        _thisSelf.locationData.lat = latitude;
-        _thisSelf.locationData.lon = longitude;
         const mapObj = new AMap.Map("amap2");
         mapObj.plugin("AMap.Geocoder", function() {
           const geocoder = new AMap.Geocoder({
@@ -252,32 +232,26 @@
             // console.log("getAddress", result);
             if (status === "complete" && result.info === "OK") {
               // result为对应的地理位置详细信息
-              const adcode = result.regeocode.addressComponent.adcode; // 省市编码
-              if (
-                reg1.test(adcode) ||
-                reg2.test(adcode) ||
-                reg3.test(adcode) ||
-                reg4.test(adcode)
-              ) {
-                _thisSelf.locationData.city =
-                  result.regeocode.addressComponent.province;
+              let address = result.regeocode.addressComponent;
+
+              const adcode = address.adcode; // 省市编码
+
+              if ( reg1.test(adcode) || reg2.test(adcode) || reg3.test(adcode) || reg4.test(adcode) ) {
+                _thisSelf.locationData.city = result.regeocode.addressComponent.province;
               } else {
-                _thisSelf.locationData.city =
-                  result.regeocode.addressComponent.city;
+                _thisSelf.locationData.city = result.regeocode.addressComponent.city;
               }
-              // 提取 省 市 区 详细地址信息 重拼装省-市-区信息
-              _thisSelf.locationData.province =
-                result.regeocode.addressComponent.province;
-              _thisSelf.locationData.district =
-                result.regeocode.addressComponent.district;
-              _thisSelf.locationData.Address = result.regeocode.formattedAddress;
-              _thisSelf.locationData.nowPlace =
-                result.regeocode.addressComponent.province +
-                result.regeocode.addressComponent.city +
-                result.regeocode.addressComponent.district;
-              _thisSelf.userInfo.ProvinceName = _thisSelf.locationData.province;
-              _thisSelf.userInfo.CCityName = _thisSelf.locationData.city;
-              _thisSelf.userInfo.RegionName = _thisSelf.locationData.district;
+             
+              let location = {
+                latitude,
+                longitude,
+                province: address.province,
+                district: address.district,
+                formattedAddress: result.regeocode.formattedAddress,
+                nowPlace: address.province + address.city + address.district,
+                needAddress: address.township + address.neighborhood + address.building
+              }
+              _thisSelf.$store.commit('setLocation', location);
             } else {
               console.log(_thisSelf.locationData); // 回调函数
             }
@@ -287,7 +261,6 @@
     },
     created() {
       this.getLocation();
-      console.log(typeof this.locationData);
     }
   }
 </script>
