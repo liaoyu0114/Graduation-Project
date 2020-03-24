@@ -9,7 +9,7 @@
             <button class="toggle-btn" type="button" @click="regster()">Register</button>
           </div>
           <div class="social-icons">
-            <i class="fa fa-qq" aria-hidden="true" @click="test"></i>
+            <i class="fa fa-qq" aria-hidden="true"></i>
             <i class="fa fa-weixin" aria-hidden="true"></i>
             <i class="fa fa-weibo" aria-hidden="true"></i>
           </div>
@@ -136,29 +136,11 @@
       }
     },
     methods: {
-      test() {
-        console.log(1)
-        let into = {
-          user_id: 7,
-          user_nickname: "HHH",
-          user_sex: 1,
-          user_pic: "sssssss"
-        }
-        updateuser(into).then(res => {
-          console.log(res)
-        }).catch( err => {
-          console.log(err)
-        })
-      },
       handleClose(done) {
          this.$confirm("邮箱必填！！！", {
           confirmButtonText: '确定',
           type: 'warning'
          })
-          .then(_ => {
-            
-          })
-          .catch(_ => {});
       },
       login() {
         this.$refs.btn.style.left = "0";
@@ -172,7 +154,6 @@
         this.$refs.register.style.left = "10%";
       },
       loginClick(fromName) {
-        // this.success = true
         this.saveClick();
         this.$refs[fromName].validate(valid => {
           if (valid) {
@@ -183,10 +164,23 @@
               user_password: this.ruleFormLogin.password
             };
             sign(data).then(res => {
-              console.log(res);
-              setTimeout(() => {
+              this.$confirm(res.msg, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'info'
+              }).then(() => {
                 this.loading = false;
-              }, 1000)
+                if( res.code === "000") {
+                  this.$store.commit("setUserInfo",res.user);
+                  if (!this.checkInfo()) {
+                    this.drawer = true
+                  } else {
+                    this.$router.push("/home")
+                  }
+                }
+              })
+            }).catch(() => {
+              this.$message("网络错误")
             })
           } else {
             return false
@@ -194,7 +188,6 @@
         });
       },
       registClick(formName) {
-        this.drawer = true
         this.$refs[formName].validate(valid => {
           if (valid) {
             this.$message("通过验证");
@@ -204,9 +197,24 @@
               user_password: this.ruleFormRegist.rePassword
             };
             regist(data).then(res => {
-              console.log(res);
+
+              this.$confirm(res.msg, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'info'
+              }).then(() => {
                 this.loading = false;
-                this.drawer = true
+                if( res.code === "000") {
+                  this.$store.commit("setUserInfo",res.user);
+                  if (!this.checkInfo()) {
+                    this.drawer = true
+                  } else {
+                    this.$router.push("/home")
+                  }
+                }
+              })
+            }).catch(err => {
+              this.$message("网络错误");
             })
           }
         });
@@ -214,6 +222,10 @@
       saveClick() {
         localStorage.phone = this.isSave ? this.phone : "";
         localStorage.password = this.password ? this.password : "";
+      },
+      checkInfo() {
+        let email_reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        return email_reg.test(this.$store.state.userInfo.email)
       }
     }
   }

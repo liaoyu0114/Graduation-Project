@@ -14,7 +14,8 @@ const state = {
     phone: "",
     sex: "",
     avatar: "",
-    createTime: ""
+    createTime: "",
+    email: ""
   },
   homeScrollHeight: 0,
   locationData: {

@@ -22,5 +22,13 @@ export default {
     state.IPInfo.ProvinceName = address.province.toString();
     state.IPInfo.CCityName = address.city;
     state.IPInfo.RegionName = address.district;
+  },
+  setUserInfo(state, userInfo) {
+    state.userInfo.id = userInfo.user_id;
+      state.userInfo.nickName = userInfo.user_nickname;
+      state.userInfo.phone = userInfo.user_phone;
+      state.userInfo.avatar = userInfo.user_pic;
+      state.userInfo.createTime = userInfo.user_time;
+      state.userInfo.email = userInfo.user_mail;
   }
 }

@@ -46,6 +46,10 @@ export default {
         }
 
         function onError(data) {
+          if (self.$route.path !== "/home") {
+            self.getLngLatLocation();
+            return
+          }
           self.$message({
             howClose: true,
             message: "定位出错，将使用IP定位，可能不准确",
