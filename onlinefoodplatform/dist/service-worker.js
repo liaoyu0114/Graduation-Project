@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.3415d00869e5da8a86854423a2735a80.js"
+  "precache-manifest.cd59d0d135976ba83dfde8de67f5c065.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "onlinefoodplatform"});
