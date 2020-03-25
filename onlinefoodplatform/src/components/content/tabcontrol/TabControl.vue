@@ -37,13 +37,14 @@
  .tabcontrol {
    display: flex;
    text-align: center;
-   height: 6vh;
-   line-height: 6vh;
-   font-size: 2.5vh;
+   height: 30px;
+   line-height: 30px;
+   font-size: 20px;
    /*font-weight: 600;*/
-
+  padding: 10px 0;
    margin-bottom: 0.5vh;
    background-color: white;
+   color: #777;
  }
   .tabcontrol-item {
     flex: 1;

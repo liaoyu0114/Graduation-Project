@@ -18,6 +18,7 @@ const state = {
     email: ""
   },
   homeScrollHeight: 0,
+  homeLoading: "",
   locationData: {
     // 用于定位相关信息提交
     lat: "", // 纬度

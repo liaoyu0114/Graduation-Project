@@ -91,6 +91,7 @@ export default {
                     city: data.regeocode.addressComponent.city,
                     district: data.regeocode.addressComponent.district
                   };
+                  self.$store.state.homeLoading = address.district
                   self.$store.commit("setIPInfo", address);
                 }
               });
@@ -146,6 +147,7 @@ export default {
               needAddress:
                 address.township + address.neighborhood + address.building
             };
+            _thisSelf.$store.state.homeLoading = location.needAddress
             _thisSelf.$store.commit("setLocation", location);
           } else {
             console.log("err location"); // 回调函数

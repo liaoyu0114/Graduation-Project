@@ -34,7 +34,9 @@
                          class="button"
                          @click="loginClick('ruleFormLogin')">登 录</el-button>
             </div>
-
+            <a href="http://frp.hhh233.xyz/admin">
+            <el-button type="text">商家登录</el-button>
+            </a>
           </div>
 
           <div class="input-group" id="register" ref="register">

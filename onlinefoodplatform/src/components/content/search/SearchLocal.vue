@@ -86,6 +86,7 @@ export default {
             message: "重设成功!"
           });
           this.$store.commit("setLocation", addresss);
+          this.backClick()
         })
         .catch(() => {
           this.$message({

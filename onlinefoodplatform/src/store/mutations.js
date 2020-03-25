@@ -15,6 +15,7 @@ export default {
     state.locationData.nowPlace = address.province + address.city + address.district;
 
     state.locationData.needAddress = address.needAddress
+    state.homeLoading = state.locationData.needAddress
   },
   setIPInfo(state, address) {
     state.IPInfo.lat = address.lat;
@@ -22,6 +23,7 @@ export default {
     state.IPInfo.ProvinceName = address.province.toString();
     state.IPInfo.CCityName = address.city;
     state.IPInfo.RegionName = address.district;
+    state.homeLoading = state.IPInfo.district
   },
   setUserInfo(state, userInfo) {
     state.userInfo.id = userInfo.user_id;

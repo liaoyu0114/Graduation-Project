@@ -24,7 +24,7 @@ export default {
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-  padding: 25vh 0 45vh;
+  padding: calc(25vh - 40px) 0 45vh;
   height: 30vh;
   flex-wrap: wrap;
 }
