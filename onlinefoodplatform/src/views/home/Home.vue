@@ -47,7 +47,7 @@ export default {
     NavBar
   },
   created () {
-    this.goodsShow = this.goods
+    this.goodsShow = this.goods.concat()
   },
   data() {
     // debugger
@@ -174,35 +174,6 @@ export default {
     this.$bus.$off("imageLoad", this.itemImgListener);
   },
   methods: {
-    isloding() {
-      setTimeout(() => {
-        console.log(1)
-      if (this.$store.state.locationData.address.length !== 0) {
-        this.$store.state.homeLoading = this.$store.state.location.needAddress;
-      }
-      if (this.$store.state.IPInfo.CCityName.length !== 0) {
-        this.$store.state.homeLoading = address.district;
-      }
-    }, 5000 * Math.random());
-    },
-    randomNum(maxNum, minNum, decimalNum) {
-            var max = 0, min = 0;
-            minNum <= maxNum ? (min = minNum, max = maxNum) : (min = maxNum, max = minNum);
-            switch (arguments.length) {
-                case 1:
-                    return Math.floor(Math.random() * (max + 1));
-                    break;
-                case 2:
-                    return Math.floor(Math.random() * (max - min + 1) + min);
-                    break;
-                case 3:
-                    return (Math.random() * (max - min) + min).toFixed(decimalNum);
-                    break;
-                default:
-                    return Math.random();
-                    break;
-            }
-        },
     currentPosition(position) {
       // this.listenShowBackTop(position);
 
@@ -216,13 +187,18 @@ export default {
     tabClick(index) {
       switch (index) {
         case 0 :
-          this.goodsShow = this.goods
-          break
+          this.goodsShow = this.goods.concat();
+          break;
         case 1 :
-          this.goodsShow = this.goods.sort((a, b) => { a.score > b.score })
-          break
+          this.goodsShow.sort(function (a,b) {
+            return a.score - b.score
+          });
+          console.log(this.goodsShow);
+          break;
         case 2 :
-          this.goodsShow = this.goods.sort((a, b) => { a.distance > b.distance })
+          this.goodsShow.sort((a, b) => {
+            return a.distance - b.distance
+          });
           break
       }
       // 同步吸顶tabcontrol和滚动tabcontrol的选中状态

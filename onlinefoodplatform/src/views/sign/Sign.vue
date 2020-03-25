@@ -75,7 +75,7 @@
         :visible.sync="drawer"
         :direction="direction"
         :before-close="handleClose">
-          <my-form></my-form>
+          <my-form @success="submit"></my-form>
         </el-drawer>
   </div>
 </template>
@@ -138,6 +138,10 @@
       }
     },
     methods: {
+      submit() {
+        this.drawer = false;
+        this.$router.push("/home")
+      },
       handleClose(done) {
          this.$confirm("邮箱必填！！！", {
           confirmButtonText: '确定',

@@ -35,7 +35,9 @@
           <el-input v-model="ruleForm.email" placeholder="邮箱"></el-input>
         </el-form-item>
         <div class="button-box">
-          <el-button type="primary" class="button">确 定</el-button>
+          <el-button type="primary"
+                     @click="submit"
+                     class="button">确 定</el-button>
         </div>
       </el-form>
     </div>
@@ -85,6 +87,9 @@
       }
     },
     methods: {
+      submit() {
+        this.$emit("success")
+      },
       handleAvatarSuccess(res, file) {
         this.avatar = URL.createObjectURL(file.raw);
       },

@@ -16,7 +16,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-rate v-model="goodsItem.score"
+            <el-rate v-model="value"
             class="stars"
             disabled
             show-score
@@ -27,7 +27,7 @@
         <el-row>
           <el-col :span="12">
             <el-tag type="warning" size="mini">销量100</el-tag>
-            <el-tag type="warning" size="mini">标签二</el-tag>
+            <el-tag type="warning" size="mini">距离 {{goodsItem.distance}}m</el-tag>
             <el-tag type="warning" size="mini">标签二</el-tag>
             <el-tag type="warning" size="mini">标签二</el-tag>
             <el-tag type="warning" size="mini">标签二</el-tag>
@@ -52,11 +52,11 @@
     },
     data() {
       return {
-        value: this.goodsitem.score
+        value: 0
       }
     },
-    computed: {
-
+    mounted() {
+      this.value = this.goodsItem.score
     },
     methods: {
       goodClick() {
@@ -77,6 +77,8 @@
   .goodsitem {
     margin: 10px 0;
     width: 100vw;
+    cursor: pointer;
+
   }
   .item-image {
     border-radius: 10px;

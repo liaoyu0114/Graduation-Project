@@ -48,6 +48,7 @@
  }
   .tabcontrol-item {
     flex: 1;
+    cursor: pointer;
   }
   .active span{
     border-bottom: 3px solid #4294f7;
