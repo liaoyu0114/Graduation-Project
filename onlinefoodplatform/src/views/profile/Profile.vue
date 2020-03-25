@@ -6,10 +6,10 @@
       </div>
     </profile-nav-bar>
 
-    <tologin v-if="userInfo"></tologin>
+    <tologin v-if="!userInfo.id"></tologin>
     <tourists v-else></tourists>
-    <!-- <el-button @click="signClick">sign</el-button>
-    <el-button @click="testClick">test</el-button> -->
+    <!--&lt;!&ndash; <el-button @click="signClick">sign</el-button>-->
+    <el-button @click="logoutClick">退出</el-button>
   </div>
 </template>
 
@@ -44,8 +44,11 @@
           console.log(res);
         })
       },
-      testClick() {
-        console.log(1)
+      logoutClick() {
+        localStorage.phone = "";
+        localStorage.password = "";
+        this.$store.state.userInfo = {};
+        this.$router.go(0);
       }
     }
   }

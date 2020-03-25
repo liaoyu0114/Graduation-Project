@@ -11,6 +11,7 @@
 <script>
 import AMap from "AMap";
 import MainTabBar from "@/components/content/maintabbar/MainTabBar";
+import {sign} from "./network/user";
 
 export default {
   name: "app",
@@ -21,6 +22,9 @@ export default {
     return {
       list: ["/home"]
     };
+  },
+  created() {
+    this.signAuto();
   },
   mounted() {
     this.getLocation();
@@ -154,6 +158,19 @@ export default {
           }
         });
       });
+    },
+    signAuto() {
+      if ( localStorage.phone.length !== 0 || localStorage.password !== 0) {
+        let data = {
+          user_phone: localStorage.phone,
+          user_password: localStorage.password
+        };
+        sign(data).then(res => {
+            if( res.code === "000") {
+              this.$store.commit("setUserInfo", res.user);
+            }
+          })
+      }
     }
   }
 };

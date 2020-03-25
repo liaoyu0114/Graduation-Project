@@ -5,7 +5,7 @@
         订单
       </div>
     </order-nav-bar>
-    <tologin v-if="userInfo"></tologin>
+    <tologin v-if="!userInfo.id"></tologin>
     <div v-else>
       <scroll class="scroll">
         <order-cell v-for="(item, index) in orders" :order-item="item" :key="index"></order-cell>
@@ -31,6 +31,7 @@
     },
     data() {
       return {
+        userInfo: {},
         orders: [
           {
             shop: {

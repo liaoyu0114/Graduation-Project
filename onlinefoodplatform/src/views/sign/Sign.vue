@@ -226,8 +226,8 @@
         });
       },
       saveClick() {
-        localStorage.phone = this.isSave ? this.phone : "";
-        localStorage.password = this.password ? this.password : "";
+        localStorage.phone = this.ruleFormLogin.isSave ? this.ruleFormLogin.phone : "";
+        localStorage.password = this.ruleFormLogin.isSave ? this.ruleFormLogin.password : "";
       },
       checkInfo() {
         let email_reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
