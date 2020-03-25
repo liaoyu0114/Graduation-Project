@@ -26,22 +26,28 @@
           <i class="fa fa-search" aria-hidden="true"></i>
         </div>
       </el-col>
-      <el-col :span="24">
+    </el-row>
+    <scroll class="scroll">
+ <el-row>
+      <el-col :span="24" class="search-item">
         <search-item v-for="(item,index) in searchRes" :key="index" v-if="searchRes" :search-item="item"></search-item>
       </el-col>
     </el-row>
+    </scroll>
+   
   </div>
 </template>
 
 <script>
 import DisNavBar from "components/common/navbar/NavBar";
-
+import Scroll from "components/common/scroll/Scroll";
 import SearchItem from "components/content/search/SearchItem";
 
 export default {
   name: "Discovery",
   components: {
     DisNavBar,
+    Scroll,
     SearchItem
   },
   mounted() {
@@ -64,14 +70,16 @@ export default {
         ? restaurants.filter(this.createFilter(queryString))
         : restaurants;
       // 调用 callback 返回建议列表的数据
-      cb(results);
+      this.searchRes = results
+      cb();
     },
     createFilter(queryString) {
       return restaurant => {
-        return (
-          restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) ===
-          0
-        );
+        return true
+        // return (
+        //   restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) ===
+        //   0
+        // );
       };
     },
     loadAll() {
@@ -227,5 +235,17 @@ export default {
   line-height: 40px;
   font-size: 30px;
   color: #aaa;
+}
+.scroll {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 150px);
+  right: 0;
+  left: 0;
+  background: white;
+  overflow: hidden;
+}
+.search-item {
+    cursor: pointer;
 }
 </style>

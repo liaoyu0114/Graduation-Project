@@ -16,7 +16,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-rate v-model="value"
+            <el-rate v-model="goodsItem.score"
             class="stars"
             disabled
             show-score
@@ -52,7 +52,7 @@
     },
     data() {
       return {
-        value: 4.6
+        value: this.goodsitem.score
       }
     },
     computed: {

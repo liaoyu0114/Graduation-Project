@@ -21,7 +21,7 @@
     >
       <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"></home-swiper>
       <tab-control :titles="['综合排序', '评分优先', '距离优先']" @tabClick="tabClick" ref="tabControl"></tab-control>
-      <goods-list :goods="goods"></goods-list>
+      <goods-list :goods="goodsShow"></goods-list>
     </scroll>
   </div>
 </template>
@@ -45,6 +45,9 @@ export default {
     Scroll,
     TabControl,
     NavBar
+  },
+  created () {
+    this.goodsShow = this.goods
   },
   data() {
     // debugger
@@ -82,46 +85,64 @@ export default {
           link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234f02f89a.jpg"
         }
       ],
+      goodsShow: [],
       goods: [
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+          score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
+          // tags: ['销量100'，'受欢迎']
         },
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+           score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
         },
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+           score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
         },
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+           score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
         },
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+           score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
         },
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+           score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
         },
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+           score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
         },
         {
           image:
             "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧"
+          title: "狗子们，情人节到了快来选个头像吧",
+           score: 5 * Math.random().toFixed(1),
+          distance: 10000 * Math.random().toFixed(4)
         }
       ]
     };
@@ -164,6 +185,24 @@ export default {
       }
     }, 5000 * Math.random());
     },
+    randomNum(maxNum, minNum, decimalNum) {
+            var max = 0, min = 0;
+            minNum <= maxNum ? (min = minNum, max = maxNum) : (min = maxNum, max = minNum);
+            switch (arguments.length) {
+                case 1:
+                    return Math.floor(Math.random() * (max + 1));
+                    break;
+                case 2:
+                    return Math.floor(Math.random() * (max - min + 1) + min);
+                    break;
+                case 3:
+                    return (Math.random() * (max - min) + min).toFixed(decimalNum);
+                    break;
+                default:
+                    return Math.random();
+                    break;
+            }
+        },
     currentPosition(position) {
       // this.listenShowBackTop(position);
 
@@ -175,18 +214,18 @@ export default {
       this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
     },
     tabClick(index) {
-      // switch (index) {
-      //   case 0 :
-      //     this.currentType = 'pop';
-      //     break
-      //   case 1 :
-      //     this.currentType = 'new';
-      //     break
-      //   case 2 :
-      //     this.currentType = 'sell';
-      //     break
-      // }
-      //同步吸顶tabcontrol和滚动tabcontrol的选中状态
+      switch (index) {
+        case 0 :
+          this.goodsShow = this.goods
+          break
+        case 1 :
+          this.goodsShow = this.goods.sort((a, b) => { a.score > b.score })
+          break
+        case 2 :
+          this.goodsShow = this.goods.sort((a, b) => { a.distance > b.distance })
+          break
+      }
+      // 同步吸顶tabcontrol和滚动tabcontrol的选中状态
       this.$refs.tabControl.currentIndex = index;
       this.$refs.tabControlFixed.currentIndex = index;
     }
