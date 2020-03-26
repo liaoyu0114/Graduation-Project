@@ -50,7 +50,9 @@
         </el-row>
       </el-menu>
       <keep-alive>
-        <router-view />
+        <transition name="slide-fade">
+          <router-view />
+        </transition>
       </keep-alive>
     </scroll>
   </div>
@@ -67,6 +69,10 @@ export default {
     shop: {
       type: Object,
       default: {}
+    },
+    path: {
+      type: String,
+      default: "/home"
     }
   },
   components: {
@@ -82,10 +88,10 @@ export default {
   },
   methods: {
     backClick() {
-      this.$router.back();
+      this.$router.push(this.path);
     },
     handleSelect(key, keyPath) {
-      this.$router.push("/detail/shopinfo")
+      this.$router.push("/detail/shopinfo");
       // switch (key) {
       //   case 1:
       //     this.$router.push("/detail/goods");
@@ -108,6 +114,7 @@ export default {
 <style scoped>
 .detail {
   background: white;
+  
 }
 .detail-navbar {
   width: 100%;
@@ -115,7 +122,9 @@ export default {
   color: white;
 }
 .scroll {
-  height: calc(100vh - 53px - 44px);
+  position: relative;
+  height: calc(100vh - 40px);
+  z-index: 99;
 }
 .left {
   position: absolute;
@@ -181,5 +190,20 @@ export default {
 .goods-box {
   float: left;
   width: 100px;
+}
+.slide-fade-enter-active {
+  transition: all 0.8s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.1s ease;
+}
+.slide-fade-enter
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.slide-fade-leave-to {
+   transform: translateX(100%);
+  opacity: 0;
 }
 </style>

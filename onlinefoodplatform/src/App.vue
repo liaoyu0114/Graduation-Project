@@ -20,8 +20,10 @@ export default {
   },
   data() {
     return {
-      list: ["/home"]
+      list: ["/detail","/detail/goods","/detail/comment","/detail/shopinfo"]
     };
+  },
+  computed: {
   },
   created() {
     this.signAuto();

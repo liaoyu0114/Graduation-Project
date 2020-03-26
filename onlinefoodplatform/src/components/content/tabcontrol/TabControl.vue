@@ -39,7 +39,7 @@
    text-align: center;
    height: 30px;
    line-height: 30px;
-   font-size: 20px;
+   font-size: 18px;
    /*font-weight: 600;*/
   padding: 10px 0;
    margin-bottom: 0.5vh;
@@ -52,7 +52,7 @@
   }
   .active span{
     border-bottom: 3px solid #4294f7;
-    padding: 5px;
+    padding: 3px;
     color: #4294f7;
   }
   @media screen and (max-device-width: 370px) {

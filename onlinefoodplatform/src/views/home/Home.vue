@@ -28,7 +28,10 @@
       <back-top @click.native="backClick" v-show="isShowBackTop" />
     </transition>
     <div class="cart">
-      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      <el-badge :value="0" class="item">
+<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      </el-badge>
+      
     </div>
   </div>
 </template>
@@ -740,6 +743,13 @@ export default {
   position: fixed;
   bottom: 110px;
   right: 20px;
+  background: #777;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 20px;
+
 }
 .fa-shopping-cart {
   color: var(--color-ele-blue);
