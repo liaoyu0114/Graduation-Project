@@ -1,3 +1,4 @@
+
 // 配置
 module.exports = {
   configureWebpack: {
@@ -15,6 +16,7 @@ module.exports = {
     devServer: {
       disableHostCheck: true
     },
+
     externals: {
       'AMap': 'AMap',
     }
@@ -23,5 +25,6 @@ module.exports = {
     extract: true
   },
   lintOnSave: false,
-  publicPath: './'
+  publicPath: './',
+ 
 };

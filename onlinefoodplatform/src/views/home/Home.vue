@@ -46,8 +46,8 @@ export default {
     TabControl,
     NavBar
   },
-  created () {
-    this.goodsShow = this.goods.concat()
+  created() {
+    this.goodsShow = this.goods.concat();
   },
   data() {
     // debugger
@@ -88,62 +88,432 @@ export default {
       goodsShow: [],
       goods: [
         {
+          shop_unique_key: "995e238d3c3f634614e52735f2c1fd99",
+          id: "13",
+          name: "儿时味粽子飘香饭",
+          address: "苍南县龙港镇龙翔路151号一层",
+          longitude: 120.551027,
+          latitude: 27.588527,
+          phone: "136****0881 0577-68699919",
+          opening_hours: "06:50/20:00",
+          rating: 4.8,
+          rating_count: 26,
+          categories: "地方小吃;包子粥店",
+          month_sales: 160,
+          float_delivery_fee: 3,
+          order_lead_time: 28,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "",
+          description: "",
+          promotion_info: "",
+          is_star: false,
+          status: 1,
+          province: "浙江省",
+          city: "温州市",
+          district: "苍南县",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-          score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
-          // tags: ['销量100'，'受欢迎']
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+          shop_dishes: ["皇品叉烧饭","梅菜扣肉饭+汤", "酱汁卤肉饭+汤"]
         },
         {
+          shop_unique_key: "5dbf8a693773ac1e72dcabe8ebd2972d",
+          id: "12",
+          name: "藿香鱼川菜馆",
+          address: "成都市温江区天府街办青泰小区13组8栋1号",
+          longitude: 103.827548,
+          latitude: 30.665575,
+          phone: "189****6421",
+          opening_hours: "10:00/14:30;16:00/21:30",
+          rating: 4.5,
+          rating_count: 134,
+          categories: "川湘菜",
+          month_sales: 103,
+          float_delivery_fee: 4,
+          order_lead_time: 47,
+          recommend_reasons: "",
+          delivery_mode: "",
+          description: "欢迎广大新老用户前来品尝",
+          promotion_info: "热烈庆祝本店入住饿了么外卖",
+          is_star: false,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "温江区",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-           score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["冬菇滑鸡粥单人餐T","奥堡辣堡双人餐ST", "葡式蛋挞6只TN"]
         },
         {
+          shop_unique_key: "2ec7daa83e2e946ff4d0ad3b84eeb8b9",
+          id: "11",
+          name: "华德士(团结店)",
+          address: "成都市郫都区团结镇团三路277号附18号",
+          longitude: 103.987516,
+          latitude: 30.817816,
+          phone: "176****5519",
+          opening_hours: "10:00/02:05",
+          rating: 4.5,
+          rating_count: 46,
+          categories: "汉堡薯条;简餐",
+          month_sales: 355,
+          float_delivery_fee: 1,
+          order_lead_time: 27,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "",
+          description: "大吉大利、天天吃鸡！",
+          promotion_info: "工商全校男女都送上楼、传媒男寝上楼、女寝看情况",
+          is_star: false,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "郫都区",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-           score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg"
         },
         {
+          shop_unique_key: "ca9e69d5a9f897f8c73191212ff239e6",
+          id: "10",
+          name: "小叶厨房（高新店）",
+          address: "成都高新区成汉中路185号-1楼31号",
+          longitude: 104.054714,
+          latitude: 30.593332,
+          phone: "19938851895 028-61555620",
+          opening_hours: "10:30/22:00",
+          rating: 4.7,
+          rating_count: 72,
+          categories: "川湘菜;简餐",
+          month_sales: 250,
+          float_delivery_fee: 1.5,
+          order_lead_time: 34,
+          recommend_reasons: "",
+          delivery_mode: "",
+          description: "小叶厨房2019全新菜品欢迎新老顾客下单、",
+          promotion_info:
+            "欢迎光临小叶厨房。本店的餐品是由饿了么蜂鸟骑手负责配送。骑手取餐时，我们已经检查包装及餐品数量，并提醒骑手一定保存好餐品。如您接餐后发现任何问题，一定及时拨打门店电话与我们联系。请不要随意给差评哦。这样我们不能为您解决问题，感谢您的选择！",
+          is_star: false,
+          status: 5,
+          province: "四川省",
+          city: "成都市",
+          district: "武侯区",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-           score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["苹果汁","蒜苔炒肉丝锅巴饭", "回锅肉锅巴饭"]
         },
         {
+          shop_unique_key: "2dfe462b0fb15e86c0349dc310236fa6",
+          id: "9",
+          name: "龙骨匠（沙湾店）",
+          address: "成都市金牛区沙湾路1号负1楼",
+          longitude: 104.052702,
+          latitude: 30.684902,
+          phone: "173****0817",
+          opening_hours: "10:00/22:00",
+          rating: 4.6,
+          rating_count: 412,
+          categories: "盖浇饭;其他小吃",
+          month_sales: 1814,
+          float_delivery_fee: 2.5,
+          order_lead_time: 28,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "蜂鸟专送",
+          description:
+            "龙是中华民族象征性的符号，辣是湖湘人生命之中不可缺少的味道！口鲜香醇，满嘴湖湘味，火辣的感觉，销魂的滋味！一面红墙一颗心，一顿龙骨一份情！没理由“就是辣么喜欢你”！",
+          promotion_info:
+            "随时恭候小哥哥小姐姐们的吐槽哟，解决所有您的不满，更有小惊喜等着您哟订餐须知：请确保您的电话畅通，以便送餐员能及时联系上您；为了确保能及时用餐希望您提前45分钟以上预定下单，避开高峰时期。",
+          is_star: false,
+          status: 5,
+          province: "四川省",
+          city: "成都市",
+          district: "金牛区",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-           score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+             shop_dishes: ["酱拌子炒腊肉锅巴饭"]
         },
         {
+          shop_unique_key: "469b28ec9840565b172830b350beaf55",
+          id: "8",
+          name: "马队长资格烤羊肉",
+          address: "成都市锦江区双桂路350号1层",
+          longitude: 104.115943,
+          latitude: 30.639814,
+          phone: "176****0853",
+          opening_hours: "16:00/03:00",
+          rating: 4.8,
+          rating_count: 2,
+          categories: "烧烤;其他小吃",
+          month_sales: 28,
+          float_delivery_fee: 10.5,
+          order_lead_time: 42,
+          recommend_reasons: "",
+          delivery_mode: "",
+          description: "",
+          promotion_info: "",
+          is_star: false,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "锦江区",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-           score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["酱拌子炒腊肉锅巴饭","青椒肉丝盖浇饭","干土豆片腊肉盖浇饭", "农家小炒肉", "红烧鸡块锅巴饭"]
         },
         {
+          shop_unique_key: "469b28ec9840565b172830b350beaf55",
+          id: "7",
+          name: "马队长资格烤羊肉",
+          address: "成都市锦江区双桂路350号1层",
+          longitude: 104.115943,
+          latitude: 30.639814,
+          phone: "176****0853",
+          opening_hours: "16:00/03:00",
+          rating: 4.8,
+          rating_count: 2,
+          categories: "烧烤;其他小吃",
+          month_sales: 28,
+          float_delivery_fee: 10.5,
+          order_lead_time: 42,
+          recommend_reasons: "",
+          delivery_mode: "",
+          description: "",
+          promotion_info: "",
+          is_star: false,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "锦江区",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-           score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["酱拌子炒腊肉锅巴饭","青椒肉丝盖浇饭","干土豆片腊肉盖浇饭", "农家小炒肉", "红烧鸡块锅巴饭"]
         },
         {
+          shop_unique_key: "d41fff1427c7fb2622ce7e29e08d4bf3",
+          id: "6",
+          name: "阳澄湖大闸蟹（蓉城店）",
+          address: "成都市金牛区同和路99号附15号1楼",
+          longitude: 104.016834,
+          latitude: 30.6836,
+          phone: "130****8199",
+          opening_hours: "09:00/01:00",
+          rating: 5,
+          rating_count: 0,
+          categories: "川湘菜",
+          month_sales: 36,
+          float_delivery_fee: 8,
+          order_lead_time: 29,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "",
+          description: "",
+          promotion_info: "",
+          is_star: false,
+          status: 5,
+          province: "四川省",
+          city: "成都市",
+          district: "金牛区",
           image:
-            "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
-          title: "狗子们，情人节到了快来选个头像吧",
-           score: 5 * Math.random().toFixed(1),
-          distance: 10000 * Math.random().toFixed(4)
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["麻辣香锅单人B套餐（含米饭一份）","麻辣香锅单人BA套餐（含米饭一份）","麻辣香锅单人A套餐（含米饭一份）"]
+        },
+        {
+          shop_unique_key: "0d9132c3e1f979240eca3645f818bb3c",
+          id: "5",
+          name: "德克士（新繁店）",
+          address: "成都市新都区新繁镇正西街124号附1号",
+          longitude: 104.0158,
+          latitude: 30.873006,
+          phone: "028 - 83089577",
+          opening_hours: "07:00/22:30",
+          rating: 4.6,
+          rating_count: 122,
+          categories: "汉堡薯条;炸鸡炸串",
+          month_sales: 449,
+          float_delivery_fee: 3,
+          order_lead_time: 29,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "",
+          description: "德克士（新繁店）",
+          promotion_info:
+            "一桶系列中1.25L可乐应无货改为3听罐装可乐，介意的顾客慎重购买，谢谢",
+          is_star: true,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "新都区",
+          image:
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+        },
+        {
+          shop_unique_key: "0d9132c3e1f979240eca3645f818bb3c",
+          id: "4",
+          name: "德克士（新繁店）",
+          address: "成都市新都区新繁镇正西街124号附1号",
+          longitude: 104.0158,
+          latitude: 30.873006,
+          phone: "028 - 83089577",
+          opening_hours: "07:00/22:30",
+          rating: 4.6,
+          rating_count: 122,
+          categories: "汉堡薯条;炸鸡炸串",
+          month_sales: 449,
+          float_delivery_fee: 3,
+          order_lead_time: 29,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "",
+          description: "德克士（新繁店）",
+          promotion_info:
+            "一桶系列中1.25L可乐应无货改为3听罐装可乐，介意的顾客慎重购买，谢谢",
+          is_star: true,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "新都区",
+          image:
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+        },
+        {
+          shop_unique_key: "ff28842eb61eb6ea96627ce821ce4377",
+          id: "3",
+          name: "秋圃沙拉果汁(恒大店)",
+          address: "成都市青羊区提督街99号华置广场the one购物中心负一层B1038号",
+          longitude: 104.07421,
+          latitude: 30.661333,
+          phone: "184****9550",
+          opening_hours: "10:00/21:30",
+          rating: 4.8,
+          rating_count: 56,
+          categories: "西餐;奶茶果汁",
+          month_sales: 224,
+          float_delivery_fee: 1,
+          order_lead_time: 20,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "蜂鸟专送",
+          description:
+            "秋圃·沙拉果汁是专注做主食沙拉和鲜榨果汁的健康饮食馆，有各种主食沙拉和自制沙拉酱，欢迎大家过来种草拔草：）",
+          promotion_info:
+            "Natural Garden秋圃（沙拉·果汁） 美味的食物天天有 健康的灵魂只有一个 我们可以为您提供美味 同时也能提供健康 让我们一起推翻外卖不健康的标签吧",
+          is_star: true,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "青羊区",
+          image:
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+        },
+        {
+          shop_unique_key: "f9fcf109f71873cdaabe8902d5b85812",
+          id: "2",
+          name: "汤锅王黄牛肉",
+          address: "四川省彭州市天彭镇朝阳中路219、221号",
+          longitude: 103.951844,
+          latitude: 30.989284,
+          phone: "186****7788",
+          opening_hours: "10:00/22:00",
+          rating: 0,
+          rating_count: 0,
+          categories: "其他菜系;川湘菜",
+          month_sales: 0,
+          float_delivery_fee: 4,
+          order_lead_time: 0,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "蜂鸟专送",
+          description: "",
+          promotion_info: "",
+          is_star: false,
+          status: 4,
+          province: "四川省",
+          city: "成都市",
+          district: "彭州市",
+          image:
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+        },
+        {
+          shop_unique_key: "084c9871f6958d8ece502d3f7452d94a",
+          id: "1",
+          name: "香飘飘芋儿鸡",
+          address: "龙泉驿区十陵街道江华路59号2栋附116号",
+          longitude: 104.184438,
+          latitude: 30.651957,
+          phone: "158****2717",
+          opening_hours: "11:00/21:00",
+          rating: 5,
+          rating_count: 3,
+          categories: "香锅砂锅",
+          month_sales: 14,
+          float_delivery_fee: 2,
+          order_lead_time: 20,
+          recommend_reasons: "配送飞快",
+          delivery_mode: "蜂鸟专送",
+          description: "",
+          promotion_info: "",
+          is_star: false,
+          status: 1,
+          province: "四川省",
+          city: "成都市",
+          district: "龙泉驿区",
+          image:
+            "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
+            shop_dishes: ["西兰花","油菜","台式烤肠"]
         }
+
+        // {
+        //   id: 2,
+        //   image:
+        //     "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
+        //   title: "狗子们，情人节到了快来选个头像吧",
+        //   score: 3.5,
+        //   distance: 5360
+        // },
+        // {
+        //   id: 3,
+        //   image:
+        //     "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
+        //   title: "狗子们，情人节到了快来选个头像吧",
+        //   score: 4,
+        //   distance: 4201
+        // },
+        // {
+        //   id: 4,
+        //   image:
+        //     "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
+        //   title: "狗子们，情人节到了快来选个头像吧",
+        //   score: 3.7,
+        //   distance: 3578
+        // },
+        // {
+        //   id: 5,
+        //   image:
+        //     "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
+        //   title: "狗子们，情人节到了快来选个头像吧",
+        //   score: 4.2,
+        //   distance: 8645
+        // },
+        // {
+        //   id: 6,
+        //   image:
+        //     "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
+        //   title: "狗子们，情人节到了快来选个头像吧",
+        //   score: 4.8,
+        //   distance: 1423
+        // },
+        // {
+        //   id: 7,
+        //   image:
+        //     "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
+        //   title: "狗子们，情人节到了快来选个头像吧",
+        //   score: 4.4,
+        //   distance: 301
+        // },
+        // {
+        //   id: 8,
+        //   image:
+        //     "http://pic1.zhimg.com/50/v2-a1daed32cac3a2904997f1f7e0b60d9b_hd.jpg",
+        //   title: "狗子们，情人节到了快来选个头像吧",
+        //   score: 3.9,
+        //   distance: 428
+        // }
       ]
     };
   },
@@ -186,20 +556,19 @@ export default {
     },
     tabClick(index) {
       switch (index) {
-        case 0 :
+        case 0:
           this.goodsShow = this.goods.concat();
           break;
-        case 1 :
-          this.goodsShow.sort(function (a,b) {
-            return a.score - b.score
+        case 1:
+          this.goodsShow.sort(function(a, b) {
+            return b.rating - a.rating;
           });
-          console.log(this.goodsShow);
           break;
-        case 2 :
+        case 2:
           this.goodsShow.sort((a, b) => {
-            return a.distance - b.distance
+            return a.distance - b.distance;
           });
-          break
+          break;
       }
       // 同步吸顶tabcontrol和滚动tabcontrol的选中状态
       this.$refs.tabControl.currentIndex = index;

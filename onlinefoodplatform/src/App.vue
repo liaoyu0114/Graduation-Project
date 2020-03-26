@@ -45,7 +45,6 @@ export default {
         AMap.event.addListener(geolocation, "error", onError);
 
         function onComplete(data) {
-          console.log(data)
           self.newGetAddress(data.position.lat, data.position.lng);
         }
 
@@ -113,14 +112,12 @@ export default {
           radius: 100 // 以已知坐标为中心点，radius为半径，返回范围内兴趣点和道路信息
         });
         const lnglat = [longitude, latitude]; // 倒序反写经纬度
-        console.log(lnglat)
         // 天津120 北京110 上海310 重庆500 ,
         const reg1 = /^[1][1][0][0-9][0-9][0-9]/;
         const reg2 = /^[1][2][0][0-9][0-9][0-9]/;
         const reg3 = /^[5][0][0][0-9][0-9][0-9]/;
         const reg4 = /^[3][1][0][0-9][0-9][0-9]/;
         geocoder.getAddress(lnglat, function(status, result) {
-          console.log("getAddress", result);
           if (status === "complete" && result.info === "OK") {
             // result为对应的地理位置详细信息
             let address = result.regeocode.addressComponent;
