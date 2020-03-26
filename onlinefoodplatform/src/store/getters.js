@@ -15,5 +15,11 @@ export default {
     if (state.IPInfo.CCityName.length !==0) {
       return state.homeLoading === state.IPInfo.district
     }
+  },
+  cartLength(state) {
+    return state.cartList.length;
+  },
+  cartList(state) {
+    return state.cartList;
   }
 }

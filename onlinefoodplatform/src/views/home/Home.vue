@@ -27,8 +27,8 @@
     <transition name="slide-fade">
       <back-top @click.native="backClick" v-show="isShowBackTop" />
     </transition>
-    <div class="cart">
-      <el-badge :value="0" class="item">
+    <div class="cart" @click="cartClick">
+      <el-badge :value="cartLength" class="item">
 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </el-badge>
       
@@ -651,7 +651,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["homeLoading"])
+    ...mapGetters(["homeLoading","cartLength"])
   },
   activated() {
     /**
@@ -677,6 +677,9 @@ export default {
     this.$bus.$off("imageLoad", this.itemImgListener);
   },
   methods: {
+    cartClick() {
+      this.$router.push('/cart')
+    },
     backClick() {
       this.$refs.scroll.uscrollTo(0, 0, 1);
     },
@@ -741,8 +744,8 @@ export default {
 }
 .cart {
   position: fixed;
-  bottom: 110px;
-  right: 20px;
+  bottom: 55px;
+  right: 10px;
   background: #777;
   width: 40px;
   height: 40px;

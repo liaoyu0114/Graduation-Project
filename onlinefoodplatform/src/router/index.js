@@ -10,7 +10,7 @@ const Profile = () => import('../views/profile/Profile');
 const Sign = () => import('../views/sign/Sign');
 const Detail = () => import('../views/detail/Detail');
 const SearchLocal = () => import('components/content/search/SearchLocal');
-
+const Cart = () => import('../views/cart/Cart');
 const goods = () => import('../views/detail/childComs/goods.vue');
 const comment = () => import('../views/detail/childComs/coment.vue');
 const shopinfo = () => import('../views/detail/childComs/shopinfo.vue');
@@ -69,6 +69,10 @@ const routes = [
   {
     path: '/search-local',
     component: SearchLocal
+  },
+  {
+    path: '/cart',
+    component: Cart
   }
 ];
 

@@ -20,4 +20,4 @@ yarn-error.log*
 *.sln
 *.sw?
 onlinefoodplatform/dist
-package.json
+package-lock.json

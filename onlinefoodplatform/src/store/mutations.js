@@ -1,4 +1,17 @@
+import {
+  ADD_COUNTER,
+  ADD_TO_CART
+} from './mutation-types'
+
 export default {
+  //已有商品增加count
+  [ADD_COUNTER](state, payload) {
+    payload.count++;
+  },
+  //购物车添加新商品
+  [ADD_TO_CART](state, payload) {
+    state.cartList.push(payload);
+  },
   changeHomeScrollHeight(state, position) {
     state.homeScrollHeight = position;
   },
