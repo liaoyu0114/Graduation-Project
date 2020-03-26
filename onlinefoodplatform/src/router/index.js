@@ -9,7 +9,12 @@ const Order = () => import('../views/order/Order');
 const Profile = () => import('../views/profile/Profile');
 const Sign = () => import('../views/sign/Sign');
 const Detail = () => import('../views/detail/Detail');
-const SearchLocal = () => import('components/content/search/SearchLocal')
+const SearchLocal = () => import('components/content/search/SearchLocal');
+
+const goods = () => import('../views/detail/childComs/goods.vue');
+const comment = () => import('../views/detail/childComs/coment.vue');
+const shopinfo = () => import('../views/detail/childComs/shopinfo.vue');
+
 const routes = [
   {
     path: '',
@@ -37,7 +42,29 @@ const routes = [
   },
   {
     path: '/detail',
-    component: Detail
+    component: Detail,
+    // redirect: "/detail/goods",
+    children: [
+      {
+        name: "goods",
+        path: 'goods',
+        component: goods
+      },
+      {
+        name: "comment",
+        path: 'comment',
+        component: comment
+      },
+      {
+        name: "shopinfo",
+        path: 'shopinfo',
+        component: shopinfo
+      },
+      {
+        path: "/",
+        component: goods
+      }
+    ]
   },
   {
     path: '/search-local',
