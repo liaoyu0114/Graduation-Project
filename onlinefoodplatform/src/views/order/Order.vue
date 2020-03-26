@@ -6,7 +6,7 @@
       </div>
     </order-nav-bar>
     <tologin v-if="!userInfo.id"></tologin>
-    <div v-else>
+    <div v-else class="scroll-box">
       <scroll class="scroll">
         <order-cell v-for="(item, index) in orders" :order-item="item" :key="index"></order-cell>
       </scroll>
@@ -38,7 +38,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 1,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -48,7 +48,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 2,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -58,7 +58,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 3,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -68,7 +68,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 4,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -78,7 +78,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 2,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -88,7 +88,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 4,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -98,7 +98,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 4,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -108,7 +108,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 4,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -118,7 +118,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 4,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -128,7 +128,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 4,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -138,7 +138,7 @@
               name: "张姐脆皮鸡饭",
               url: "https://s1.ax1x.com/2020/03/15/88WU2t.png"
             },
-            state: '0',
+            state: 4,
             time: new Date().toLocaleString(),
             good: "双拼 - 蜜汁烤肉+脆皮鸡+饮料+烤肠",
             moneny: "15.99"
@@ -159,8 +159,8 @@
   .scroll {
     background: white;
     position: absolute;
-    top: 40px;
-    height: calc(100vh - 98px);
+    top: 50px;
+    height: calc(100vh - 108px);
     overflow: hidden;
   }
   .order-nav-bar {

@@ -20,9 +20,16 @@
       @scrollPosition="currentPosition"
     >
       <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"></home-swiper>
+      <colloction :recommends="recommends" @imageLoaded="swiperImageLoad"></colloction>
       <tab-control :titles="['综合排序', '评分优先', '距离优先']" @tabClick="tabClick" ref="tabControl"></tab-control>
       <goods-list :goods="goodsShow"></goods-list>
     </scroll>
+    <transition name="slide-fade">
+      <back-top @click.native="backClick" v-show="isShowBackTop" />
+    </transition>
+    <div class="cart">
+      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+    </div>
   </div>
 </template>
 
@@ -34,6 +41,8 @@ import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
 import TabControl from "components/content/tabcontrol/TabControl";
 import NavBar from "components/common/navbar/NavBar";
+import BackTop from "components/content/backTop/BackTop";
+import Colloction from "./childComs/Collection";
 import { mapGetters } from "vuex";
 
 export default {
@@ -44,7 +53,9 @@ export default {
     GoodsList,
     Scroll,
     TabControl,
-    NavBar
+    NavBar,
+    BackTop,
+    Colloction
   },
   created() {
     this.goodsShow = this.goods.concat();
@@ -53,11 +64,110 @@ export default {
     // debugger
     return {
       tabOffsetTop: 0,
+      isShowBackTop: false,
       result: {},
       //是否展示吸顶效果的tabControl
       isShowTabControl: false,
       //已滑动距离
       scrolledPosition: 0,
+      recommends: [
+        {
+          id: 20,
+          is_in_serving: true,
+          description: "苦了累了，来点甜的",
+          title: "甜品饮品",
+          link:
+            "eleme://restaurants?filter_key=%7B%22category_schema%22%3A%7B%22category_name%22%3A%22%5Cu751c%5Cu54c1%5Cu996e%5Cu54c1%22%2C%22complex_category_ids%22%3A%5B240%2C241%2C242%5D%2C%22is_show_all_category%22%3Atrue%7D%2C%22restaurant_category_id%22%3A%7B%22id%22%3A239%2C%22name%22%3A%22%5Cu751c%5Cu54c1%5Cu996e%5Cu54c1%22%2C%22sub_categories%22%3A%5B%5D%2C%22image_url%22%3A%22%22%7D%2C%22activities%22%3A%5B%5D%7D&target_name=%E7%94%9C%E5%93%81%E9%A5%AE%E5%93%81&animation_type=1&is_need_mark=0&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/2/35/696aa5cf9820adada9b11a3d14bf5jpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        },
+        {
+          id: 10,
+          is_in_serving: true,
+          description: "足不出户，便利回家",
+          title: "商超便利",
+          link:
+            "eleme://restaurants?filter_key=%7B%22category_schema%22%3A%7B%22category_name%22%3A%22%5Cu5546%5Cu8d85%5Cu4fbf%5Cu5229%22%2C%22complex_category_ids%22%3A%5B254%2C255%2C256%2C257%2C258%2C271%2C272%2C273%2C274%5D%2C%22is_show_all_category%22%3Atrue%7D%2C%22restaurant_category_id%22%3A%7B%22id%22%3A252%2C%22name%22%3A%22%5Cu5546%5Cu5e97%5Cu8d85%5Cu5e02%22%2C%22sub_categories%22%3A%5B%5D%2C%22image_url%22%3A%22%22%7D%2C%22activities%22%3A%5B%5D%7D&target_name=%E5%95%86%E8%B6%85%E4%BE%BF%E5%88%A9&animation_type=1&is_need_mark=0&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/0/da/f42235e6929a5cb0e7013115ce78djpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        },
+        {
+          id: 15,
+          is_in_serving: true,
+          description: "附近美食一网打尽",
+          title: "美食",
+          link:
+            "eleme://restaurants?filter_key=%7B%22category_schema%22%3A%7B%22category_name%22%3A%22%5Cu7f8e%5Cu98df%22%2C%22complex_category_ids%22%3A%5B207%2C220%2C233%2C260%5D%2C%22is_show_all_category%22%3Afalse%7D%2C%22restaurant_category_id%22%3A%7B%22id%22%3A207%2C%22name%22%3A%22%5Cu5feb%5Cu9910%5Cu4fbf%5Cu5f53%22%2C%22sub_categories%22%3A%5B%5D%2C%22image_url%22%3A%22%22%7D%2C%22activities%22%3A%5B%5D%7D&target_name=%E7%BE%8E%E9%A3%9F&animation_type=1&is_need_mark=0&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/b/7e/d1890cf73ae6f2adb97caa39de7fcjpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        },
+        {
+          id: 225,
+          is_in_serving: true,
+          description: "有菜有肉，营养均衡",
+          title: "简餐",
+          link:
+            "eleme://restaurants?filter_key=%7B%22activity_types%22%3A%5B3%5D%2C%22category_schema%22%3A%7B%22category_name%22%3A%22%5Cu7b80%5Cu9910%22%2C%22complex_category_ids%22%3A%5B209%2C212%2C215%2C265%5D%2C%22is_show_all_category%22%3Atrue%7D%2C%22restaurant_category_id%22%3A%7B%22id%22%3A207%2C%22name%22%3A%22%5Cu5feb%5Cu9910%5Cu4fbf%5Cu5f53%22%2C%22sub_categories%22%3A%5B%5D%2C%22image_url%22%3A%22%22%7D%2C%22activities%22%3A%5B%7B%22id%22%3A3%2C%22name%22%3A%22%5Cu4e0b%5Cu5355%5Cu7acb%5Cu51cf%22%2C%22icon_name%22%3A%22%5Cu51cf%22%2C%22icon_color%22%3A%22f07373%22%2C%22is_need_filling%22%3A1%2C%22is_multi_choice%22%3A0%2C%22filter_value%22%3A3%2C%22filter_key%22%3A%22activity_types%22%7D%5D%7D&target_name=%E7%AE%80%E9%A4%90&animation_type=1&is_need_mark=0&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/d/38/7bddb07503aea4b711236348e2632jpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        },
+        {
+          id: 403297,
+          is_in_serving: true,
+          description: "大胆尝鲜，遇见惊喜",
+          title: "新店特惠",
+          link:
+            "eleme://restaurants?filter_key=%7B%22category_schema%22%3A%7B%22category_name%22%3A%22%5Cu65b0%5Cu5e97%5Cu7279%5Cu60e0%22%2C%22complex_category_ids%22%3A%5B207%2C220%2C233%2C239%2C244%2C248%2C252%2C260%5D%2C%22is_show_all_category%22%3Atrue%7D%2C%22restaurant_category_id%22%3A%7B%22id%22%3A207%2C%22name%22%3A%22%5Cu5feb%5Cu9910%5Cu4fbf%5Cu5f53%22%2C%22sub_categories%22%3A%5B%5D%2C%22image_url%22%3A%22%22%7D%2C%22support_ids%22%3A%5B-1%5D%2C%22activities%22%3A%5B%5D%7D&target_name=%E6%96%B0%E5%BA%97%E7%89%B9%E6%83%A0&animation_type=1&is_need_mark=0&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/a/fa/d41b04d520d445dc5de42dae9a384jpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        },
+        {
+          id: 92,
+          is_in_serving: true,
+          description: "准时必达，超时赔付",
+          title: "准时达",
+          link:
+            "eleme://restaurants?filter_key=%7B%22support_ids%22%3A%5B9%5D%2C%22activities%22%3A%5B%7B%22id%22%3A9%2C%22name%22%3A%22%5Cu51c6%5Cu65f6%5Cu8fbe%22%2C%22icon_name%22%3A%22%5Cu51c6%22%2C%22icon_color%22%3A%22E8842D%22%2C%22is_need_filling%22%3A0%2C%22is_multi_choice%22%3A1%2C%22filter_value%22%3A9%2C%22filter_key%22%3A%22support_ids%22%2C%22description%22%3A%22%5Cu51c6%5Cu65f6%5Cu8fbe%22%7D%5D%7D&target_name=%E5%87%86%E6%97%B6%E8%BE%BE&animation_type=1&is_need_mark=0&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/3/84/8e031bf7b3c036b4ec19edff16e46jpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        },
+        {
+          id: 1,
+          is_in_serving: true,
+          description: "0元早餐0起送，每天都有新花样。",
+          title: "预订早餐",
+          link:
+            "eleme://web?url=https%3A%2F%2Fzaocan.ele.me&target_name=%E9%A2%84%E8%AE%A2%E6%97%A9%E9%A4%90&animation_type=1&is_need_mark=&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/d/49/7757ff22e8ab28e7dfa5f7e2c2692jpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        },
+        {
+          id: 65,
+          is_in_serving: true,
+          description: "",
+          title: "土豪推荐",
+          link:
+            "eleme://restaurants?filter_key=%7B%22activities%22%3A%5B%7B%22filter_key%22%3A%22tags%22%2C%22filter_value%22%3A0%7D%5D%7D&target_name=%E5%9C%9F%E8%B1%AA%E6%8E%A8%E8%8D%90&animation_type=1&is_need_mark=0&banner_type=",
+          image_url: "https://fuss10.elemecdn.com/e/7e/02b72b5e63c127d5bfae57b8e4ab1jpeg.jpeg",
+          icon_url: "",
+          title_color: "",
+          __v: 0
+        }
+      ],
       banners: [
         {
           image:
@@ -113,7 +223,7 @@ export default {
           district: "苍南县",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-          shop_dishes: ["皇品叉烧饭","梅菜扣肉饭+汤", "酱汁卤肉饭+汤"]
+          shop_dishes: ["皇品叉烧饭", "梅菜扣肉饭+汤", "酱汁卤肉饭+汤"]
         },
         {
           shop_unique_key: "5dbf8a693773ac1e72dcabe8ebd2972d",
@@ -141,7 +251,11 @@ export default {
           district: "温江区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["冬菇滑鸡粥单人餐T","奥堡辣堡双人餐ST", "葡式蛋挞6只TN"]
+          shop_dishes: [
+            "冬菇滑鸡粥单人餐T",
+            "奥堡辣堡双人餐ST",
+            "葡式蛋挞6只TN"
+          ]
         },
         {
           shop_unique_key: "2ec7daa83e2e946ff4d0ad3b84eeb8b9",
@@ -197,7 +311,7 @@ export default {
           district: "武侯区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["苹果汁","蒜苔炒肉丝锅巴饭", "回锅肉锅巴饭"]
+          shop_dishes: ["苹果汁", "蒜苔炒肉丝锅巴饭", "回锅肉锅巴饭"]
         },
         {
           shop_unique_key: "2dfe462b0fb15e86c0349dc310236fa6",
@@ -227,7 +341,7 @@ export default {
           district: "金牛区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-             shop_dishes: ["酱拌子炒腊肉锅巴饭"]
+          shop_dishes: ["酱拌子炒腊肉锅巴饭"]
         },
         {
           shop_unique_key: "469b28ec9840565b172830b350beaf55",
@@ -255,7 +369,13 @@ export default {
           district: "锦江区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["酱拌子炒腊肉锅巴饭","青椒肉丝盖浇饭","干土豆片腊肉盖浇饭", "农家小炒肉", "红烧鸡块锅巴饭"]
+          shop_dishes: [
+            "酱拌子炒腊肉锅巴饭",
+            "青椒肉丝盖浇饭",
+            "干土豆片腊肉盖浇饭",
+            "农家小炒肉",
+            "红烧鸡块锅巴饭"
+          ]
         },
         {
           shop_unique_key: "469b28ec9840565b172830b350beaf55",
@@ -283,7 +403,13 @@ export default {
           district: "锦江区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["酱拌子炒腊肉锅巴饭","青椒肉丝盖浇饭","干土豆片腊肉盖浇饭", "农家小炒肉", "红烧鸡块锅巴饭"]
+          shop_dishes: [
+            "酱拌子炒腊肉锅巴饭",
+            "青椒肉丝盖浇饭",
+            "干土豆片腊肉盖浇饭",
+            "农家小炒肉",
+            "红烧鸡块锅巴饭"
+          ]
         },
         {
           shop_unique_key: "d41fff1427c7fb2622ce7e29e08d4bf3",
@@ -311,7 +437,11 @@ export default {
           district: "金牛区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["麻辣香锅单人B套餐（含米饭一份）","麻辣香锅单人BA套餐（含米饭一份）","麻辣香锅单人A套餐（含米饭一份）"]
+          shop_dishes: [
+            "麻辣香锅单人B套餐（含米饭一份）",
+            "麻辣香锅单人BA套餐（含米饭一份）",
+            "麻辣香锅单人A套餐（含米饭一份）"
+          ]
         },
         {
           shop_unique_key: "0d9132c3e1f979240eca3645f818bb3c",
@@ -340,7 +470,7 @@ export default {
           district: "新都区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+          shop_dishes: ["骨肉相连", "红烧丸子", "扬州炒饭"]
         },
         {
           shop_unique_key: "0d9132c3e1f979240eca3645f818bb3c",
@@ -369,7 +499,7 @@ export default {
           district: "新都区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+          shop_dishes: ["骨肉相连", "红烧丸子", "扬州炒饭"]
         },
         {
           shop_unique_key: "ff28842eb61eb6ea96627ce821ce4377",
@@ -399,7 +529,7 @@ export default {
           district: "青羊区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+          shop_dishes: ["骨肉相连", "红烧丸子", "扬州炒饭"]
         },
         {
           shop_unique_key: "f9fcf109f71873cdaabe8902d5b85812",
@@ -427,7 +557,7 @@ export default {
           district: "彭州市",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["骨肉相连","红烧丸子","扬州炒饭"]
+          shop_dishes: ["骨肉相连", "红烧丸子", "扬州炒饭"]
         },
         {
           shop_unique_key: "084c9871f6958d8ece502d3f7452d94a",
@@ -455,7 +585,7 @@ export default {
           district: "龙泉驿区",
           image:
             "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2991054592,3218464923&fm=26&gp=0.jpg",
-            shop_dishes: ["西兰花","油菜","台式烤肠"]
+          shop_dishes: ["西兰花", "油菜", "台式烤肠"]
         }
 
         // {
@@ -544,11 +674,13 @@ export default {
     this.$bus.$off("imageLoad", this.itemImgListener);
   },
   methods: {
+    backClick() {
+      this.$refs.scroll.uscrollTo(0, 0, 1);
+    },
     currentPosition(position) {
-      // this.listenShowBackTop(position);
-
       //吸顶TabControl的隐藏/显示，使用v-if。
       this.isShowTabControl = -position.y > this.tabOffsetTop;
+      this.isShowBackTop = -position.y > 1000;
     },
     swiperImageLoad() {
       // //所有组件都有$el ,用于获取组件内元素
@@ -603,5 +735,25 @@ export default {
   top: 126px;
   width: 100vw;
   z-index: 9;
+}
+.cart {
+  position: fixed;
+  bottom: 110px;
+  right: 20px;
+}
+.fa-shopping-cart {
+  color: var(--color-ele-blue);
+  font-size: 20px;
+}
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
