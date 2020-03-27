@@ -180,6 +180,9 @@ export default {
 .main-tab-bar {
   margin: 0 5px;
 }
+.view {
+  overflow: hidden;
+}
 @media screen and (min-width: 500px) {
   .view {
     width: 500px;

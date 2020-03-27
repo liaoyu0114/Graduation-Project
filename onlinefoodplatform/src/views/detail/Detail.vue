@@ -8,7 +8,7 @@
         <div class="title-box-title">烧鸡公菌汤羊肉汤</div>
       </div>
     </nav-bar>
-    <scroll class="scroll">
+    <!-- <scroll class="scroll"> -->
       <div class="shop-info">
         <div class="backgroud" @click="backClick">
           <div class="avatar">
@@ -32,7 +32,7 @@
         @select="handleSelect"
       >
         <el-row :gutter="20">
-          <router-link to="/detail/goods" replace>
+          <router-link :to="{name: 'goods'}">
             <el-col :span="4" :offset="5">
               <el-menu-item index="1">点餐</el-menu-item>
             </el-col>
@@ -42,8 +42,8 @@
               <el-menu-item index="2">评价</el-menu-item>
             </el-col>
           </router-link>
-          <router-link to="/detail/shopinfo">
-            <el-col :span="8">
+          <router-link :to="{name: 'shopinfo'}">
+            <el-col :span="4">
               <el-menu-item index="3">商家</el-menu-item>
             </el-col>
           </router-link>
@@ -54,7 +54,7 @@
           <router-view />
         </transition>
       </keep-alive>
-    </scroll>
+    <!-- </scroll> -->
   </div>
 </template>
 
@@ -68,7 +68,7 @@ export default {
   props: {
     shop: {
       type: Object,
-      default: {}
+      
     },
     path: {
       type: String,
