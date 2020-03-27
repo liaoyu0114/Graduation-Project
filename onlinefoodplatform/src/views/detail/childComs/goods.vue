@@ -52,7 +52,6 @@
                           disabled
                           show-score
                           text-color="#ff9900"
-                          score-template="{value}"
                         ></el-rate>
                         <div class="food_description_sale_rating">
                           <span class="sales">月售{{foods.month_sales}}份</span>
@@ -106,163 +105,47 @@ export default {
       imgBaseUrl: "http://elm.cangdu.org/img/1700587e5b163508.jpg",
       goods: [
         {
-          name: "热销榜",
+          name: "热销榜🔥",
           description: "热销来袭～",
           restaurant_id: 1,
           id: 9196,
           foods: [
-            {
-              _id: "5e018611de911551beafac3c",
-              tips: "711评价 月售265份",
-              item_id: 6053,
-              category_id: 9196,
-              restaurant_id: 1,
-              activity: {
-                image_text: "打威群岛",
-                icon_color: "f07373",
-                image_text_color: "f1884f"
-              },
-              image_path: "16f35f39b6262048.jpg",
-              name: "阿斯顿·",
-              __v: 0,
-              specfoods: [
-                {
-                  specs_name: "默认",
-                  name: "阿斯顿·",
-                  item_id: 6053,
-                  sku_id: 23689,
-                  food_id: 23716,
-                  restaurant_id: 1,
-                  _id: "5e018a9ede911551beafacf1",
-                  specs: [
-                    {
-                      name: "规格",
-                      value: "默认",
-                      _id: "5e018a9ede911551beafacf2"
-                    }
-                  ],
-                  stock: 1000,
-                  checkout_mode: 1,
-                  is_essential: false,
-                  recent_popularity: 820,
-                  sold_out: false,
-                  price: 20,
-                  promotion_stock: -1,
-                  recent_rating: 0.6,
-                  packing_fee: 0,
-                  pinyin_name: "",
-                  original_price: 0
-                },
-                {
-                  specs_name: "111",
-                  name: "阿斯顿·",
-                  item_id: 6053,
-                  sku_id: 23690,
-                  food_id: 23717,
-                  restaurant_id: 1,
-                  _id: "5e018a9ede911551beafacef",
-                  specs: [
-                    {
-                      name: "规格",
-                      value: "111",
-                      _id: "5e018a9ede911551beafacf0"
-                    }
-                  ],
-                  stock: 1000,
-                  checkout_mode: 1,
-                  is_essential: false,
-                  recent_popularity: 733,
-                  sold_out: false,
-                  price: 20,
-                  promotion_stock: -1,
-                  recent_rating: 4.1,
-                  packing_fee: 0,
-                  pinyin_name: "",
-                  original_price: 0
-                }
-              ],
-              satisfy_rate: 30,
-              satisfy_count: 128,
-              attributes: [
-                {
-                  icon_name: "招牌",
-                  icon_color: "f07373"
-                }
-              ],
-              is_essential: false,
-              server_utc: "2019-12-22T12:14:57.129Z",
-              specifications: [
-                {
-                  values: ["默认", "111"],
-                  name: "规格"
-                }
-              ],
-              rating_count: 711,
-              month_sales: 265,
-              description: "的撒旦",
-              attrs: [],
-              display_times: [],
-              pinyin_name: "",
-              is_featured: 0,
-              rating: 5
-            },
             {
               _id: "5e01b173de911551beafb045",
               tips: "742评价 月售798份",
               item_id: 6086,
               category_id: 9196,
               restaurant_id: 1,
-              activity: {
-                image_text: "e1",
-                icon_color: "f07373",
-                image_text_color: "f1884f"
-              },
-              image_path:
-                "blob:http://localhost:8002/cb165b6f-1ef7-4ed3-a738-045f98ad1e72",
               name: "ew1",
-              __v: 0,
-              specfoods: [
+              server_utc: "2019-12-22T12:14:57.129Z",
+              month_sales: 798,
+              description: "e1",
+              rating: 4.6,
+              image: "",
+              specifications: [],
+                     specfoods: [
                 {
                   specs_name: "默认",
-                  name: "ew1",
-                  item_id: 6086,
-                  sku_id: 23698,
-                  food_id: 23725,
+                  name: "长沙喜茶",
+                  item_id: 6138,
+                  sku_id: 23881,
+                  food_id: 23908,
                   restaurant_id: 1,
-                  _id: "5e01b173de911551beafb046",
+                  _id: "5e0961c16901211bf3ad7c9a",
                   specs: [],
                   stock: 1000,
                   checkout_mode: 1,
                   is_essential: false,
-                  recent_popularity: 108,
+                  recent_popularity: 538,
                   sold_out: false,
-                  price: 20,
+                  price: 200,
                   promotion_stock: -1,
-                  recent_rating: 0.8,
-                  packing_fee: 0,
+                  recent_rating: 3.1,
+                  packing_fee: 3,
                   pinyin_name: "",
                   original_price: 0
                 }
               ],
-              satisfy_rate: 73,
-              satisfy_count: 514,
-              attributes: [
-                {
-                  icon_name: "新",
-                  icon_color: "5ec452"
-                }
-              ],
-              is_essential: false,
-              server_utc: "2019-12-22T12:14:57.129Z",
-              specifications: [],
-              rating_count: 742,
-              month_sales: 798,
-              description: "e1",
-              attrs: [],
-              display_times: [],
-              pinyin_name: "",
-              is_featured: 0,
-              rating: 4.6
             },
             {
               _id: "5e01c15718adbf20d9cbff84",
@@ -9735,7 +9618,6 @@ export default {
     leftPosition(position) {},
     rightPosition(position) {
       if (!this.$refs.scrollleft) {
-        console.log(1);
         return;
       }
       this.shopListTop.forEach((item, index) => {
@@ -9781,7 +9663,8 @@ export default {
 .scroll-right {
   position: relative;
   overflow: hidden;
-  height: calc(100vh - 356px - 58px);
+  height: calc(100vh - 356px);
+  z-index: 99;
 }
 .menu_item_title {
   font-size: 20px;

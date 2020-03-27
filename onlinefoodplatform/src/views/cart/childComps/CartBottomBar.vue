@@ -2,7 +2,7 @@
   <div class="bottom-menu">
     <CheckButton class="select-all"
                  :is-active="isSelectAll" @click.native="checkClick"></CheckButton>
-    <span>全选</span>
+    <span class="sall">全选</span>
     <span class="total-price">合计: <strong>¥{{totalPrice}}</strong></span>
     <span class="buy-product">去计算({{cartLength}})</span>
   </div>
@@ -58,16 +58,17 @@
   .bottom-menu {
     width: 100%;
     height: 44px;
-    background-color: #eee;
+    /* background-color: #DCDFE6; */
     position: fixed;
-    bottom: 49px;
+    bottom: 58px;
     left: 0;
-    box-shadow: 0 -2px 3px rgba(0, 0, 0, .2);
+    box-shadow: 0 -2px 3px rgba(100, 92, 92, 0.2);
     font-size: 14px;
-    color: #888;
+    color: #999;
     line-height: 44px;
     padding-left: 35px;
     box-sizing: border-box;
+    z-index: 200;
   }
 
   .bottom-menu .select-all {
@@ -80,16 +81,23 @@
   .bottom-menu .total-price {
     margin-left: 15px;
     font-size: 16px;
-    color: #666;
+    color: #777;
   }
 
   .bottom-menu .buy-product {
-    background-color: orangered;
-    color: #fff;
+    background-color: #409EFF;
+    color: #888;
     width: 100px;
     height: 44px;
     text-align: center;
     line-height: 44px;
     float: right;
+  }
+  .sall {
+    margin-left: 10px;
+    line-height: 100%;
+  }
+  .buy-product {
+    color: white !important;
   }
 </style>

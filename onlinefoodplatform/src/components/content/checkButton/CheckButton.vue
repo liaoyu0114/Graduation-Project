@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="icon-selector" :class="{'selector-active': isActive}">
-      <img src="~/assets/img/cart/tick.svg" alt="">
+      <i class="fa fa-check" aria-hidden="true"></i> 
     </div>
   </div>
 </template>
@@ -28,13 +28,16 @@
     border-radius: 50%;
     border: 2px solid #ccc;
     cursor: pointer;
-  }
-  .icon-selector img {
-    width: 15px;
+    line-height: 20px;
+    font-size: 16px;
+    text-align: center;
   }
 
   .selector-active {
-    background-color: #ff8198;
-    border-color: #ff8198;
+    background-color: #409EFF;
+    border-color: #409EFF;
+  }
+  .fa-check {
+    color: white;;
   }
 </style>

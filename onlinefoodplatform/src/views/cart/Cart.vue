@@ -1,5 +1,5 @@
 <template>
-  <div class="cart">
+  <div class="cart-view">
     <cart-nav-bar class="nav-bar">
       <div slot="center">购物车({{cartLength}})</div>
     </cart-nav-bar>

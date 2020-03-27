@@ -3,7 +3,11 @@
     <keep-alive>
       <router-view class="view"></router-view>
     </keep-alive>
-
+     <div class="cart" @click="cartClick" v-if="$route.path !== '/cart'">
+      <el-badge :value="cartLength" class="item">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      </el-badge>
+    </div>
     <main-tab-bar class="main-tab-bar"></main-tab-bar>
   </div>
 </template>
@@ -12,6 +16,7 @@
 import AMap from "AMap";
 import MainTabBar from "@/components/content/maintabbar/MainTabBar";
 import {sign} from "./network/user";
+import { mapGetters } from "vuex";
 
 export default {
   name: "app",
@@ -24,6 +29,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["cartLength"])
   },
   created() {
     this.signAuto();
@@ -32,6 +38,9 @@ export default {
     this.getLocation();
   },
   methods: {
+    cartClick() {
+      this.$router.push("/cart");
+    },
     getLocation() {
       const self = this;
       AMap.plugin("AMap.Geolocation", function() {
@@ -183,6 +192,23 @@ export default {
 .view {
   overflow: hidden;
 }
+.cart {
+  position: fixed;
+  bottom: 55px;
+  right: 10px;
+  background: #fff;
+  border: solid 1px #409EFF;
+  color: #409EFF;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 20px;
+}
+.fa-shopping-cart {
+  font-size: 16px;
+}
+
 @media screen and (min-width: 500px) {
   .view {
     width: 500px;
