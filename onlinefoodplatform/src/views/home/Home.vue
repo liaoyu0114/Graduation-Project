@@ -177,28 +177,28 @@ export default {
       banners: [
         {
           image:
-            "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ee2ecf4.jpg",
-          link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ee2ecf4.jpg"
+            "https://cube.elemecdn.com/2/1b/f3590c3724b08e4ce0c31599c0bc1jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
+          link: "https://cube.elemecdn.com/2/1b/f3590c3724b08e4ce0c31599c0bc1jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
         },
         {
           image:
-            "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ec1c603.jpg",
-          link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ec1c603.jpg"
+            "https://cube.elemecdn.com/8/90/d9449f298cf74b4fdf10fd3a1d765png.png?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
+          link: "https://cube.elemecdn.com/8/90/d9449f298cf74b4fdf10fd3a1d765png.png?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
         },
         {
           image:
-            "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ed215ff.jpg",
-          link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ed215ff.jpg"
+            "https://cube.elemecdn.com/0/9e/10ecca943c74e90c08211edf24feajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
+          link: "https://cube.elemecdn.com/0/9e/10ecca943c74e90c08211edf24feajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
         },
         {
           image:
-            "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ef31513.jpg",
-          link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234ef31513.jpg"
+            "https://cube.elemecdn.com/5/24/97c23a32025250ac945a69c69d3eajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
+          link: "https://cube.elemecdn.com/5/24/97c23a32025250ac945a69c69d3eajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
         },
         {
           image:
-            "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234f02f89a.jpg",
-          link: "http://pic1.win4000.com/wallpaper/2020-02-11/5e4234f02f89a.jpg"
+            "https://cube.elemecdn.com/4/6e/bd5f54693e42bd46fa5a8788398f0jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
+          link: "https://cube.elemecdn.com/4/6e/bd5f54693e42bd46fa5a8788398f0jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
         }
       ],
       goodsShow: [],
@@ -705,7 +705,7 @@ export default {
           break;
         case 2:
           this.goodsShow.sort((a, b) => {
-            return a.distance - b.distance;
+            return b.month_sales - a.month_sales;
           });
           break;
       }

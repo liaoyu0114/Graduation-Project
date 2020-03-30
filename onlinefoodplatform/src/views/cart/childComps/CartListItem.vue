@@ -23,7 +23,12 @@
           <el-col :span="20">
             <div class="info-bottom">
               <div class="item-price left">¥{{product.price}}</div>
-              <div class="item-count right">x{{product.count}}</div>
+              <div class="item-count right">
+               <div class="number-decrease" @click="decrease"><i class="el-icon-minus"></i></div>
+               <div class="input-box"><input class="input" type="text" v-model="product.count"></div>
+              
+                <div class="number-increase" @click="increase"><i class="el-icon-plus"></i></div>
+              </div>
               
             </div>
           </el-col>
@@ -74,6 +79,12 @@ export default {
         });
             
      
+    },
+    decrease() {
+      this.$store.commit('MUTATIONS', payload)
+    },
+    increase() {
+
     }
   }
 };
@@ -140,6 +151,34 @@ export default {
   display: flex;
   justify-self: center;
   height: 100%;
+}
+
+.item-count {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 20px;
+}
+
+.input {
+  width: 50%;
+  text-align: center;
+  height: 20px;
+  border: solid 1px #999;
+  border-radius: 4px;
+}
+.input-box {
+  display: flex;
+  justify-content: center;
+}
+.number-decrease， .number-increase {
+  display: flex;
+  align-items: center;
+}
+.el-icon-minus,  .el-icon-plus{
+  display: block;
+  height: 20px;
+  font-size: 16px;
+  line-height: 20px;
 }
 </style>
 
