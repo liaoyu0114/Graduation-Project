@@ -21,5 +21,8 @@ export default {
   },
   cartList(state) {
     return state.cartList;
+  },
+  cartItemLength(state) {
+
   }
 }

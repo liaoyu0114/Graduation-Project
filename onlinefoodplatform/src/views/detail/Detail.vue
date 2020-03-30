@@ -37,7 +37,7 @@
               <el-menu-item index="1">点餐</el-menu-item>
             </el-col>
           </router-link>
-          <router-link :to="{name: 'comment'}">
+          <router-link to="/detail/comment">
             <el-col :span="4">
               <el-menu-item index="2">评价</el-menu-item>
             </el-col>

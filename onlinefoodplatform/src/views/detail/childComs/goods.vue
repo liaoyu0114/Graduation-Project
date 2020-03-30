@@ -33,7 +33,12 @@
             @scrollPosition="rightPosition"
           >
             <div ref="menu">
-              <el-card :body-style="{ padding: '0px' }" v-for="(item, index) in goods" :key="index" class="card">
+              <el-card
+                :body-style="{ padding: '0px' }"
+                v-for="(item, index) in goods"
+                :key="index"
+                class="card"
+              >
                 <el-row :gutter="10">
                   <el-col :span="24" class="food-header">
                     <span class="menu_item_title">{{item.name}}</span>
@@ -47,12 +52,7 @@
                       <div class="goods">
                         <div class="description_foodname">{{foods.name}}</div>
                         <div class="food_description_content">{{foods.description}}</div>
-                        <el-rate
-                          v-model="value"
-                          disabled
-                          show-score
-                          text-color="#ff9900"
-                        ></el-rate>
+                        <el-rate v-model="value" disabled show-score text-color="#ff9900"></el-rate>
                         <div class="food_description_sale_rating">
                           <span class="sales">月售{{foods.month_sales}}份</span>
                           <span>好评率{{foods.satisfy_rate}}%</span>
@@ -116,14 +116,14 @@ export default {
               item_id: 6086,
               category_id: 9196,
               restaurant_id: 1,
-              name: "ew1",
+              name: "长沙喜茶",
               server_utc: "2019-12-22T12:14:57.129Z",
               month_sales: 798,
               description: "e1",
               rating: 4.6,
               image: "",
               specifications: [],
-                     specfoods: [
+              specfoods: [
                 {
                   specs_name: "默认",
                   name: "长沙喜茶",
@@ -145,7 +145,7 @@ export default {
                   pinyin_name: "",
                   original_price: 0
                 }
-              ],
+              ]
             },
             {
               _id: "5e01c15718adbf20d9cbff84",
@@ -160,7 +160,7 @@ export default {
               },
               image_path:
                 "blob:http://localhost:8002/b6d4076d-9467-4818-8eb1-e412b64c9bbb",
-              name: "ee",
+              name: "测试数据",
               __v: 0,
               specfoods: [
                 {
@@ -217,7 +217,7 @@ export default {
                 image_text_color: "f1884f"
               },
               image_path: "170a90adb5664655.jpg",
-              name: "dsd",
+              name: "测试数据",
               __v: 0,
               specfoods: [
                 {
@@ -335,7 +335,7 @@ export default {
                 image_text_color: "f1884f"
               },
               image_path: "16f454da7fc62267.jpg",
-              name: "222",
+              name: "测试数据",
               __v: 0,
               specfoods: [
                 {
@@ -396,7 +396,7 @@ export default {
                 image_text: "111"
               },
               image_path: "16f4637c1ec62295.jpg",
-              name: "ergre",
+              name: "测试数据",
               __v: 0,
               specfoods: [
                 {
@@ -428,7 +428,7 @@ export default {
                 },
                 {
                   specs_name: "111",
-                  name: "ergre",
+                  name: "测试数据",
                   item_id: 6146,
                   sku_id: 23851,
                   food_id: 23878,
