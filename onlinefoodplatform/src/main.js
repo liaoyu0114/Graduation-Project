@@ -11,6 +11,20 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.prototype.$bus = new Vue();
 
+/**
+ * 重写路由的push方法
+ */
+// router.onError((error) => {
+//   const pattern = /Loading chunk (\d)+ failed/g;
+//   const isChunkLoadFailed = error.message.match(pattern);
+//   const targetPath = router.history.pending.fullPath;
+//   if (isChunkLoadFailed) {
+//     router.replace(targetPath);
+//     console.log(targetPath)
+//   }
+//   console.log(targetPath)
+// });
+
 new Vue({
   router,
   store,

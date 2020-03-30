@@ -11,9 +11,9 @@ const Sign = () => import('../views/sign/Sign');
 const Detail = () => import('../views/detail/Detail');
 const SearchLocal = () => import('components/content/search/SearchLocal');
 const Cart = () => import('../views/cart/Cart');
-const goods = () => import('../views/detail/childComs/goods.vue');
-const comment = () => import('../views/detail/childComs/coment.vue');
-const shopinfo = () => import('../views/detail/childComs/shopinfo.vue');
+import goods from '../views/detail/childComs/goods.vue';
+import comment from '../views/detail/childComs/coment.vue';
+import shopinfo from '../views/detail/childComs/shopinfo.vue';
 
 const routes = [
   {
@@ -45,11 +45,6 @@ const routes = [
     component: Detail,
     // redirect: "/detail/goods",
     children: [
-      {
-        name: "goods",
-        path: 'goods',
-        component: goods
-      },
       {
         name: "comment",
         path: 'comment',

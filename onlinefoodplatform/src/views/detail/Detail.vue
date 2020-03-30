@@ -32,7 +32,7 @@
         @select="handleSelect"
       >
         <el-row :gutter="20">
-          <router-link :to="{name: 'goods'}">
+          <router-link to="/detail">
             <el-col :span="4" :offset="5">
               <el-menu-item index="1">点餐</el-menu-item>
             </el-col>
@@ -42,7 +42,7 @@
               <el-menu-item index="2">评价</el-menu-item>
             </el-col>
           </router-link>
-          <router-link :to="{name: 'shopinfo'}">
+          <router-link to="/detail/shopinfo">
             <el-col :span="4">
               <el-menu-item index="3">商家</el-menu-item>
             </el-col>
