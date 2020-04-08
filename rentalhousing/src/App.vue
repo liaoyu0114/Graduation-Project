@@ -19,13 +19,15 @@
 }
 
 .nav {
-  padding: 30px;
+  position: fixed;
+  top: 0;
+  left: 10;
 }
 
 .nav-item {
   font-weight: bold;
   color: #2c3e50;
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 
