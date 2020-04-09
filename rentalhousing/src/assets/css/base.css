@@ -1,0 +1,10 @@
+@import "./normalize.css";
+
+:root {
+  --IVORY: #FFFEF2;
+  --TIMBERWOLF: #D8D7D0;
+  --CYAN-AZURE: #5380AA;
+  --IGHT-STEEL-BLUE: #B6CDD8;
+  --ALABASTER: #F2E6E9;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}

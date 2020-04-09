@@ -10,18 +10,17 @@
 </template>
 
 <style>
+@import "./assets/css/base.css";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
 .nav {
   position: fixed;
-  top: 0;
-  left: 10;
+  bottom: 0;
+  left: 200px;
 }
 
 .nav-item {
