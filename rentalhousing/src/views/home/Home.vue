@@ -21,6 +21,7 @@
 
         <div class="menu-box limit">
           <el-menu
+                  default-active="1"
                   class="el-menu-demo"
                   background-color="#b4cdd7"
                   text-color="#fff"
@@ -29,10 +30,10 @@
                   @select="handleSelect"
                   router
           >
-            <el-menu-item index="/" :class="{active: showActive}">租房</el-menu-item>
-            <el-menu-item index="myhouse">我的房源</el-menu-item>
-            <el-menu-item index="rentalmoneny">租金缴纳</el-menu-item>
-            <el-menu-item index="error">报障处理</el-menu-item>
+            <el-menu-item index="/" :class="{active: showActive === '/'}">租房</el-menu-item>
+            <el-menu-item index="myhouse" :class="{active: showActive === 'myhouse'}">我的房源</el-menu-item>
+            <el-menu-item index="rentalmoneny" :class="{active: showActive === 'rentalmoneny'}">租金缴纳</el-menu-item>
+            <el-menu-item index="error" :class="{active: showActive === 'error'}">报障处理</el-menu-item>
           </el-menu>
         </div>
         <div class="header-avatar">
@@ -90,7 +91,12 @@
 
   export default {
     name: "Home",
+created() {
+      if (this.$route.path !== "/") {
+        this.showActive = this.$route.path.replace("/", "")
+      }
 
+},
     data() {
       return {
         activeIndex: "1",
