@@ -85,12 +85,12 @@
     <transition name="slide-fade">
       <div class="avatar-box-mobile" v-if="showAvatarMenu">
         <div class="avatar-menu-mobile">
-            <div class="avatar-menu-mobile-item">个人信息</div>
-            <div class="avatar-menu-mobile-item">修改密码</div>
-            <div class="avatar-menu-mobile-item">身份认证</div>
-            <div class="avatar-menu-mobile-item">成为房东</div>
-            <div class="avatar-menu-mobile-item logout">注销登录</div>
-          </div>
+          <div class="avatar-menu-mobile-item">个人信息</div>
+          <div class="avatar-menu-mobile-item">修改密码</div>
+          <div class="avatar-menu-mobile-item">身份认证</div>
+          <div class="avatar-menu-mobile-item">成为房东</div>
+          <div class="avatar-menu-mobile-item logout">注销登录</div>
+        </div>
       </div>
     </transition>
   </div>
@@ -105,8 +105,6 @@ export default {
   },
   data() {
     return {
-      isCollapse: true,
-      menuWidth: "60px",
       activeName: "second",
       mobileMenu: false,
       showAvatarMenu: false
@@ -123,13 +121,13 @@ export default {
       console.log(key, keyPath);
     },
     avatarClick() {
-      console.log(1)
-      this.showAvatarMenu = !this.showAvatarMenu
-      this.mobileMenu = false
+      console.log(1);
+      this.showAvatarMenu = !this.showAvatarMenu;
+      this.mobileMenu = false;
     },
     menuClick() {
-this.mobileMenu = !this.mobileMenu
-this.showAvatarMenu = false
+      this.mobileMenu = !this.mobileMenu;
+      this.showAvatarMenu = false;
     }
   },
   computed: {
@@ -152,10 +150,6 @@ this.showAvatarMenu = false
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   overflow: hidden;
-}
-.avatar-menu-mobile {
-  /* padding: 0 20px; */
-  
 }
 .avatar-menu-mobile-item {
   font-size: 15px;

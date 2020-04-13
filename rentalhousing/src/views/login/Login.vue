@@ -4,76 +4,82 @@
       <div class="form sign-in">
         <h2>欢迎回来</h2>
         <label>
-          <el-form ref="formSign" :model="loginForm" size="small">
-            <el-form-item>
-              <el-input placeholder="请输入账号" v-model="loginForm.userName">
+          <el-form ref="ruleFormLogin" :model="ruleFormLogin" size="small" :rules="rulesLogin">
+            <el-form-item prop="phone">
+              <el-input placeholder="请输入账号" v-model="ruleFormLogin.phone">
                 <i slot="suffix" class="el-input__icon el-icon-user-solid"></i>
               </el-input>
             </el-form-item>
-            <el-form-item>
-              <el-input placeholder="请输入密码" v-model="loginForm.passWord" type="password">
+            <el-form-item prop="password">
+              <el-input placeholder="请输入密码" v-model="ruleFormLogin.password" type="password">
                 <i slot="suffix" class="el-input__icon el-icon-edit"></i>
               </el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="isSave">
               <div class="tttt">
- <el-switch v-model="loginForm.saveLocal" active-text="记住我" ></el-switch>
-              <p class="forgot-pass">
-          <a href="javascript:">忘记密码？</a>
-        </p>
+                <el-switch v-model="ruleFormLogin.isSave" active-text="记住我"></el-switch>
+                <p class="forgot-pass">
+                  <a href="javascript:">忘记密码？</a>
+                </p>
               </div>
-             
             </el-form-item>
           </el-form>
         </label>
 
-        
-        <button type="button" class="submit">登 录</button>
+        <button type="button" class="submit" @click="loginClick('ruleFormLogin')">登 录</button>
         <button type="button" class="fb-btn">
           使用
-          <span>facebook</span> 帐号登录
+          <span>
+            <i class="fa fa-qq" aria-hidden="true"></i>
+            <i class="fa fa-weibo" aria-hidden="true"></i>
+            <i class="fa fa-weixin" aria-hidden="true"></i>
+          </span> 帐号登录
         </button>
       </div>
       <div class="sub-cont">
         <div class="img">
           <div class="img__text m--up">
             <h2>还未注册？</h2>
-            <p>立即注册，发现大量机会！</p>
+            <p>立即注册，发现大量房源！</p>
           </div>
           <div class="img__text m--in">
             <h2>已有帐号？</h2>
             <p>有帐号就登录吧，好久不见了！</p>
           </div>
-          <div class="img__btn" @click="loginClick">
+          <div class="img__btn" @click="changeType">
             <span class="m--up">注 册</span>
-            <span class="m--in" @click="loginClick">登 录</span>
+            <span class="m--in">登 录</span>
           </div>
         </div>
         <div class="form sign-up">
           <h2>立即注册</h2>
           <label>
-            <el-form ref="formSign" :model="loginForm" size="small">
-              <el-form-item>
-                <el-input placeholder="请输入账号" v-model="loginForm.userName">
+            <el-form ref="ruleFormRegist" :model="ruleFormRegist" size="small" :rules="rulesRegist">
+              <el-form-item prop="rePhone">
+                <el-input placeholder="请输入账号" v-model="ruleFormRegist.rePhone">
                   <i slot="suffix" class="el-input__icon el-icon-user-solid"></i>
                 </el-input>
               </el-form-item>
-              <el-form-item>
-                <el-input placeholder="请输入密码" v-model="loginForm.passWord" type="password">
+              <el-form-item prop="rePassword">
+                <el-input placeholder="请输入密码" v-model="ruleFormRegist.rePassword" type="password">
                   <i slot="suffix" class="el-input__icon el-icon-edit"></i>
                 </el-input>
               </el-form-item>
-              <el-form-item>
-                <el-input placeholder="请重复输入" v-model="loginForm.passWord" type="password">
+              <el-form-item prop="repeat">
+                <el-input placeholder="请重复输入" v-model="ruleFormRegist.repeat" type="password">
                   <i slot="suffix" class="el-input__icon el-icon-key"></i>
                 </el-input>
               </el-form-item>
             </el-form>
           </label>
-          <button type="button" class="submit">注 册</button>
+          <button type="button" class="submit" @click="loginClick('ruleFormRegist')">注 册</button>
           <button type="button" class="fb-btn">
             使用
-            <span>facebook</span> 帐号注册
+            <span>
+              <i class="fa fa-qq" aria-hidden="true"></i>
+              <i class="fa fa-weibo" aria-hidden="true"></i>
+              <i class="fa fa-weixin" aria-hidden="true"></i>
+            </span> 帐号注册
           </button>
         </div>
       </div>
@@ -85,30 +91,145 @@
 export default {
   name: "Login",
   data() {
+    let validateName = (rule, value, callback) => {
+      console.log(value);
+      if (value === "") {
+        callback(new Error("请输入账号"));
+      } else if (
+        !/^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/.test(
+          value
+        )
+      ) {
+        callback("输入正确的手机号");
+      }
+      callback();
+    };
+    let validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else if (!/^.{6,16}$/.test(value)) {
+        callback("密码长度必须大于6位或者小于16位");
+      }
+      callback();
+    };
+    let validateRepeat = (rule, value, callback) => {
+      if (value !== this.ruleFormRegist.rePassword) {
+        callback(new Error("两次输入密码不正确"));
+      } else if (value === "") {
+        callback(new Error("请再次输入密码"));
+      }
+      callback();
+    };
     return {
       loginType: false,
-      loginForm: {
-        userName: "",
-        passWord: "",
-        saveLocal: false
+      ruleFormLogin: {
+        phone: "",
+        password: "",
+        isSave: false
       },
-      logoutForm: {
-        userName: "",
-        passWord: "",
+      ruleFormRegist: {
+        rePhone: "",
+        rePassword: "",
         repeat: ""
+      },
+      rulesLogin: {
+        phone: [{ validator: validateName, trigger: "blur" }],
+        password: [{ validator: validatePass, trigger: "blur" }]
+      },
+      rulesRegist: {
+        rePhone: [{ validator: validateName, trigger: "blur" }],
+        rePassword: [{ validator: validatePass, trigger: "blur" }],
+        repeat: [{ validator: validateRepeat, trigger: "blur" }]
       }
     };
   },
   methods: {
-    loginClick() {
-      console.log(1);
+    changeType() {
       this.loginType = !this.loginType;
+    },
+    loginClick(fromName) {
+      this.saveClick();
+      this.$refs[fromName].validate(valid => {
+        if (valid) {
+          this.$message("通过验证");
+          this.loading = true;
+          //     let data = {
+          //       user_phone: this.ruleFormLogin.phone,
+          //       user_password: this.ruleFormLogin.password
+          //     };
+          //     sign(data).then(res => {
+          //       this.$confirm(res.msg, '提示', {
+          //         confirmButtonText: '确定',
+          //         cancelButtonText: '取消',
+          //         type: 'info'
+          //       }).then(() => {
+          //         this.loading = false;
+          //         if( res.code === "000") {
+          //           this.$store.commit("setUserInfo",res.user);
+          //           if (!this.checkInfo()) {
+          //             this.drawer = true
+          //           } else {
+          //             this.$router.push("/home")
+          //           }
+          //         }
+          //       })
+          //     }).catch(() => {
+          //       this.$message("网络错误")
+          //     })
+          //   } else {
+          //     return false
+        }
+      });
+    },
+    registClick(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$message("通过验证");
+          this.loading = true;
+          //   let data = {
+          //     user_phone: this.ruleFormRegist.rePhone,
+          //     user_password: this.ruleFormRegist.rePassword
+          //   };
+          //   regist(data).then(res => {
+          //     this.$confirm(res.msg, '提示', {
+          //       confirmButtonText: '确定',
+          //       cancelButtonText: '取消',
+          //       type: 'info'
+          //     }).then(() => {
+          //       this.loading = false;
+          //       if( res.code === "000") {
+          //         this.$store.commit("setUserInfo",res.user);
+          //         if (!this.checkInfo()) {
+          //           this.drawer = true
+          //         } else {
+          //           this.$router.push("/home")
+          //         }
+          //       }
+          //     })
+          //   }).catch(err => {
+          //     this.$message("网络错误");
+          //   })
+        }
+      });
+    },
+    saveClick() {
+      localStorage.phone = this.ruleFormLogin.isSave
+        ? this.ruleFormLogin.phone
+        : "";
+      localStorage.password = this.ruleFormLogin.isSave
+        ? this.ruleFormLogin.password
+        : "";
     }
   }
 };
 </script>
 
 <style scoped>
+.fa-qq,
+.fa-weibo,
+.fa-weixin {
+  padding: 0 5px;
+}
 *,
 *:before,
 *:after {

@@ -11,7 +11,6 @@
 
 <style>
 @import "./assets/css/base.css";
-@import url(https://raw.githubusercontent.com/daneden/animate.css/master/animate.css);
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
