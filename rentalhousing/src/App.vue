@@ -11,6 +11,7 @@
 
 <style>
 @import "./assets/css/base.css";
+@import url(https://raw.githubusercontent.com/daneden/animate.css/master/animate.css);
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -21,6 +22,12 @@
   position: fixed;
   bottom: 0;
   left: 200px;
+}
+@media screen and (max-width: 500px){
+  .nav {
+    left: 10px;
+    z-index: 99;
+  }
 }
 
 .nav-item {

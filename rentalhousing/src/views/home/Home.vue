@@ -1,77 +1,115 @@
 <template>
   <div class="home-page">
     <el-container>
-      <el-header class="home-header">
-        <div class="collapse-menu" @click="menuClick">
-          <i :class="collapseMenu"></i>
+      <el-header class="home-header home-header-mobile" v-if="!widthWindow">
+        <div class="menu-mobile">
+          <div class="menu-icon" @click="menuClick">
+            <i class="iconfont icon-mune" v-if="!mobileMenu"></i>
+            <i class="iconfont icon-close" v-else></i>
+          </div>
+        </div>
+        <div class="logo-menu">RentalHousing</div>
+        <div class="ava-box" @click="avatarClick">
+          <el-avatar
+            :size="45"
+            src="http://img1.imgtn.bdimg.com/it/u=3620016507,562397260&fm=11&gp=0.jpg"
+          ></el-avatar>
+        </div>
+      </el-header>
+      <el-header class="home-header" v-else>
+        <div class="logo-menu">RentalHousing</div>
+
+        <div class="menu-box limit">
+          <el-menu
+            default-active="1"
+            class="el-menu-demo"
+            background-color="#b4cdd7"
+            text-color="#fff"
+            mode="horizontal"
+            active-text-color="#006fb2"
+            @select="handleSelect"
+          >
+            <el-menu-item index="1">租房</el-menu-item>
+            <el-menu-item index="2">我的房源</el-menu-item>
+            <el-menu-item index="3">租金缴纳</el-menu-item>
+            <el-menu-item index="4">报障处理</el-menu-item>
+          </el-menu>
         </div>
         <div class="header-avatar">
-           <el-avatar :size="45" src="http://img1.imgtn.bdimg.com/it/u=3620016507,562397260&fm=11&gp=0.jpg"></el-avatar>
-           <div class="avatar-menu">
-          测试i
+          <el-avatar
+            :size="45"
+            src="http://img1.imgtn.bdimg.com/it/u=3620016507,562397260&fm=11&gp=0.jpg"
+          ></el-avatar>
+          <div class="avatar-menu">
+            <div class="avatar-menu-item">个人信息</div>
+            <div class="avatar-menu-item">修改密码</div>
+            <div class="avatar-menu-item">身份认证</div>
+            <div class="avatar-menu-item">成为房东</div>
+            <div class="avatar-menu-item logout">注销登录</div>
+          </div>
         </div>
-        </div>
-        
       </el-header>
-       <el-container>
-   
-  
-      <el-aside width="64px" class="home-aside">
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical"
-          @open="handleOpen"
-          @close="handleClose"
-          :collapse="true"
-          hide-timeout="10000"
-          ref="mymenu"
-        >
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span slot="title">导航一</span>
-            </template>
-            <el-menu-item-group>
-              <span slot="title">分组一</span>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <span slot="title">选项4</span>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
-        </el-menu>
-      </el-aside>
-      <el-main>Main</el-main>
+      <el-container>
+        <div class="body-box">
+          <el-main class="limit">
+            <el-tabs type="border-card" v-model="activeName">
+              <el-tab-pane label="综合浏览" name="first">综合浏览</el-tab-pane>
+              <el-tab-pane label="整套出租" name="second">
+                <home-cell v-for="item in 10" :key="item"></home-cell>
+              </el-tab-pane>
+              <el-tab-pane label="单间出租" name="third">单间出租</el-tab-pane>
+              <el-tab-pane label="短租/日租" name="fourth">短租/日租</el-tab-pane>
+            </el-tabs>
+          </el-main>
+        </div>
       </el-container>
     </el-container>
+    <transition name="slide-fade">
+      <div class="menu-box-mobile" v-if="mobileMenu">
+        <el-menu
+          default-active="1"
+          class="el-menu-demo"
+          background-color="#fff"
+          text-color="#999"
+          mode="vertical"
+          active-text-color="#006fb2"
+          @select="handleSelect"
+        >
+          <el-menu-item index="1">租房</el-menu-item>
+          <el-menu-item index="2">我的房源</el-menu-item>
+          <el-menu-item index="3">租金缴纳</el-menu-item>
+          <el-menu-item index="4">报障处理</el-menu-item>
+        </el-menu>
+      </div>
+    </transition>
+    <transition name="slide-fade">
+      <div class="avatar-box-mobile" v-if="showAvatarMenu">
+        <div class="avatar-menu-mobile">
+            <div class="avatar-menu-mobile-item">个人信息</div>
+            <div class="avatar-menu-mobile-item">修改密码</div>
+            <div class="avatar-menu-mobile-item">身份认证</div>
+            <div class="avatar-menu-mobile-item">成为房东</div>
+            <div class="avatar-menu-mobile-item logout">注销登录</div>
+          </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import HomeCell from "../../components/HomeCell";
 export default {
   name: "Home",
-  components: {},
+  components: {
+    HomeCell
+  },
   data() {
     return {
       isCollapse: true,
-      menuWidth: "60px"
+      menuWidth: "60px",
+      activeName: "second",
+      mobileMenu: false,
+      showAvatarMenu: false
     };
   },
   methods: {
@@ -81,29 +119,65 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    avatarClick() {
+      console.log(1)
+      this.showAvatarMenu = !this.showAvatarMenu
+      this.mobileMenu = false
+    },
     menuClick() {
-      this.isCollapse = !this.isCollapse
-      this.menuWidth = window.getComputedStyle(this.$refs.mymenu.$el).width
-      console.log(this.menuWidth)
-      console.log(window.getComputedStyle(this.$refs.mymenu.$el).width)
+this.mobileMenu = !this.mobileMenu
+this.showAvatarMenu = false
     }
   },
   computed: {
-    collapseMenu() {
-      return this.isCollapse ? "el-icon-s-fold" : "el-icon-s-unfold";
-    },
-    getWidth() {
-      // return this.isCollapse ? "64px" : "200px";
-      return "64px"
+    widthWindow() {
+      return window.screen.width > 500;
     }
   },
-  mounted () {
-    this.menuWidth = window.getComputedStyle(this.$refs.mymenu.$el).width
-  }
+  mounted() {}
 };
 </script>
 
 <style scoped>
+.avatar-box-mobile {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  /* width: 100%; */
+  z-index: 9;
+  background: #b4cdd7;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  overflow: hidden;
+}
+.avatar-menu-mobile {
+  /* padding: 0 20px; */
+  
+}
+.avatar-menu-mobile-item {
+  font-size: 15px;
+  padding: 4px 20px;
+  text-align: right;
+}
+.avatar-menu-mobile-item:hover {
+  background: #006fb2;
+}
+.menu-icon,
+.ava-box {
+  width: 60px;
+}
+.ava-box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.icon-mune,
+.icon-close {
+  font-size: 20px;
+}
 .home-header {
   position: relative;
   background: var(--IGHT-STEEL-BLUE);
@@ -122,22 +196,75 @@ export default {
   position: absolute;
   padding: 5 0 0;
   width: 100%;
-  height: 100px;
   background: var(--IGHT-STEEL-BLUE);
   display: none;
-  transition: .5s ease;
+  transition: 0.5s ease;
 }
 .header-avatar:hover .avatar-menu {
   display: block;
 }
-.el-icon-s-fold, .el-icon-s-unfold {
+.home-header-mobile {
+  position: relative;
+  z-index: 12;
+}
+.el-icon-s-fold,
+.el-icon-s-unfold {
   font-size: 30px;
-  color: var(--CYAN-AZURE)
+  color: var(--CYAN-AZURE);
+}
+.limit {
+  max-width: 900px;
+  padding: 10px !important;
+}
+.body-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.el-menu-demo {
+  font-size: 15px;
+}
+.avatar-menu-item {
+  text-align: center;
+  padding: 5px;
+  font-size: 12px;
+}
+.avatar-menu-item:hover {
+  background: #006fb2;
+}
+.logout {
+  color: #e70018ed !important;
+}
+.menu-box-mobile {
+  position: absolute;
+  width: 100%;
+  top: 60px;
+  left: 0;
+  z-index: 9;
+}
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateY(-100px);
+  opacity: 0;
+}
+.logo-menu {
+  text-transform: uppercase;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 </style>
 
 <style>
 .el-menu {
   height: 100%;
+}
+.el-menu-item {
+  font-size: 16px;
+  font-weight: 600;
 }
 </style>
