@@ -8,53 +8,33 @@
         <div class="title-box-title">烧鸡公菌汤羊肉汤</div>
       </div>
     </nav-bar>
-    <!-- <scroll class="scroll"> -->
-      <div class="shop-info">
-        <div class="backgroud" @click="backClick">
-          <div class="avatar">
-            <img :src="avatarUrl" alt />
-          </div>
-
-          <div class="bg-white"></div>
+    <div class="shop-info">
+      <div class="backgroud" @click="backClick">
+        <div class="avatar">
+          <img :src="avatarUrl" alt />
         </div>
-        <div class="shop-title">烧鸡公菌汤羊肉汤</div>
 
-        <div class="shop-info-box">
-          <div class="sorce">评价4.3</div>
-          <div class="saled">月销125单</div>
-          <div class="toout">商家配送约40分钟</div>
-        </div>
+        <div class="bg-white"></div>
       </div>
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-row :gutter="20">
-          <router-link to="/detail">
-            <el-col :span="4" :offset="5">
-              <el-menu-item index="1">点餐</el-menu-item>
-            </el-col>
-          </router-link>
-          <router-link to="/detail/comment">
-            <el-col :span="4">
-              <el-menu-item index="2">评价</el-menu-item>
-            </el-col>
-          </router-link>
-          <router-link to="/detail/shopinfo">
-            <el-col :span="4">
-              <el-menu-item index="3">商家</el-menu-item>
-            </el-col>
-          </router-link>
-        </el-row>
-      </el-menu>
-      <keep-alive>
-        <transition name="slide-fade">
-          <router-view />
-        </transition>
-      </keep-alive>
-    <!-- </scroll> -->
+      <div class="shop-title">烧鸡公菌汤羊肉汤</div>
+
+      <div class="shop-info-box">
+        <div class="sorce">评价4.3</div>
+        <div class="saled">月销125单</div>
+        <div class="toout">商家配送约40分钟</div>
+      </div>
+    </div>
+    <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
+    >
+      <el-menu-item index="/">点餐</el-menu-item>
+      <el-menu-item index="comment">评价</el-menu-item>
+      <el-menu-item index="shopinfo">商家</el-menu-item>
+    </el-menu>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -67,8 +47,7 @@ export default {
   name: "Detail",
   props: {
     shop: {
-      type: Object,
-      
+      type: Object
     },
     path: {
       type: String,
@@ -83,7 +62,7 @@ export default {
   data() {
     return {
       avatarUrl: "https://s2.ax1x.com/2020/03/07/3jYXZT.th.jpg",
-      activeIndex: "1"
+      activeIndex: "/"
     };
   },
   methods: {
@@ -110,11 +89,15 @@ export default {
   }
 };
 </script>
-
+<style scoped>
+.el-menu-demo {
+  display: flex;
+  justify-content: center;
+}
+</style>
 <style scoped>
 .detail {
   background: white;
-  
 }
 .detail-navbar {
   width: 100%;
@@ -203,7 +186,7 @@ export default {
   opacity: 0;
 }
 .slide-fade-leave-to {
-   transform: translateX(100%);
+  transform: translateX(100%);
   opacity: 0;
 }
 </style>
