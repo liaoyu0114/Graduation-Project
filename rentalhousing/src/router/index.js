@@ -23,6 +23,11 @@ const Homing = () => import('../views/homing/Homing');
         component: Homing
       },
       {
+        path: '/detail',
+        name: 'Detail',
+        component: Detail
+      },
+      {
         path: "/error",
         name: "Error",
         component: Error
@@ -40,11 +45,7 @@ const Homing = () => import('../views/homing/Homing');
 
     ]
   },
-  {
-    path: '/detail',
-    name: 'Detail',
-    component: Detail
-  },
+  
     {
       path: '/login',
       name: 'Login',

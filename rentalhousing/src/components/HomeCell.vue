@@ -15,7 +15,7 @@
         <el-col :span="20">
           <div class="cell-title">
             <b class="strongbox">
-              <a href>高升桥地铁站 应届生免押 无中介 可月付 可短租 衣冠庙</a>
+              <a>高升桥地铁站 应届生免押 无中介 可月付 可短租 衣冠庙</a>
             </b>
           </div>
           <div class="cell-describe">

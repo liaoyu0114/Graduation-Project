@@ -21,11 +21,12 @@
   position: fixed;
   bottom: 0;
   left: 200px;
+      z-index: 99;
 }
 @media screen and (max-width: 500px){
   .nav {
     left: 10px;
-    z-index: 99;
+
   }
 }
 

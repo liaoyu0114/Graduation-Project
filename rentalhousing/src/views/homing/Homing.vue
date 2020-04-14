@@ -6,7 +6,7 @@
           <el-tabs type="border-card" v-model="activeName">
             <el-tab-pane label="综合浏览" name="first">综合浏览</el-tab-pane>
             <el-tab-pane label="整套出租" name="second">
-              <home-cell v-for="item in 10" :key="item"></home-cell>
+              <home-cell v-for="item in 10" :key="item" @click.native="pushDetail"></home-cell>
             </el-tab-pane>
             <el-tab-pane label="单间出租" name="third">单间出租</el-tab-pane>
             <el-tab-pane label="短租/日租" name="fourth">短租/日租</el-tab-pane>
@@ -29,6 +29,12 @@
         activeName: "second"
       };
     },
+    methods: {
+      pushDetail() {
+        console.log(1)
+        this.$router.push("/detail")
+      }
+    }
   }
 </script>
 
