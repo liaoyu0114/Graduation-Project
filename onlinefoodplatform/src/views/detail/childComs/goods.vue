@@ -9,7 +9,9 @@
             :probe-type="3"
             @scrollPosition="leftPosition"
           >
-            <el-menu
+          <div class="link" v-for="(item, index) in goods" :key="index" @click="refresh"> <a class="href"  :href="'#'+item.name">{{item.name}}</a></div>
+         
+            <!-- <el-menu
               :default-active="activeIndex"
               class="el-menu-vertical-demo"
               @select="handleSelect"
@@ -22,15 +24,13 @@
               >
                 <span slot="title">{{item.name}}</span>
               </el-menu-item>
-            </el-menu>
+            </el-menu> -->
           </scroll>
         </el-col>
         <el-col class="menu-right" :span="18">
-          <scroll
+          <div
             class="scroll-right"
             ref="scrollright"
-            :probe-type="3"
-            @scrollPosition="rightPosition"
           >
             <div ref="menu">
               <el-card
@@ -39,6 +39,7 @@
                 :key="index"
                 class="card"
               >
+              <a :id="item.name"></a> 
                 <el-row :gutter="10">
                   <el-col :span="24" class="food-header">
                     <span class="menu_item_title">{{item.name}}</span>
@@ -83,7 +84,7 @@
                 </el-row>
               </el-card>
             </div>
-          </scroll>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -7210,6 +7211,9 @@ export default {
     }
   },
   methods: {
+    refresh() {
+      this.$refs.rightScroll.urefresh()
+    },
     leftPosition(position) {},
     rightPosition(position) {
       // debounce((position) => {
@@ -7265,6 +7269,9 @@ export default {
   height: calc(100vh - 356px);
   z-index: 99;
 }
+.scroll-right  {
+  overflow: scroll;
+}
 .menu_item_title {
   font-size: 20px;
   padding: 5px;
@@ -7274,9 +7281,12 @@ export default {
   font-size: 16px;
   color: #888;
 }
-a {
+/* a {
   text-decoration: none;
-  color: transparent;
+  color: transparent; */
+/* } */
+.href {
+
 }
 .activity {
   background: #f5f5f5;
