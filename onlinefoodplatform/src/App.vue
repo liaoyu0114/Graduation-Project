@@ -8,7 +8,7 @@
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </el-badge>
     </div>
-    <main-tab-bar class="main-tab-bar"></main-tab-bar>
+    <main-tab-bar class="main-tab-bar" v-if="showTabbar"></main-tab-bar>
   </div>
 </template>
 
@@ -29,7 +29,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cartLength"])
+    ...mapGetters(["cartLength"]),
+    showTabbar() {
+      return this.list.indexOf(this.$route.path) === -1
+    }
   },
   created() {
     this.signAuto();
@@ -204,6 +207,7 @@ export default {
   line-height: 40px;
   text-align: center;
   border-radius: 20px;
+  z-index: 99;
 }
 .fa-shopping-cart {
   font-size: 16px;

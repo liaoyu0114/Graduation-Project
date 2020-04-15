@@ -25,16 +25,19 @@
       </div>
     </div>
     <el-menu
-      :default-active="activeIndex"
+      default-active="goods"
       class="el-menu-demo"
       mode="horizontal"
+      router 
       @select="handleSelect"
     >
-      <el-menu-item index="/">点餐</el-menu-item>
+      <el-menu-item index="goods">点餐</el-menu-item>
       <el-menu-item index="comment">评价</el-menu-item>
       <el-menu-item index="shopinfo">商家</el-menu-item>
     </el-menu>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -42,6 +45,8 @@
 import Scroll from "components/common/scroll/Scroll";
 import Goods from "./childComs/goods";
 import NavBar from "components/common/navbar/NavBar";
+
+
 
 export default {
   name: "Detail",
@@ -51,7 +56,7 @@ export default {
     },
     path: {
       type: String,
-      default: "/home"
+      default: "goods"
     }
   },
   components: {
@@ -62,15 +67,15 @@ export default {
   data() {
     return {
       avatarUrl: "https://s2.ax1x.com/2020/03/07/3jYXZT.th.jpg",
-      activeIndex: "/"
+      activeIndex: "goods"
     };
   },
   methods: {
     backClick() {
-      this.$router.push(this.path);
+      this.$router.push("/home");
     },
     handleSelect(key, keyPath) {
-      this.$router.push("/detail/shopinfo");
+      // this.$router.push("/detail/shopinfo");
       // switch (key) {
       //   case 1:
       //     this.$router.push("/detail/goods");
