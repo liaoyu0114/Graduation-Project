@@ -2,7 +2,7 @@
   <div class="homing">
     <el-container>
       <div class="body-box">
-        <el-main class="limit">
+        <el-main class="limit limit-2">
           <el-tabs type="border-card" v-model="activeName">
             <el-tab-pane label="综合浏览" name="first">综合浏览</el-tab-pane>
             <el-tab-pane label="整套出租" name="second">
@@ -39,6 +39,11 @@
 </script>
 
 <style scoped>
+.homing,
+.el-container,
+.body-box {
+  background: transparent;
+}
   .body-box {
     width: 100%;
     display: flex;
@@ -47,6 +52,7 @@
   .limit {
     max-width: 900px;
     padding: 10px !important;
+    background: white;
   }
 
 </style>

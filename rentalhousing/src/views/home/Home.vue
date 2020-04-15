@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <el-container>
+    <el-container class="container">
       <el-header class="home-header home-header-mobile" v-if="!widthWindow">
         <div class="menu-mobile">
           <div class="menu-icon" @click="menuClick">
@@ -136,6 +136,10 @@ export default {
 </script>
 
 <style scoped>
+.home-page,
+.container {
+  background: transparent;
+}
 .active {
   color: rgb(0, 111, 178) !important;
 }
