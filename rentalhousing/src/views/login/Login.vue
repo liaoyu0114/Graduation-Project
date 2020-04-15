@@ -247,7 +247,7 @@ export default {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   width: 100vw;
   height: 100vh;
-  background: #ededed;
+  background: transparent;
 }
 
 input,
