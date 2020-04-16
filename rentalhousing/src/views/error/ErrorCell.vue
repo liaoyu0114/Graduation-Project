@@ -3,6 +3,7 @@
     <el-card class="error-card">
       <div slot="header" class="card-title">
         <span>高升桥地铁站 应届生免押 无中介 可月付 可短租 衣冠庙</span>
+        <div class="error-status">status</div>
       </div>
       <el-row class="card-body">
         <el-col :span="24" class="card-body-line">
@@ -33,5 +34,14 @@ export default {
 .card-title:hover span {
   color: #f45f21;
   text-decoration: underline;
+}
+.error-status {
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+  color: red;
+  float: right; 
+  font-weight: 500;
+  padding: 3px 0
 }
 </style>
