@@ -1,5 +1,6 @@
 <template>
   <div class="detail-page">
+        <div class="bg"></div>
     <div class="detail-box">
       <el-row>
         <el-col>
@@ -200,6 +201,7 @@ export default {
 .house-info-3 {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .house-info-1 div,
 .house-info-2 div,
@@ -218,6 +220,16 @@ export default {
 }
 </style>
 <style scoped>
+.bg {
+  position: absolute;
+  top: 0;
+  left: calc((100vw - 1215px) / 2);
+  max-width: 1200px;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background: white;
+  z-index: -1;
+}
 .house-info {
   display: flex;
   justify-content: space-between;
@@ -335,6 +347,7 @@ export default {
   width: 100%;
   padding: 10px 10px 0;
   max-width: 1200px;
+  background: white;
 }
 .detail-title {
   font-size: 24px;

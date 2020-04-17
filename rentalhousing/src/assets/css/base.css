@@ -11,3 +11,16 @@
   --ALABASTER: #F2E6E9;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
+
+.form-limit {
+  max-width: 500px;
+  width: 100%;
+}
+.change-password,
+.profile,
+.identify,
+.houser {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

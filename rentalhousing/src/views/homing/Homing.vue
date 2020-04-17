@@ -11,7 +11,7 @@
             <el-tab-pane label="单间出租" name="third">单间出租</el-tab-pane>
             <el-tab-pane label="短租/日租" name="fourth">短租/日租</el-tab-pane>
           </el-tabs>
-           <el-backtop target="limit limit-2"></el-backtop>
+          
         </el-main>
       </div>
     </el-container>

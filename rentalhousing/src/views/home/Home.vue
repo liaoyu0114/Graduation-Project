@@ -39,11 +39,11 @@
         <div class="header-avatar">
           <el-popover placement="bottom" width="100" trigger="hover">
             <div class="avatar-menu">
-              <div class="avatar-menu-item">个人信息</div>
-              <div class="avatar-menu-item">修改密码</div>
-              <div class="avatar-menu-item">身份认证</div>
-              <div class="avatar-menu-item">成为房东</div>
-              <div class="avatar-menu-item logout">注销登录</div>
+              <div class="avatar-menu-item" @click="showProfile">个人信息</div>
+              <div class="avatar-menu-item" @click="changePassword">修改密码</div>
+              <div class="avatar-menu-item" @click="identifyValite">身份认证</div>
+              <div class="avatar-menu-item" @click="becomeHouser">成为房东</div>
+              <div class="avatar-menu-item logout" @click="logout">注销登录</div>
             </div>
             <el-avatar
               :size="45"
@@ -55,6 +55,18 @@
       </el-header>
       <router-view></router-view>
     </el-container>
+    <el-dialog
+      title="个人信息"
+      :visible.sync="dialogVisible"
+      :width="dialogWidth"
+      :before-close="handleClose"
+    >
+      <profile v-if="profileVisible"></profile>
+      <change-password v-if="passwordVisible"></change-password>
+      <identify-valite v-if="identifyVisible"></identify-valite>
+      <houser v-if="houserVisible"></houser>
+    </el-dialog>
+
     <transition name="slide-fade">
       <div class="menu-box-mobile" v-if="mobileMenu">
         <el-menu
@@ -77,11 +89,11 @@
     <transition name="slide-fade">
       <div class="avatar-box-mobile" v-if="showAvatarMenu">
         <div class="avatar-menu-mobile">
-          <div class="avatar-menu-mobile-item">个人信息</div>
-          <div class="avatar-menu-mobile-item">修改密码</div>
-          <div class="avatar-menu-mobile-item">身份认证</div>
-          <div class="avatar-menu-mobile-item">成为房东</div>
-          <div class="avatar-menu-mobile-item logout">注销登录</div>
+          <div class="avatar-menu-mobile-item" @click="showProfile">个人信息</div>
+          <div class="avatar-menu-mobile-item" @click="changePassword">修改密码</div>
+          <div class="avatar-menu-mobile-item" @click="identifyValite">身份认证</div>
+          <div class="avatar-menu-mobile-item" @click="becomeHouser">成为房东</div>
+          <div class="avatar-menu-mobile-item logout" @click="logout">注销登录</div>
         </div>
       </div>
     </transition>
@@ -89,27 +101,55 @@
 </template>
 
 <script>
+import Profile from "../../components/Profile";
+import ChangePassword from "../../components/ChangePassword";
+import IdentifyValite from "../../components/IdentifyValite";
+import Houser from "../../components/Houser";
 export default {
   name: "Home",
+  components: {
+    Profile,
+    ChangePassword,
+    IdentifyValite,
+    Houser
+  },
   created() {
     if (this.$route.path !== "/") {
       this.showActive = this.$route.path.replace("/", "");
     }
+    this.dialogWidth = window.screen.width > 500 ? "50%" : "90%";
   },
   data() {
     return {
       activeIndex: "1",
       mobileMenu: false,
       showAvatarMenu: false,
-      showActive: "/"
+      showActive: "/",
+      dialogVisible: false,
+      profileVisible: false,
+      passwordVisible: false,
+      identifyVisible: false,
+      houserVisible: false
     };
   },
   methods: {
+    closeMune() {
+      this.mobileMenu = false;
+      this.showAvatarMenu = false;
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    handleClose(done) {
+      // this.$confirm("确认关闭？")
+      //   .then(() => {
+          done();
+          this.profileVisible = false;
+          this.passwordVisible = false;
+          this.identifyVisible = false;
+          this.houserVisible = false;
+        // })
+        // .catch(() => {});
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -124,7 +164,24 @@ export default {
     menuClick() {
       this.mobileMenu = !this.mobileMenu;
       this.showAvatarMenu = false;
-    }
+    },
+    showProfile() {
+      this.dialogVisible = true;
+      this.profileVisible = true;
+    },
+    changePassword() {
+      this.dialogVisible = true;
+      this.passwordVisible = true;
+    },
+    identifyValite() {
+      this.dialogVisible = true;
+      this.identifyVisible = true;
+    },
+    becomeHouser() {
+      this.dialogVisible = true;
+      this.houserVisible = true;
+    },
+    logout() {}
   },
   computed: {
     widthWindow() {
@@ -135,7 +192,18 @@ export default {
 };
 </script>
 
+<style>
+.el-dialog {
+  border-radius: 10px !important;
+  min-width: 452px;
+}
+  .el-message-box {
+    min-width: 452px;
+    transform: translateY(-25vh);
+  }
+</style>
 <style scoped>
+
 .home-page,
 .container {
   background: transparent;
@@ -233,9 +301,9 @@ export default {
   }
 }
 .avatar-menu-item:hover {
- animation: changeback 0.5s ease 1;
- background: #006fb2;
- color: white !important;
+  animation: changeback 0.5s ease 1;
+  background: #006fb2;
+  color: white !important;
 }
 .logout {
   color: #e70018ed !important;
@@ -271,5 +339,15 @@ export default {
 .el-menu-item {
   font-size: 16px;
   font-weight: 600;
+}
+@media screen and (max-width: 500px) {
+  .el-message-box {
+    width: 90% !important;
+    min-width: 0;
+  }
+  .el-dialog {
+    width: 90% !important;
+    min-width: 0;
+  }
 }
 </style>

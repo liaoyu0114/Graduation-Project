@@ -22,7 +22,7 @@
             <div class="des-box">
               <span class="vr-line">3室1厅</span>
               <span class="vr-line">15平米</span>
-              <span>高层(共17层)</span>
+              <span class="vr-line">高层(共17层)</span>
               <span>
                 <i class="iconfont icon-profile"></i>李双全
               </span>
@@ -160,11 +160,13 @@
   .vr-line:before {
     content: "\007C";
     position: absolute;
-    top: 20%;
-    right: -0.25em;
+    top: 28%;
+    margin-right: 3px;
+    right: -0.25rem;
     line-height: 100%;
     height: 60%;
     display: inline-block;
+    vertical-align: middle;
   }
 
   .price-box, .price-box-mobile {

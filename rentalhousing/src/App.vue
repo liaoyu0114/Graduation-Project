@@ -14,6 +14,7 @@
     <vue-particles
       class="particles"
       color="#fff"
+      v-if="showParticles"
     ></vue-particles>
     <router-view />
   </div>
@@ -22,6 +23,9 @@
 <script>
 export default {
   name: "app",
+  created () {
+    this.showParticles = window.screen.width > 500
+  }
 };
 </script>
 
