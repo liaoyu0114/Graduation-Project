@@ -12,7 +12,7 @@
         <div class="ava-box" @click="avatarClick">
           <el-avatar
             :size="45"
-            src="http://img1.imgtn.bdimg.com/it/u=3620016507,562397260&fm=11&gp=0.jpg"
+            :src="avatar"
           ></el-avatar>
         </div>
       </el-header>
@@ -48,7 +48,7 @@
             <el-avatar
               :size="45"
               slot="reference"
-              src="http://img1.imgtn.bdimg.com/it/u=3620016507,562397260&fm=11&gp=0.jpg"
+              :src="avatar"
             ></el-avatar>
           </el-popover>
         </div>
@@ -121,6 +121,7 @@ export default {
   },
   data() {
     return {
+      avatar: "https://s1.ax1x.com/2020/04/17/JVI740.jpg",
       activeIndex: "1",
       mobileMenu: false,
       showAvatarMenu: false,

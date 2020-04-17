@@ -1,6 +1,15 @@
 @import "./normalize.css";
 @import "./animate.css";
-@import "//at.alicdn.com/t/font_1631969_g57kt02onjp.css";
+@import "//at.alicdn.com/t/font_1631969_nqrqyaxbugs.css";
+@font-face {
+  font-family: 'iconfont';  /* project id 1631969 */
+  src: url('//at.alicdn.com/t/font_1631969_nqrqyaxbugs.eot');
+  src: url('//at.alicdn.com/t/font_1631969_nqrqyaxbugs.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1631969_nqrqyaxbugs.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1631969_nqrqyaxbugs.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1631969_nqrqyaxbugs.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1631969_nqrqyaxbugs.svg#iconfont') format('svg');
+}
 
 
 :root {
@@ -12,15 +21,31 @@
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 .form-limit {
   max-width: 500px;
   width: 100%;
 }
 .change-password,
-.profile,
+.profile-box,
 .identify,
 .houser {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.item-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  
+}
+.item-button .el-button {
+  margin: 0 10px;
 }
