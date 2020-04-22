@@ -725,7 +725,7 @@ export default {
 .scroll {
   position: relative;
   top: 0;
-  height: calc(100vh - 86px - 93px);
+  height: calc(100vh - 86px - 100px);
   right: 0;
   left: 0;
   background: white;
@@ -739,7 +739,7 @@ export default {
 }
 .tabcontrol-fixed {
   position: absolute;
-  top: 126px;
+  top: 125px;
   width: 100vw;
   z-index: 9;
 }

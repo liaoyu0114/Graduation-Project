@@ -17,6 +17,7 @@ import AMap from "AMap";
 import MainTabBar from "@/components/content/maintabbar/MainTabBar";
 import {sign} from "./network/user";
 import { mapGetters } from "vuex";
+import { sendEmail } from "./network/yesapi"
 
 export default {
   name: "app",
@@ -36,13 +37,19 @@ export default {
   },
   created() {
     this.signAuto();
+   
   },
   mounted() {
     this.getLocation();
   },
   methods: {
     cartClick() {
-      this.$router.push("/cart");
+      // this.$router.push("/cart");
+       sendEmail("1453473547@qq.com").then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
     },
     getLocation() {
       const self = this;
@@ -197,7 +204,7 @@ export default {
 }
 .cart {
   position: fixed;
-  bottom: 55px;
+  bottom: 70px;
   right: 10px;
   background: #fff;
   border: solid 1px #409EFF;
@@ -212,7 +219,9 @@ export default {
 .fa-shopping-cart {
   font-size: 16px;
 }
-
+#app {
+  overflow: hidden;
+}
 @media screen and (min-width: 500px) {
   .view {
     width: 500px;

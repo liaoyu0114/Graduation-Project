@@ -38,7 +38,7 @@ export function updateuser(data) {
    */
   return request({
     method: "post",
-    url: "/updateuser",
+    url: "/updateUser",
     data: qs.stringify(data)
   })
 }

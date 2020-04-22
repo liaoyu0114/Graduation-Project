@@ -15,7 +15,8 @@ const state = {
     sex: "",
     avatar: "",
     createTime: "",
-    email: ""
+    email: "",
+    collection: ""
   },
   homeScrollHeight: 0,
   homeLoading: "",
