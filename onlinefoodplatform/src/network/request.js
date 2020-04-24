@@ -5,7 +5,7 @@ export function request(config) {
 
   //1.创建axios实例
   const instance = axios.create({
-    baseURL: 'http://frp.hhh233.xyz:8081/onlineplatform',
+    baseURL: 'https://api.hhh233.xyz/onlineplatform',
     timeout: 5000,
     // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   });

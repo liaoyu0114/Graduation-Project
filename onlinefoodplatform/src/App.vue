@@ -163,7 +163,10 @@ export default {
       });
     },
     signAuto() {
-      if (localStorage.phone.length !== 0 || localStorage.password !== 0) {
+      if (!(localStorage.phone && localStorage.password)) {
+        return
+
+}if (localStorage.phone.length !== 0 || localStorage.password !== 0) {
         let data = {
           user_phone: localStorage.phone,
           user_password: localStorage.password

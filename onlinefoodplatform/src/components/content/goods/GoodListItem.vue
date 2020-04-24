@@ -91,7 +91,7 @@ export default {
 this.distance = this.goodsItem.distance * 1000 + "m"
 
       } else {
-        this.distance = this.goodsItem.distance.toFixed(1) + "km"
+        this.distance = Number(this.goodsItem.distance).toFixed(1) + "km"
       }
   },
   methods: {
