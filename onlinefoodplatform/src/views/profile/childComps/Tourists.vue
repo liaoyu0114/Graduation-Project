@@ -3,14 +3,14 @@
     <el-row class="user-info" @click.native="infoClick">
       <el-col :span="18">
         <div class="user-name">
-          IUIYT<br>
-          <i class="iconfont icon-tubiao">18382389882</i>
-          <div class="user-name-tips">提示语</div>
+            {{userInfo.nickName}}<br>
+          <i class="iconfont icon-tubiao">{{userInfo.phone}}</i>
+          <div class="user-name-tips">Nice to meet you</div>
         </div>
       </el-col>
       <el-col :span="6">
         <div class="profile-avatar">
-          <el-avatar :size="75" :src="src"></el-avatar>
+          <el-avatar :size="75" :src="userInfo.avatar"></el-avatar>
         </div>
 
       </el-col>
@@ -26,14 +26,22 @@
 
 <script>
   import ListCell from 'components/content/ListCell'
+  import { mapGetters } from "vuex"
   export default {
     name: "Tourists",
+    props: {
+      userInfo: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
+    },
     components: {
       ListCell
     },
     data() {
       return {
-        src: "https://assets.hhh233.xyz/003%20%284%29.jpg?imageView2/1/w/200/h/200/format/webp/q/75",
         list: [
           {
             iconName: "icon-shoucang",

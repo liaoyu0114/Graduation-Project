@@ -14,7 +14,7 @@
   .back-top {
     position: fixed;
     right: 8px;
-    bottom: 115px;
+    bottom: 100px;
     z-index: 999;
   }
 

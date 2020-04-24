@@ -2,7 +2,7 @@
   <div class="sign">
     <div class="hero">
       <div class="hero-bg">
-        <div class="form-box">
+        <div class="form-box" ref="formbox">
           <div class="button-box">
             <div id="btn" ref="btn"></div>
             <button class="toggle-btn" type="button" @click="login()">Log In</button>
@@ -36,6 +36,9 @@
             </div>
             <a href="http://frp.hhh233.xyz/admin">
               <el-button type="text">商家登录</el-button>
+            </a>
+            <a style="margin-left: 10px">
+              <el-button type="text" @click="backHome">返回首页</el-button>
             </a>
           </div>
 
@@ -199,6 +202,9 @@ export default {
     }
   },
   methods: {
+    backHome() {
+      this.$router.push("/home")
+    },
     getCaptcha() {
       let time = (new Date().getTime() - this.emailSendDate) / 1000;
       if (time < 60) {
@@ -213,7 +219,6 @@ export default {
 
       sendEmail(this.ruleFormRegist.email)
         .then(res => {
-          console.log(res);
           if (res.data.err_code === 0) {
             this.$message("发送成功，下次发送请在60s之后");
             this.emailSendDate = new Date().getTime();
@@ -258,36 +263,11 @@ export default {
             user_phone: this.ruleFormLogin.phone,
             user_password: this.ruleFormLogin.password
           };
-          loginNetwork(data);
+          this.loginNetwork(data);
         } else {
           return false;
         }
       });
-    },
-    loginNetwork(data) {
-      console.log(data);
-      sign(data)
-        .then(res => {
-          this.$confirm(res.msg, "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "info"
-          }).then(() => {
-            if (res.code === "000") {
-              this.$store.commit("setUserInfo", res.user);
-              if (!this.checkInfo()) {
-                this.updateUser(res.user);
-                // this.drawer = true;
-              } else {
-                this.loading = false;
-                this.$router.push("/home");
-              }
-            }
-          });
-        })
-        .catch(() => {
-          this.$message("网络错误");
-        });
     },
     registClick(formName) {
       this.$refs[formName].validate(valid => {
@@ -312,12 +292,6 @@ export default {
                     user_password: this.ruleFormRegist.rePassword
                   };
                   this.loginNetwork(data);
-                  // this.$store.commit("setUserInfo", res.user);
-                  // if (!this.checkInfo()) {
-                  //   this.drawer = true;
-                  // } else {
-                  //   this.$router.push("/home");
-                  // }
                 } else {
                   this.loading = false
                   this.$notify.warning({
@@ -332,6 +306,56 @@ export default {
             });
         }
       });
+    },
+    loginNetwork(data) {
+      console.log(data);
+      sign(data)
+        .then(res => {
+          this.$confirm(res.msg, "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "info"
+          }).then(() => {
+            this.loading = false;
+            if (res.code === "000") {
+              this.$store.commit("setUserInfo", res.user);
+              if (!this.checkInfo()) {
+                this.updateUser(res.user);
+                // this.drawer = true;
+              } else {
+                this.$router.push("/home");
+              }
+            }
+          });
+        })
+        .catch(() => {
+          this.loading = false;
+          this.$message("网络错误");
+        });
+    },
+    updateUser(info) {
+      let data = {
+        "user_id": info.user_id,
+        "user_nickname": "用户"+info.user_phone.slice(6,10),
+        "user_sex": "0",
+        "user_pic": "https://s1.ax1x.com/2020/04/22/JtKAbV.png",
+        "user_mail": info.user_mail,
+        // "user_mail": "example@hhh233.xyz",
+        "collection": ""
+      };
+      updateuser(data).then(res => {
+        this.loading = false;
+        if (res.code === "000") {
+          this.$store.commit("setUserInfo", res.user);
+        } else {
+          this.$notify.warning({
+            title: "更新用户信息失败"
+          });
+        }
+        this.$router.push("/home");
+      }).catch(err => {
+        console.log(err)
+      })
     },
     saveClick() {
       localStorage.phone = this.ruleFormLogin.isSave
@@ -350,30 +374,6 @@ export default {
       }
       return flag;
     },
-    updateUser(info) {
-      console.log(info)
-      let data = {
-        "user_id": info.user_id,
-        "user_nickname": "默认名称",
-        "user_sex": 0,
-        "user_pic": "https://s1.ax1x.com/2020/04/22/JtKAbV.png",
-        "user_mail": info.user_mail,
-        "collection": ""
-      };
-      updateuser(data).then(res => {
-        console.log(res)
-        this.loading = false;
-        if (res.code === "000") {
-          this.$store.commit("setUserInfo", res.user);
-        } else {
-          this.$notify.warning({
-            title: "更新用户信息失败",
-            message: "可继续使用，请及时更新"
-          });
-        }
-        this.$router.push("/home");
-      });
-    }
   }
 };
 </script>
@@ -423,13 +423,13 @@ export default {
 .form-box {
   width: 90%;
   max-width: 380px;
-  height: 480px;
+  height: 560px;
   position: relative;
   margin: auto;
   background: #fff;
   padding: 5px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
+  transition: all .5s;
 }
 .button-box {
   width: 220px;

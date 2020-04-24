@@ -41,7 +41,7 @@ const routes = [
     component: Sign
   },
   {
-    path: '/detail',
+    path: '/detail/shop:id',
     name: "Detail",
     component: Detail,
     children: [

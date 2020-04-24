@@ -13,12 +13,12 @@
           :trigger-on-focus="false"
           @select="handleSelect"
         >
-         <i class="el-icon-edit el-input__icon" slot="suffix" @click="handleIconClick"></i>
-        <template slot-scope="{ item }">
-          <div class="name">{{ item.name }}</div>
+          <i class="el-icon-edit el-input__icon" slot="suffix" @click="handleIconClick"></i>
+          <template slot-scope="{ item }">
+            <div class="name">{{ item.name }}</div>
 
-          <span class="addr">{{ item.address }}</span>
-        </template>
+            <span class="addr">{{ item.address }}</span>
+          </template>
         </el-autocomplete>
       </el-col>
       <el-col :span="4">
@@ -28,13 +28,17 @@
       </el-col>
     </el-row>
     <scroll class="scroll">
- <el-row>
-      <el-col :span="24" class="search-item">
-        <search-item v-for="(item,index) in searchRes" :key="index" v-if="searchRes" :search-item="item"></search-item>
-      </el-col>
-    </el-row>
+      <el-row>
+        <el-col :span="24" class="search-item">
+          <search-item
+            v-for="(item,index) in searchRes"
+            :key="index"
+            :search-item="item"
+          ></search-item>
+        </el-col>
+      </el-row>
+      <div v-if="resState">{{resText}}</div>
     </scroll>
-   
   </div>
 </template>
 
@@ -42,7 +46,8 @@
 import DisNavBar from "components/common/navbar/NavBar";
 import Scroll from "components/common/scroll/Scroll";
 import SearchItem from "components/content/search/SearchItem";
-
+import { selectshoprandom } from "network/user";
+import { debounce } from "common/utils"
 export default {
   name: "Discovery",
   components: {
@@ -57,11 +62,29 @@ export default {
     return {
       restaurants: [],
       state: "",
-      searchRes: []
+      searchRes: [],
+      resState: false,
+      resText: ""
     };
   },
+  watch: {
+    state(val, oldVal) {
+      selectshoprandom({"shop_name": val}).then(res => {
+        if (res.shoplist.length === 0 ) {
+          this.resState = true
+          this.resText = "搜索不到了"
+        } else {
+           this.resState = false
+          this.searchRes = res.shoplist
+        }
+      }).catch(() => {
+        this.resState = true
+          this.resText = "网络错误"
+      })
+    }
+  },
   methods: {
-     handleIconClick(ev) {
+    handleIconClick(ev) {
       console.log(ev);
     },
     querySearch(queryString, cb) {
@@ -70,12 +93,12 @@ export default {
         ? restaurants.filter(this.createFilter(queryString))
         : restaurants;
       // 调用 callback 返回建议列表的数据
-      this.searchRes = results
+      this.searchRes = results;
       cb();
     },
     createFilter(queryString) {
       return restaurant => {
-        return true
+        return true;
         // return (
         //   restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) ===
         //   0
@@ -202,8 +225,8 @@ export default {
       ];
     },
     handleSelect(item) {
-      this.state = item.name
-      this.searchRes = [item]
+      this.state = item.name;
+      this.searchRes = [item];
     }
   }
 };
@@ -246,6 +269,6 @@ export default {
   overflow: hidden;
 }
 .search-item {
-    cursor: pointer;
+  cursor: pointer;
 }
 </style>

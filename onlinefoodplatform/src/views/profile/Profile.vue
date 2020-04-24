@@ -4,10 +4,9 @@
       <div class="order-title" slot="center">我的</div>
     </profile-nav-bar>
 
-    <tologin v-if="!userInfo.id"></tologin>
+    <tologin v-if="!userInfo.id" ></tologin>
     <div class v-else>
-      <tourists></tourists>
-      <!--&lt;!&ndash; <el-button @click="signClick">sign</el-button>-->
+      <tourists :user-info="userInfo"></tourists>
       <el-button @click="logoutClick">退出</el-button>
     </div>
   </div>
@@ -18,6 +17,7 @@ import Tourists from "./childComps/Tourists";
 import Tologin from "components/content/tologin/Tologin";
 import ProfileNavBar from "components/common/navbar/NavBar";
 import { sign } from "network/user";
+
 
 export default {
   name: "Profile",

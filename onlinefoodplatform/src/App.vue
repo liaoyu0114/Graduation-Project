@@ -3,7 +3,7 @@
     <keep-alive>
       <router-view class="view"></router-view>
     </keep-alive>
-     <div class="cart" @click="cartClick" v-if="$route.path !== '/cart'">
+    <div class="cart" @click="cartClick" v-if="showCart">
       <el-badge :value="cartLength" class="item">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </el-badge>
@@ -15,9 +15,9 @@
 <script>
 import AMap from "AMap";
 import MainTabBar from "@/components/content/maintabbar/MainTabBar";
-import {sign} from "./network/user";
+import { sign } from "./network/user";
 import { mapGetters } from "vuex";
-import { sendEmail } from "./network/yesapi"
+import { sendEmail } from "./network/yesapi";
 
 export default {
   name: "app",
@@ -26,30 +26,34 @@ export default {
   },
   data() {
     return {
-      list: ["/detail","/detail/goods","/detail/comment","/detail/shopinfo"]
+      listTab: [
+        "/detail",
+        "/detail/goods",
+        "/detail/comment",
+        "/detail/shopinfo",
+        "/sign"
+      ],
+      listCart: ["/sign", "/cart"]
     };
   },
   computed: {
     ...mapGetters(["cartLength"]),
     showTabbar() {
-      return this.list.indexOf(this.$route.path) === -1
+      return this.listTab.indexOf(this.$route.path) === -1;
+    },
+    showCart() {
+      return this.listCart.indexOf(this.$route.path) === -1;
     }
   },
   created() {
     this.signAuto();
-   
   },
   mounted() {
     this.getLocation();
   },
   methods: {
     cartClick() {
-      // this.$router.push("/cart");
-       sendEmail("1453473547@qq.com").then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
+      this.$router.push("/cart");
     },
     getLocation() {
       const self = this;
@@ -72,14 +76,8 @@ export default {
         function onError(data) {
           if (self.$route.path !== "/home") {
             self.getLngLatLocation();
-            return
+            return;
           }
-          self.$message({
-            howClose: true,
-            message: "定位出错，将使用IP定位，可能不准确",
-            type: "error"
-          });
-          console.log("err")
           self.getLngLatLocation();
         }
       });
@@ -90,7 +88,7 @@ export default {
       AMap.plugin("AMap.CitySearch", function() {
         const citySearch = new AMap.CitySearch();
         citySearch.getLocalCity(function(status, result) {
-          console.log(result)
+          console.log(result);
           if (status === "complete" && result.info === "OK") {
             // 查询成功，result即为当前所在城市信息
             //逆向地理编码
@@ -115,7 +113,7 @@ export default {
                     city: data.regeocode.addressComponent.city,
                     district: data.regeocode.addressComponent.district
                   };
-                  self.$store.state.homeLoading = address.district
+                  self.$store.state.homeLoading = address.district;
                   self.$store.commit("setIPInfo", address);
                 }
               });
@@ -145,19 +143,6 @@ export default {
 
             const adcode = address.adcode; // 省市编码
 
-            // if (
-            //   reg1.test(adcode) ||
-            //   reg2.test(adcode) ||
-            //   reg3.test(adcode) ||
-            //   reg4.test(adcode)
-            // ) {
-            //   _thisSelf.locationData.city =
-            //     result.regeocode.addressComponent.province;
-            // } else {
-            //   _thisSelf.locationData.city =
-            //     result.regeocode.addressComponent.city;
-            // }
-
             let location = {
               latitude,
               longitude,
@@ -169,7 +154,7 @@ export default {
               needAddress:
                 address.township + address.neighborhood + address.building
             };
-            _thisSelf.$store.state.homeLoading = location.needAddress
+            _thisSelf.$store.state.homeLoading = location.needAddress;
             _thisSelf.$store.commit("setLocation", location);
           } else {
             console.log("err location"); // 回调函数
@@ -178,16 +163,16 @@ export default {
       });
     },
     signAuto() {
-      if ( localStorage.phone.length !== 0 || localStorage.password !== 0) {
+      if (localStorage.phone.length !== 0 || localStorage.password !== 0) {
         let data = {
           user_phone: localStorage.phone,
           user_password: localStorage.password
         };
         sign(data).then(res => {
-            if( res.code === "000") {
-              this.$store.commit("setUserInfo", res.user);
-            }
-          })
+          if (res.code === "000") {
+            this.$store.commit("setUserInfo", res.user);
+          }
+        });
       }
     }
   }
@@ -204,11 +189,11 @@ export default {
 }
 .cart {
   position: fixed;
-  bottom: 70px;
+  bottom: 55px;
   right: 10px;
   background: #fff;
-  border: solid 1px #409EFF;
-  color: #409EFF;
+  border: solid 1px #409eff;
+  color: #409eff;
   width: 40px;
   height: 40px;
   line-height: 40px;

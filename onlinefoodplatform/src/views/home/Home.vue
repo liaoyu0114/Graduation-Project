@@ -27,7 +27,6 @@
     <transition name="slide-fade">
       <back-top @click.native="backClick" v-show="isShowBackTop" />
     </transition>
-   
   </div>
 </template>
 
@@ -42,6 +41,7 @@ import NavBar from "components/common/navbar/NavBar";
 import BackTop from "components/content/backTop/BackTop";
 import Colloction from "./childComs/Collection";
 import { mapGetters } from "vuex";
+import { selectshoprandom } from "network/user";
 
 export default {
   name: "Home",
@@ -55,8 +55,19 @@ export default {
     BackTop,
     Colloction
   },
+  computed: {
+    ...mapGetters(["userInfo"]),
+  },
   created() {
-    this.goodsShow = this.goods.concat();
+    selectshoprandom()
+      .then(res => {
+        console.log(res);
+        this.goods = res.shoplist;
+        this.goodsShow = this.goods.concat();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   data() {
     // debugger
@@ -176,33 +187,29 @@ export default {
       ],
       banners: [
         {
-          image:
-            "https://cube.elemecdn.com/2/1b/f3590c3724b08e4ce0c31599c0bc1jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
-          link: "https://cube.elemecdn.com/2/1b/f3590c3724b08e4ce0c31599c0bc1jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
+          image: "https://s1.ax1x.com/2020/04/24/J0fJED.jpg",
+          link: "https://s1.ax1x.com/2020/04/24/J0fJED.jpg"
         },
         {
-          image:
-            "https://cube.elemecdn.com/8/90/d9449f298cf74b4fdf10fd3a1d765png.png?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
-          link: "https://cube.elemecdn.com/8/90/d9449f298cf74b4fdf10fd3a1d765png.png?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
+          image: "https://s1.ax1x.com/2020/04/24/J0f8HO.png",
+          link: "https://s1.ax1x.com/2020/04/24/J0f8HO.png"
         },
         {
-          image:
-            "https://cube.elemecdn.com/0/9e/10ecca943c74e90c08211edf24feajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
-          link: "https://cube.elemecdn.com/0/9e/10ecca943c74e90c08211edf24feajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
+          image: "https://s1.ax1x.com/2020/04/24/J0fyVS.jpg",
+          link: "https://s1.ax1x.com/2020/04/24/J0fyVS.jpg"
         },
         {
-          image:
-            "https://cube.elemecdn.com/5/24/97c23a32025250ac945a69c69d3eajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
-          link: "https://cube.elemecdn.com/5/24/97c23a32025250ac945a69c69d3eajpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
+          image: "https://s1.ax1x.com/2020/04/24/J0frb8.jpg",
+          link: "https://s1.ax1x.com/2020/04/24/J0frb8.jpg"
         },
         {
-          image:
-            "https://cube.elemecdn.com/4/6e/bd5f54693e42bd46fa5a8788398f0jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/",
-          link: "https://cube.elemecdn.com/4/6e/bd5f54693e42bd46fa5a8788398f0jpeg.jpeg?x-oss-process=image/resize,m_fill,w_780,h_194/format,webp/"
+          image: "https://s1.ax1x.com/2020/04/24/J0fDDf.jpg",
+          link: "https://s1.ax1x.com/2020/04/24/J0fDDf.jpg"
         }
       ],
       goodsShow: [],
-      goods: [
+      goods: [],
+      goods2: [
         {
           shop_unique_key: "995e238d3c3f634614e52735f2c1fd99",
           id: "13",
@@ -680,7 +687,6 @@ export default {
     this.$bus.$off("imageLoad", this.itemImgListener);
   },
   methods: {
-    
     backClick() {
       this.$refs.scroll.uscrollTo(0, 0, 1);
     },
@@ -700,12 +706,12 @@ export default {
           break;
         case 1:
           this.goodsShow.sort(function(a, b) {
-            return b.rating - a.rating;
+            return b.shop_score - a.shop_score;
           });
           break;
         case 2:
           this.goodsShow.sort((a, b) => {
-            return b.month_sales - a.month_sales;
+            return b.shop_sales - a.shop_sales;
           });
           break;
       }
@@ -725,7 +731,7 @@ export default {
 .scroll {
   position: relative;
   top: 0;
-  height: calc(100vh - 86px - 100px);
+  height: calc(100vh - 86px - 95px);
   right: 0;
   left: 0;
   background: white;

@@ -1,4 +1,7 @@
 export default {
+  userInfo(state) {
+    return state.userInfo
+  },
   getLocation(state) {
     console.log(state)
     if (state.locationData.address.length !== 0) {
