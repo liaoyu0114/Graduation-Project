@@ -144,6 +144,9 @@
   .icon-pics {
     color: white;
   }
+  .strongbox {
+    color: #0090fa;
+  }
   @media screen and (min-width: 500px) {
     .home-cell:hover {
       background: #eeeeee;
