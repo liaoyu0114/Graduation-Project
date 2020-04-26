@@ -178,3 +178,13 @@ export function delectreceiving(data) {
     data: qs.stringify(data)
   })
 }
+export function selectDishesList(data) {
+  /**
+   * shop_id
+   */
+  return request({
+    method: "post",
+    url: "/selectDishesList",
+    data: qs.stringify(data)
+  })
+}

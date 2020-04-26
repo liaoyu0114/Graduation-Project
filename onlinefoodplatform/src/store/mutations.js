@@ -45,5 +45,6 @@ export default {
       state.userInfo.avatar = userInfo.user_pic;
       state.userInfo.createTime = userInfo.user_time;
       state.userInfo.email = userInfo.user_mail;
+      state.userInfo.collection = userInfo.collection
   }
 }

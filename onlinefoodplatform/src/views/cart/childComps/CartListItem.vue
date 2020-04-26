@@ -3,26 +3,26 @@
     <el-row :gutter="10" type="flex" justify="center">
       <el-col :span="2">
         <div class="item-selector">
-          <CheckButton @click.native="checkedChange" :is-active="product.checked"></CheckButton>
+          <CheckButton @checkClick="checkedChange" :is-active="product.checked"></CheckButton>
         </div>
       </el-col>
 
       <el-col :span="6">
         <div class="item-img">
-          <el-image :src="product.image"></el-image>
+          <el-image :src="product.dishes_pic"></el-image>
         </div>
       </el-col>
       <el-col :span="16">
         <div class="item-info">
           <el-col :span="24">
-            <div class="item-title">{{product.shop}}</div>
+            <div class="item-title">{{product.dishname}}</div>
           </el-col>
           <el-col :span="24">
-            <div class="item-desc">{{product.desc}}</div>
+            <div class="item-desc">{{product.material}}</div>
           </el-col>
           <el-col :span="20">
             <div class="info-bottom">
-              <div class="item-price left">¥{{product.price}}</div>
+              <div class="item-price left">¥{{product.dishes_price}}</div>
               <div class="item-count right">
                <div class="number-decrease" @click="decrease"><i class="el-icon-minus"></i></div>
                <div class="input-box"><input class="input" type="text" v-model="product.count"></div>
@@ -33,7 +33,7 @@
             </div>
           </el-col>
           <el-col :span="4">
-            <button @click="deleteClick"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button @click.prevent="deleteClick"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
           </el-col>
         </div>
       </el-col>
@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     checkedChange: function() {
+      console.log(this.$store.state.cartList)
       this.product.checked = !this.product.checked;
     },
     deleteClick() {
@@ -81,7 +82,7 @@ export default {
      
     },
     decrease() {
-      this.$store.commit('MUTATIONS', payload)
+      // this.$store.commit('MUTATIONS', payload)
     },
     increase() {
 

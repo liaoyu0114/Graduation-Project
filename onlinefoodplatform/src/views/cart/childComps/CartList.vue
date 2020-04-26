@@ -3,7 +3,8 @@
     <scroll class="content" ref="scroll">
      <cart-list-item v-for="(item, index) in cartList"
                      :product="item"
-                     :key="index" @deleteClick="deleteClick(index)"/>
+                     :key="index" 
+                     @deleteClick="deleteClick(index)"/>
     </scroll>
   </div>
 </template>

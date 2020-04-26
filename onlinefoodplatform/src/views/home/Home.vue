@@ -711,10 +711,11 @@ export default {
           break;
         case 2:
           this.goodsShow.sort((a, b) => {
-            return b.shop_sales - a.shop_sales;
+            return a.distance - b.distance;
           });
           break;
       }
+      console.log(this.goodsShow)
       // 同步吸顶tabcontrol和滚动tabcontrol的选中状态
       this.$refs.tabControl.currentIndex = index;
       this.$refs.tabControlFixed.currentIndex = index;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="checkClick">
     <div class="icon-selector" :class="{'selector-active': isActive}">
       <i class="fa fa-check" aria-hidden="true"></i> 
     </div>
@@ -14,6 +14,12 @@
         type: Boolean,
         default: false
       }
+    },
+    methods: {
+      checkClick() {
+        this.isActive = !this.isActive
+        this.$emit("checkClick")
+      }
     }
 
   }
@@ -21,12 +27,10 @@
 
 <style scoped>
   .icon-selector {
-    position: relative;
-    margin: 0;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid #ccc;
+    border: 2px solid red;
     cursor: pointer;
     line-height: 20px;
     font-size: 16px;

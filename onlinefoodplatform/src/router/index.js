@@ -10,10 +10,14 @@ const Profile = () => import('../views/profile/Profile');
 const Sign = () => import('../views/sign/Sign');
 const Detail = () => import('../views/detail/Detail');
 const SearchLocal = () => import('components/content/search/SearchLocal');
-const Cart = () => import('../views/cart/Cart');
+// const Cart = () => import('../views/cart/Cart');
+import Cart from '../views/cart/Cart'
 import Goods from '../views/detail/childComs/goods.vue';
 import Comment from '../views/detail/childComs/coment.vue';
 import ShopInfo from '../views/detail/childComs/shopinfo.vue';
+// const Goods = () => import('../views/detail/childComs/goods.vue');
+// const Comment = () => import('../views/detail/childComs/coment.vue');
+// const ShopInfo = () => import('../views/detail/childComs/shopinfo.vue');
 
 const routes = [
   {

@@ -1,6 +1,6 @@
 <template>
   <div id="app" ref="app">
-    <keep-alive>
+    <keep-alive :exclude="['/detail']">
       <router-view class="view"></router-view>
     </keep-alive>
     <div class="cart" @click="cartClick" v-if="showCart">
@@ -26,20 +26,16 @@ export default {
   },
   data() {
     return {
-      listTab: [
-        "/detail",
-        "/detail/goods",
-        "/detail/comment",
-        "/detail/shopinfo",
-        "/sign"
-      ],
       listCart: ["/sign", "/cart"]
     };
   },
   computed: {
     ...mapGetters(["cartLength"]),
     showTabbar() {
-      return this.listTab.indexOf(this.$route.path) === -1;
+      // return this.listTab.indexOf(this.$route.path) === -1;
+      return (
+        this.$route.path.indexOf("/sign") === -1
+      );
     },
     showCart() {
       return this.listCart.indexOf(this.$route.path) === -1;
@@ -164,9 +160,9 @@ export default {
     },
     signAuto() {
       if (!(localStorage.phone && localStorage.password)) {
-        return
-
-}if (localStorage.phone.length !== 0 || localStorage.password !== 0) {
+        return;
+      }
+      if (localStorage.phone.length !== 0 || localStorage.password !== 0) {
         let data = {
           user_phone: localStorage.phone,
           user_password: localStorage.password
