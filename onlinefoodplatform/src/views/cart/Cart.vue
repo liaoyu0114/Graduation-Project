@@ -4,7 +4,7 @@
       <div slot="center">购物车({{cartLength}})</div>
     </cart-nav-bar>
     <cart-list/>
-    <cart-bottom-bar/>
+    <!-- <cart-bottom-bar/> -->
   </div>
 </template>
 

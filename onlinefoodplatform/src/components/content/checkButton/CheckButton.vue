@@ -1,6 +1,6 @@
 <template>
   <div @click="checkClick">
-    <div class="icon-selector" :class="{'selector-active': isActive}">
+    <div class="icon-selector" :class="{selector: active}">
       <i class="fa fa-check" aria-hidden="true"></i> 
     </div>
   </div>
@@ -10,14 +10,20 @@
   export default {
     name: "CheckButton",
     props: {
-      isActive: {
+      active: {
         type: Boolean,
         default: false
       }
     },
+    
+    data () {
+      return {
+        actived: this.active
+      }
+    },
     methods: {
       checkClick() {
-        this.isActive = !this.isActive
+        this.actived = !this.actived
         this.$emit("checkClick")
       }
     }
@@ -37,7 +43,7 @@
     text-align: center;
   }
 
-  .selector-active {
+  .selector {
     background-color: #409EFF;
     border-color: #409EFF;
   }

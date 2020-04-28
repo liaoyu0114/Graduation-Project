@@ -36,6 +36,10 @@
     methods: {
       deleteClick(index) {
         this.cartList.splice(index,1);
+      },
+      checkedChange(index) {
+        console.log(index)
+        this.cartList[index].checked = !this.cartList.checked
       }
     }
   }

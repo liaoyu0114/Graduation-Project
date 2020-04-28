@@ -1,41 +1,53 @@
 <template>
   <div id="shop-item">
     <el-row :gutter="10" type="flex" justify="center">
-      <el-col :span="2">
-        <div class="item-selector">
-          <CheckButton @checkClick="checkedChange" :is-active="product.checked"></CheckButton>
-        </div>
-      </el-col>
-
-      <el-col :span="6">
+      <el-col :span="8">
         <div class="item-img">
-          <el-image :src="product.dishes_pic"></el-image>
+          <el-image :src="cartItem.dishes_pic"></el-image>
         </div>
       </el-col>
       <el-col :span="16">
         <div class="item-info">
           <el-col :span="24">
-            <div class="item-title">{{product.dishname}}</div>
+            <div class="item-title">{{cartItem.dishname}}</div>
           </el-col>
           <el-col :span="24">
-            <div class="item-desc">{{product.material}}</div>
+            <div class="item-desc">{{cartItem.material}}</div>
           </el-col>
           <el-col :span="20">
             <div class="info-bottom">
-              <div class="item-price left">¥{{product.dishes_price}}</div>
+              <div class="item-price left">¥{{cartItem.dishes_price}}</div>
               <div class="item-count right">
-               <div class="number-decrease" @click="decrease"><i class="el-icon-minus"></i></div>
-               <div class="input-box"><input class="input" type="text" v-model="product.count"></div>
-              
-                <div class="number-increase" @click="increase"><i class="el-icon-plus"></i></div>
+                <div class="number-decrease" @click="decrease">
+                  <i class="el-icon-minus"></i>
+                </div>
+                <div class="input-box">
+                  <input class="input" type="text" v-model="cartItem.count" />
+                </div>
+
+                <div class="number-increase" @click="increase">
+                  <i class="el-icon-plus"></i>
+                </div>
               </div>
-              
             </div>
           </el-col>
           <el-col :span="4">
-            <button @click.prevent="deleteClick"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button @click.prevent="deleteClick">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
           </el-col>
         </div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <div class="order-info">
+          总计： ￥{{}}
+        </div>
+        <div class="order-button">
+          <el-button type="primary" plain size="mini">去结算</el-button>
+        </div>
+        
       </el-col>
     </el-row>
   </div>
@@ -56,36 +68,54 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      cartItem: this.product,
+      active: this.product.checked
+    };
+  },
+  created() {
+    // this.cartItem = this.product
+  },
+  watch: {
+    cartItem(val) {
+      this.active = val.checked;
+    }
+  },
   methods: {
     checkedChange: function() {
-      console.log(this.$store.state.cartList)
-      this.product.checked = !this.product.checked;
+      console.log(this.product.checked);
+      // this.product.checked = true
+      this.cartItem.checked = !this.cartItem.checked;
+      console.log(this.product.checked);
+      // this.$set(this.product, "checked", !this.product.checked )
+      // this.$emit("checkedChange")
     },
     deleteClick() {
-      this.$confirm('此操作将删除商品, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-           this.$emit("deleteClick");
+      this.$confirm("此操作将删除商品, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$emit("deleteClick");
           this.$message({
-            type: 'success',
-            message: '删除成功!'
+            type: "success",
+            message: "删除成功!"
           });
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除"
+          });
         });
-            
-     
     },
     decrease() {
       // this.$store.commit('MUTATIONS', payload)
     },
     increase() {
-
+      this.cartItem.count++;
     }
   }
 };
@@ -98,6 +128,7 @@ export default {
   font-size: 0;
   padding: 5px;
   border-bottom: 1px solid #ccc;
+  flex-wrap: wrap;
 }
 .item-selector {
   width: 20px;
@@ -175,7 +206,8 @@ export default {
   display: flex;
   align-items: center;
 }
-.el-icon-minus,  .el-icon-plus{
+.el-icon-minus,
+.el-icon-plus {
   display: block;
   height: 20px;
   font-size: 16px;

@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-menu">
     <CheckButton class="select-all"
-                 :is-active="isSelectAll" @click.native="checkClick"></CheckButton>
+                 :active="isSelectAll" @click.native="checkClick"></CheckButton>
     <span class="sall">全选</span>
     <span class="total-price">合计: <strong>¥{{totalPrice}}</strong></span>
     <span class="buy-product">去计算({{cartLength}})</span>
@@ -36,6 +36,7 @@
       },
       isSelectAll() {
         //全选状态
+        console.log(this.cartList)
         if (this.cartList.length === 0) return false; //没有数据的情况
         // return !(this.cartList.filter(item => !item.checked).length);
         return !this.cartList.find(item => !item.checked)
@@ -43,6 +44,8 @@
     },
     methods: {
       checkClick() {
+        console.log(this.cartList)
+        console.log(this.isSelectAll)
         if (this.isSelectAll) {//全部选中变false
           this.cartList.forEach(item => item.checked = false)
         } else {//部分选中/全部未选中变true

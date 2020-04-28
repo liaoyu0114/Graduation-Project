@@ -2,11 +2,12 @@
   <div class="location">
     <div class="location-address" @click="localClick">
       <i class="iconfont icon-icon-dingwei"></i>
-      <div class="address-box" v-if="IPInfo.ProvinceName || locationData.needAddress">
+      <div class="address-box" v-if="locationData.needAddress.length !== 0">
         <div v-if="locationData.needAddress">
           {{locationData.needAddress}}
         </div>
-        <div v-else> {{IPInfo.ProvinceName}} {{IPInfo.CCityName}} {{IPInfo.RegionName}}</div>
+        <!-- <div v-else> {{IPInfo.ProvinceName}} {{IPInfo.CCityName}} {{IPInfo.RegionName}}</div> -->
+        <div v-else>定位失败</div>
         <div class="icon-down-u"></div>
       </div>
       <div class="address-box-2" v-else>
@@ -44,9 +45,9 @@
       }
     },
     created() {
-      setTimeout(function () {
+      setTimeout( () => {
       
-        if (this.IPInfo.ProvinceName.length === 0 || this.locationData.needAddress.length === 0) {
+        if (this.locationData.needAddress.length === 0) {
           this.isLoad = false
             console.log(1)
         }

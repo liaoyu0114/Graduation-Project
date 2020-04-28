@@ -24,7 +24,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="12" offset="12">
+      <el-col :span="12" :offset="12">
         <div class="button">
           <el-button type="primary" plain size="small">再来一单</el-button>
           <el-button type="warning" plain size="small">评价此单</el-button>

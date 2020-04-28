@@ -85,6 +85,7 @@ export default {
             type: "success",
             message: "重设成功!"
           });
+          this.$store.state.IPInfo = {}
           this.$store.commit("setLocation", addresss);
           this.backClick()
         })
