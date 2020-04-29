@@ -1,0 +1,179 @@
+<template>
+  <div class="create-order" v-loading.fullscreen.lock="fullscreenLoading">
+    <el-row>
+      <el-col :span="24">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>收货人地址</span>
+            <el-button style="float: right; padding: 3px 0" type="text">更改收货人</el-button>
+          </div>
+          <div class="order-address" v-if="currentAddress">
+            <div class="address-add">地址：{{currentAddress.receiving_address}}</div>
+            <div class="address-info">
+              <span>收货人：{{currentAddress.receiving_name}}</span>
+              <br />
+              <span>联系方式：{{currentAddress.receiving_phone}}</span>
+            </div>
+          </div>
+          <div class="no-address" v-else>
+            <el-button type="text">添加地址</el-button>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="24">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span class="header-title">{{orderItem.shop.shop_name}}</span>
+          </div>
+          <el-row :gutter="10">
+            <el-col :span="4">
+              <el-image :src="orderItem.dish.dishes_pic"></el-image>
+            </el-col>
+            <el-col :span="16">
+              <div>{{orderItem.dish.dishname}}</div>
+              <div class="order-count">x{{orderItem.count}}</div>
+            </el-col>
+            <el-col :span="4">
+              <div class="total-price">￥{{orderItem.dish.dishes_price * orderItem.count}}</div>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+      <el-col :span="24">
+        <el-card class="box-card">
+          <el-input type="textarea" :rows="2" placeholder="备注" v-model="remark"></el-input>
+          <div class="tableware">
+            <div>餐具份数</div>
+            <el-input-number size="mini" v-model="tablewareNumber" :min="1"></el-input-number>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="24">
+        <div class="add-button">
+            <el-button type="primary" plain size="small" @click="getOrder">确定</el-button>
+        </div>
+        
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import { selectReceivingByUserId,addOrder } from "network/user";
+export default {
+  name: "CreateOrder",
+  props: {
+    orderItem: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  },
+  data() {
+    return {
+      currentAddress: {},
+      addresses: [],
+      remark: "",
+      tablewareNumber: 1,
+      fullscreenLoading: false
+    };
+  },
+  mounted() {
+    selectReceivingByUserId({ user_id: this.$store.state.userInfo.id }).then(
+      res => {
+        if (res.code === "000") {
+          this.addresses = res.receivinglist;
+          if (this.addresses.length !== 0) {
+            this.currentAddress = this.addresses[0];
+          }
+        }
+      }
+    );
+  },
+  methods: {
+    getOrder() {
+      this.fullscreenLoading = true
+      if(this.currentAddress.length === 0) {
+        this.$notify({
+          title: '警告',
+          message: '添加地址！！！！',
+          type: 'warning'
+        });
+        return
+      } 
+      if(!this.$store.state.userInfo.id) {
+        this.$router.push("/sign")
+        return
+      }
+      let data = {
+        "user_id": this.$store.state.userInfo.id,
+        "dishes_id": this.orderItem.dish.dishes_id,
+        "number": this.orderItem.count,
+        "remark": this.remark,
+        "tableware_number": this.tablewareNumber,
+        "consignee_phone": this.currentAddress.receiving_phone,
+        "consignee_address": this.currentAddress.receiving_address
+      }
+      addOrder(data).then(res => {
+        
+        this.fullscreenLoading = false
+        if (res.code === "000") {
+          this.$emit("createSuccess", )
+        } else {
+           this.$notify({
+          title: '警告',
+          message: '下单失败!!!!',
+          type: 'warning'
+        });
+        }
+      }).catch(err => {
+        this.fullscreenLoading = false
+         this.$notify({
+          title: '警告',
+          message: '下单失败!!!!',
+          type: 'warning'
+        });
+      })
+    }
+  }
+};
+</script>
+
+<style scoped>
+.total-price {
+  color: #ff834f;
+}
+.header-title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #409EFF;
+}
+.order-count {
+  color: #999;
+}
+.tableware {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.add-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.add-button .el-button {
+  width: 50%;
+}
+.address-add {
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+}
+.address-info {
+  font-size: 13px;
+  color: #999;
+  padding-top: 10px;
+}
+</style>

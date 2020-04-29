@@ -20,7 +20,7 @@
   import Scroll from 'components/common/scroll/Scroll'
   import OrderNavBar from 'components/common/navbar/NavBar'
   import Tologin from 'components/content/tologin/Tologin'
-
+ import {selectOrderByState} from "network/user"
   export default {
     name: "Order",
     components: {
@@ -148,6 +148,13 @@
     },
     created() {
       this.userInfo = this.$store.state.userInfo
+      if(this.userInfo.id) {
+        selectOrderByState({"user_id": this.userInfo.id}).then(res => {
+          if (res.code === "000") {
+            this.orders = res.order
+          }
+        })
+      }
     }
   }
 </script>

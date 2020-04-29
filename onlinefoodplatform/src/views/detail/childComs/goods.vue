@@ -29,13 +29,12 @@
                       <div class="dishes-sales">销量{{item.sales_volume}}</div>
                     </div>
                   </div>
-                  <el-col :span="24" >
+                  <el-col :span="24">
                     <div @click="addCart(index)">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     </div>
                   </el-col>
                 </el-col>
-                
               </el-row>
             </el-card>
           </div>
@@ -62,17 +61,19 @@ export default {
       imgBaseUrl: "http://elm.cangdu.org/img/1700587e5b163508.jpg",
       goods: [],
       showDecris: [], //商品列表的高度集合
-      indexOfLeft: 0
+      indexOfLeft: 0,
+      shop: {}
     };
   },
   activated() {
-    this.goods = []
+    this.goods = [];
     selectDishesList({ shop_id: this.$route.params.id })
       .then(res => {
         if (res.code === "000") {
           this.goods = res.disheslist;
+          this.shop = res.shop;
           this.goods.forEach(item => {
-            this.showDecris.pop(false)
+            this.showDecris.pop(false);
             return (item.dishes_pic =
               "https://assets.hhh233.xyz/disheslouis-hansel-shotsoflouis-mVZ_gjm_TOk-unsplash.jpg?imageView2/1/w/320/h/200/format/webp/q/75|watermark/2/text/Q1VJVF8yMDE2MDYyMDYw6I-c5ZOB5rWL6K-V/font/5b6u6L2v6ZuF6buR/fontsize/400/fill/I0UwRTBFMA==/dissolve/100/gravity/Center/dx/10/dy/10");
           });
@@ -92,7 +93,10 @@ export default {
   },
   methods: {
     addCart(index) {
-      this.$store.dispatch('addCart', this.goods[index])
+      this.$store.dispatch("addCart", {
+        dish: this.goods[index],
+        shop: this.shop
+      });
     },
     refresh() {
       this.$refs.rightScroll.urefresh();

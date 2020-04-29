@@ -3,49 +3,55 @@
     <el-row :gutter="10" type="flex" justify="center">
       <el-col :span="8">
         <div class="item-img">
-          <el-image :src="cartItem.dishes_pic"></el-image>
+          <el-image :src="cartItem.dish.dishes_pic"></el-image>
         </div>
       </el-col>
       <el-col :span="16">
         <div class="item-info">
           <el-col :span="24">
-            <div class="item-title">{{cartItem.dishname}}</div>
+            <div class="item-title">{{cartItem.dish.dishname}}</div>
           </el-col>
           <el-col :span="24">
-            <div class="item-desc">{{cartItem.material}}</div>
+            <div class="item-desc">{{cartItem.dish.material}}</div>
           </el-col>
           <el-col :span="20">
             <div class="info-bottom">
-              <div class="item-price left">¥{{cartItem.dishes_price}}</div>
+              
               <div class="item-count right">
-                <div class="number-decrease" @click="decrease">
-                  <i class="el-icon-minus"></i>
+                <div class="item-price left">¥{{cartItem.dish.dishes_price}}</div>
+                <div class="number-decrease" >
+                  <el-button type="text" @click="decrease" :disabled="cartItem.count === 1"><i class="el-icon-minus"></i></el-button>
+                  
                 </div>
                 <div class="input-box">
-                  <input class="input" type="text" v-model="cartItem.count" />
+                 <!-- <div> -->
+<input class="input" type="text" v-model="cartItem.count" />
+                 <!-- </div> -->
+                  
                 </div>
 
-                <div class="number-increase" @click="increase">
-                  <i class="el-icon-plus"></i>
+                <div class="number-increase">
+                   <el-button type="text"  @click="increase">  <i class="el-icon-plus"></i></el-button>
+                
                 </div>
               </div>
             </div>
           </el-col>
           <el-col :span="4">
-            <button @click.prevent="deleteClick">
+            <el-button @click="deleteClick" type="text">
               <i class="fa fa-trash-o" aria-hidden="true"></i>
-            </button>
+            </el-button>
           </el-col>
         </div>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <div class="order-info">
-          总计： ￥{{}}
+        <div class="order-info" style="height: 100%">
+          总计： 
         </div>
         <div class="order-button">
-          <el-button type="primary" plain size="mini">去结算</el-button>
+          <el-button type="primary" plain size="mini" @click="createOrder">去结算</el-button>
         </div>
         
       </el-col>
@@ -91,6 +97,9 @@ export default {
       // this.$set(this.product, "checked", !this.product.checked )
       // this.$emit("checkedChange")
     },
+    createOrder() {
+      this.$emit("createOrder")
+    },
     deleteClick() {
       this.$confirm("此操作将删除商品, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -112,7 +121,11 @@ export default {
         });
     },
     decrease() {
-      // this.$store.commit('MUTATIONS', payload)
+      if (this.cartItem.count <= 1) {
+        this.$message("不能再少了哦")
+        return
+      }
+      this.cartItem.count--;
     },
     increase() {
       this.cartItem.count++;
@@ -178,6 +191,11 @@ export default {
 .info-bottom .item-price {
   color: orangered;
 }
+.item-price {
+  text-align: center;
+  margin: auto;
+  padding-right: 20px;
+}
 
 .box {
   display: flex;
@@ -188,7 +206,7 @@ export default {
 .item-count {
   display: flex;
   justify-content: space-around;
-  margin: 0 20px;
+  margin-right: 20px;
 }
 
 .input {
@@ -201,6 +219,7 @@ export default {
 .input-box {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .number-decrease， .number-increase {
   display: flex;
