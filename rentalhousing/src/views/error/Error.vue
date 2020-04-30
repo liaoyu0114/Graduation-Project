@@ -79,6 +79,7 @@ this.dialogTableVisible = false
   display: flex;
   position: relative;
   justify-content: center;
+  background: transparent;
 }
 
 .error-body {
@@ -104,16 +105,16 @@ this.dialogTableVisible = false
 .button {
   margin: 0 10px;
 }
-</style>
-
-<style>
 .bg {
   position: absolute;
   top: 0;
-  left: calc((100vw - 1000px) / 2);
   max-width: 1000px;
   width: 100%;
   height: calc(100vh - 60px);
   background: white;
 }
+</style>
+
+<style>
+
 </style>

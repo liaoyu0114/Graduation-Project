@@ -1,16 +1,5 @@
 <template>
   <div id="app">
-    <div class="nav">
-      <router-link to="/" class="nav-item">
-        <a-button type="primary">Home</a-button>
-      </router-link>
-      <router-link to="/detail" class="nav-item">
-        <a-button type="primary">Detail</a-button>
-      </router-link>
-      <router-link to="/login" class="nav-item">
-        <a-button type="primary">Login</a-button>
-      </router-link>
-    </div>
     <vue-particles
       class="particles"
       color="#fff"

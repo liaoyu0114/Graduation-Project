@@ -9,7 +9,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import VueParticles from 'vue-particles'
 
+import postMessage from "./network/request"
+
 Vue.config.productionTip = false;
+Vue.prototype.$post = postMessage
 
 Vue.use(ElementUI);
 Vue.use(VueParticles)
