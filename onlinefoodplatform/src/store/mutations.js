@@ -1,6 +1,7 @@
 import {
   ADD_COUNTER,
-  ADD_TO_CART
+  ADD_TO_CART,
+  ADD_TO_SHOP
 } from './mutation-types'
 
 export default {
@@ -11,6 +12,9 @@ export default {
   //购物车添加新商品
   [ADD_TO_CART](state, payload) {
     state.cartList.push(payload);
+  },
+  [ADD_TO_SHOP](state,payload) {
+    state.cartList.find(item => {return item.shop_id === payload.shop_id}).dishes.push(payload.dishes[0])
   },
   changeHomeScrollHeight(state, position) {
     state.homeScrollHeight = position;

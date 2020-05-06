@@ -94,8 +94,9 @@ export default {
   methods: {
     addCart(index) {
       this.$store.dispatch("addCart", {
-        dish: this.goods[index],
-        shop: this.shop
+        dishes: [this.goods[index]],
+        shop_id: this.shop.shop_id,
+        shop_name: this.shop.shop_name
       });
     },
     refresh() {

@@ -1,6 +1,7 @@
 import {
   ADD_COUNTER,
-  ADD_TO_CART
+  ADD_TO_CART,
+  ADD_TO_SHOP
 } from './mutation-types'
 
 export default {
@@ -15,16 +16,22 @@ export default {
      */
     return new Promise((resolve, reject) => {
       //1.查找之前数组中是否有这个商品
-      let oldProduct = context.state.cartList.find(item => {return item.dishes_id === payload.dishes_id});
-      //2.判断是否有这个商品
-      if (oldProduct) {
+      let oldShop = context.state.cartList.find(item => {return item.shop_id === payload.shop_id})
+      //2.判断是否有这个店铺
+      if (oldShop) {
         //数量加1
-        context.commit(ADD_COUNTER, oldProduct);
-        resolve();
+        let oldProduct = oldShop.dishes.find(item => { return item.dishes_id === payload.dishes.dishes_id});
+        if (oldProduct) {
+          context.commit(ADD_COUNTER, oldProduct)
+          resolve();
+        } else {
+          payload.dishes[0].count = 1;
+          context.commit(ADD_TO_SHOP, payload);
+          resolve();
+        }
       } else {
         //添加新的商品
-        payload.count = 1;
-        payload.checked = false;
+        payload.dishes[0].count = 1;
         context.commit(ADD_TO_CART, payload);
         resolve();
       }

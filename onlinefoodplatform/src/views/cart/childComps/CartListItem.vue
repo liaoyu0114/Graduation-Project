@@ -1,61 +1,64 @@
 <template>
-  <div id="shop-item">
-    <el-row :gutter="10" type="flex" justify="center">
-      <el-col :span="8">
-        <div class="item-img">
-          <el-image :src="cartItem.dish.dishes_pic"></el-image>
-        </div>
+  <div class="shop-item">
+    <el-row :gutter="10">
+      <el-col :span="24">
+        <span>{{cartItem.shop_name}}</span>
       </el-col>
-      <el-col :span="16">
-        <div class="item-info">
-          <el-col :span="24">
-            <div class="item-title">{{cartItem.dish.dishname}}</div>
-          </el-col>
-          <el-col :span="24">
-            <div class="item-desc">{{cartItem.dish.material}}</div>
-          </el-col>
-          <el-col :span="20">
-            <div class="info-bottom">
-              
-              <div class="item-count right">
-                <div class="item-price left">¥{{cartItem.dish.dishes_price}}</div>
-                <div class="number-decrease" >
-                  <el-button type="text" @click="decrease" :disabled="cartItem.count === 1"><i class="el-icon-minus"></i></el-button>
-                  
-                </div>
-                <div class="input-box">
-                 <!-- <div> -->
-<input class="input" type="text" v-model="cartItem.count" />
-                 <!-- </div> -->
-                  
-                </div>
-
-                <div class="number-increase">
-                   <el-button type="text"  @click="increase">  <i class="el-icon-plus"></i></el-button>
-                
+      <el-col v-for="(item,index) in cartItem.dishes" :key="index">
+        <el-col :span="8" >
+          <div class="item-img">
+            <el-image :src="item.dishes_pic" @click="increase(item)"></el-image>
+          </div>
+        </el-col>
+        <el-col :span="16">
+          <div class="item-info">
+            <el-col :span="24">
+              <div class="item-title">{{item.dishname}}</div>
+            </el-col>
+            <el-col :span="24">
+              <div class="item-desc">{{item.material}}</div>
+            </el-col>
+            <el-col :span="20">
+              <div class="info-bottom">
+                <div class="item-count right">
+                  <div class="item-price left">¥{{item.dishes_price}}</div>
+                  <div class="number-decrease">
+                    <el-button
+                      type="text"
+                      @click="decrease(index)"
+                      :disabled="item.count === 1"
+                    >
+                      <i class="el-icon-minus"></i>
+                    </el-button>
+                  </div>
+                  <div class="input-box">
+                    <input class="input" type="text" v-model="item.count" />
+                  </div>
+                  <div class="number-increase">
+                    <el-button type="text" @click="increase(index)">
+                      <i class="el-icon-plus"></i>
+                    </el-button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </el-col>
-          <el-col :span="4">
-            <el-button @click="deleteClick" type="text">
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
-            </el-button>
-          </el-col>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <div class="order-info" style="height: 100%">
-          总计： 
-        </div>
-        <div class="order-button">
-          <el-button type="primary" plain size="mini" @click="createOrder">去结算</el-button>
-        </div>
+            </el-col>
+            <el-col :span="4">
+              <el-button @click="deleteClick" type="text">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </el-button>
+            </el-col>
+          </div>
+        </el-col>
         
       </el-col>
+      <el-col :span="24" class="price-calc">
+          <div class="order-info" style="height: 100%">总计：{{totalPrice}}</div>
+          <div class="order-button">
+            <el-button type="primary" plain size="mini" @click="createOrder">去结算</el-button>
+          </div>
+        </el-col>
     </el-row>
+    <el-row></el-row>
   </div>
 </template>
 
@@ -83,6 +86,13 @@ export default {
   created() {
     // this.cartItem = this.product
   },
+  computed: {
+    totalPrice() {
+      return this.cartItem.dishes.reduce((total, val) => {
+        return total + val.count * val.dishes_price;
+      }, 0);
+    }
+  },
   watch: {
     cartItem(val) {
       this.active = val.checked;
@@ -98,7 +108,7 @@ export default {
       // this.$emit("checkedChange")
     },
     createOrder() {
-      this.$emit("createOrder")
+      this.$emit("createOrder");
     },
     deleteClick() {
       this.$confirm("此操作将删除商品, 是否继续?", "提示", {
@@ -120,15 +130,12 @@ export default {
           });
         });
     },
-    decrease() {
-      if (this.cartItem.count <= 1) {
-        this.$message("不能再少了哦")
-        return
-      }
-      this.cartItem.count--;
+    decrease(index) {
+      console.log(index)
+      this.cartItem.dishes[index].count--;
     },
-    increase() {
-      this.cartItem.count++;
+    increase(index) {
+      this.cartItem.dishes[index].count++;
     }
   }
 };
@@ -150,7 +157,10 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
+.price-calc {
+  display: flex;
+  justify-content: space-between;
+}
 .item-title,
 .item-desc {
   overflow: hidden;
