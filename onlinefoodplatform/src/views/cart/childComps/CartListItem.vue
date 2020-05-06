@@ -2,7 +2,7 @@
   <div class="shop-item">
     <el-row :gutter="10">
       <el-col :span="24">
-        <span>{{cartItem.shop_name}}</span>
+        <span class="cart-shop-name">{{cartItem.shop_name}}</span>
       </el-col>
       <el-col v-for="(item,index) in cartItem.dishes" :key="index">
         <el-col :span="8" >
@@ -58,7 +58,7 @@
           </div>
         </el-col>
     </el-row>
-    <el-row></el-row>
+    <div class="line"></div>
   </div>
 </template>
 
@@ -110,7 +110,7 @@ export default {
     createOrder() {
       this.$emit("createOrder");
     },
-    deleteClick() {
+    deleteClick(index) {
       this.$confirm("此操作将删除商品, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -132,6 +132,7 @@ export default {
     },
     decrease(index) {
       console.log(index)
+      this.$set(object, key, value)
       this.cartItem.dishes[index].count--;
     },
     increase(index) {
@@ -142,13 +143,17 @@ export default {
 </script>
 
 <style scoped>
-#shop-item {
+/* .shop-item {
   width: 100%;
   display: flex;
   font-size: 0;
   padding: 5px;
   border-bottom: 1px solid #ccc;
   flex-wrap: wrap;
+} */
+.cart-shop-name {
+  padding: 10px 10px;
+  color: var(--color-ele-blue)
 }
 .item-selector {
   width: 20px;
@@ -217,6 +222,12 @@ export default {
   display: flex;
   justify-content: space-around;
   margin-right: 20px;
+}
+.line {
+  background: #bbb;
+  height: 1px;
+  margin: 5px 0 5px;
+  width: 100%;
 }
 
 .input {

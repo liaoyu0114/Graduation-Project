@@ -5,9 +5,10 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>收货人地址</span>
-            <el-button style="float: right; padding: 3px 0" type="text">更改收货人</el-button>
+            <el-button style="float: right; padding: 3px 0" type="text" v-if="currentAddress.receiving_name">更改收货人</el-button>
+             <el-button style="float: right; padding: 3px 0" type="text" v-else>添加地址</el-button>
           </div>
-          <div class="order-address" v-if="currentAddress">
+          <div class="order-address" v-if="currentAddress.receiving_name">
             <div class="address-add">地址：{{currentAddress.receiving_address}}</div>
             <div class="address-info">
               <span>收货人：{{currentAddress.receiving_name}}</span>
@@ -15,26 +16,23 @@
               <span>联系方式：{{currentAddress.receiving_phone}}</span>
             </div>
           </div>
-          <div class="no-address" v-else>
-            <el-button type="text">添加地址</el-button>
-          </div>
         </el-card>
       </el-col>
       <el-col :span="24">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span class="header-title">{{orderItem.shop.shop_name}}</span>
+            <span class="header-title">{{orderItem.shop_name}}</span>
           </div>
-          <el-row :gutter="10">
+          <el-row :gutter="10" v-for="(item, index) in orderItem.dishes" :key="index">
             <el-col :span="4">
-              <el-image :src="orderItem.dish.dishes_pic"></el-image>
+              <el-image :src="item.dishes_pic"></el-image>
             </el-col>
             <el-col :span="16">
-              <div>{{orderItem.dish.dishname}}</div>
-              <div class="order-count">x{{orderItem.count}}</div>
+              <div>{{item.dishname}}</div>
+              <div class="order-count">x{{item.count}}</div>
             </el-col>
             <el-col :span="4">
-              <div class="total-price">￥{{orderItem.dish.dishes_price * orderItem.count}}</div>
+              <div class="total-price">￥{{item.dishes_price * item.count}}</div>
             </el-col>
           </el-row>
         </el-card>
