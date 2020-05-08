@@ -80,7 +80,7 @@
           @select="handleSelect"
         >
           <el-menu-item index="/" :class="{active: showActive === '/'}">租房</el-menu-item>
-          <el-menu-item index="myhouse" :class="{active: showActive === 'myhouse'}">我的房源</el-menu-item>
+          <el-menu-item index="myhouse" :class="{active: showActive === 'myhouse'}">我的租房</el-menu-item>
           <el-menu-item index="rentalmoneny" :class="{active: showActive === 'rentalmoneny'}">租金缴纳</el-menu-item>
           <el-menu-item index="error" :class="{active: showActive === 'error'}">报障处理</el-menu-item>
         </el-menu>

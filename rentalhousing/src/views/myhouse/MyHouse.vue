@@ -1,13 +1,19 @@
 <template>
   <div class="my-house">
     <div class="bg"></div>
-    <div class="house-box limit"></div>
+    <div class="house-box limit">
+      <my-house-cell></my-house-cell>
+    </div>
   </div>
 </template>
 
 <script>
+import MyHouseCell from "./MyHouseCell"
   export default {
-    name: "MyHouse"
+    name: "MyHouse",
+    components: {
+MyHouseCell
+    }
   }
 </script>
 
@@ -21,7 +27,7 @@
 }
 .limit {
   max-width: 1000px;
-  padding: 10px !important;
+  width: 100%;
   background: white;
 }
 .bg {

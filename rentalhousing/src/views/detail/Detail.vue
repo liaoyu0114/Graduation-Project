@@ -1,6 +1,6 @@
 <template>
   <div class="detail-page">
-        <div class="bg"></div>
+    <div class="bg"></div>
     <div class="detail-box">
       <el-row>
         <el-col>
@@ -83,7 +83,7 @@
               <div class="user-button">
                 <el-button type="primary" size="mini">联系ta</el-button>
                 <el-button type="primary" size="mini">预约看房</el-button>
-                <el-button type="primary" size="mini">租房申请</el-button>
+                <el-button type="primary" size="mini" @click="dialogVisible = true">租房申请</el-button>
               </div>
               <div class="user-describe"></div>
             </el-col>
@@ -167,16 +167,22 @@
         </el-col>
       </el-row>
       <el-container>
-  <el-footer>© Copyright 2018 Footer Template- All Rights Reserved</el-footer>
-</el-container>
+        <el-footer>© Copyright 2018 Footer Template- All Rights Reserved</el-footer>
+      </el-container>
     </div>
-
+    <el-dialog :title="diaTitle" :visible.sync="dialogVisible" width="60%">
+      <apply></apply>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import Apply from "./Apply"
 export default {
   name: "Detail",
+  components: {
+    Apply
+  },
   data() {
     return {
       items: [
@@ -190,7 +196,9 @@ export default {
         "https://s1.ax1x.com/2020/04/14/Gxx9yR.jpg",
         "https://s1.ax1x.com/2020/04/14/GznAK0.jpg",
         "https://s1.ax1x.com/2020/04/14/Gznlx1.jpg"
-      ]
+      ],
+      diaTitle: "",
+      dialogVisible: false
     };
   }
 };

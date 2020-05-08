@@ -1,7 +1,7 @@
 <template>
   <div class="rentail-moneny">
     <div class="bg"></div>
-    <div class="rental-boy">
+    <div class="rental-body">
       <rental-cell></rental-cell>
     </div>
   </div>
