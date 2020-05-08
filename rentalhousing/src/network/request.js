@@ -8,7 +8,7 @@ function qsData(data) {
 function request(config) {
   //1.创建axios实例
   const instance = axios.create({
-    baseURL: 'https://api.hhh233.xyz/onlineplatform',
+    baseURL: 'https://api.hhh233.xyz/rentalhousing',
     timeout: 5000,
   });
 

@@ -6,6 +6,9 @@
           <el-option v-for="item in house" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="详情描述" prop="detail">
+        <el-input v-model="form.detail" placeholder="请输入一些描述"></el-input>
+      </el-form-item>
       <el-form-item label="上传图片" prop="pic">
         <el-upload
           class="upload-demo"
@@ -20,7 +23,6 @@
           list-type="picture"
         >
           <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10mb, 最多三张图片</div>
         </el-upload>
       </el-form-item>
       <el-form-item>
@@ -59,10 +61,12 @@ export default {
     return {
       form: {
         house: "",
+        detail: "",
         pic: []
       },
       formRules:{
         house: [{ validator: validateHouse, trigger: "change" }],
+        detail: [{ required: true, message: '请输入详情描述', trigger: 'change' }],
         pic: [{ validator: validatePic, trigger: "change" }]
       } 
     };
@@ -84,7 +88,7 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 10;
 
       if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+        this.$message.error("上传头像图片只能是 JPG /PNG 格式!");
       }
       if (!isLt2M) {
         this.$message.error("上传头像图片大小不能超过 10MB!");

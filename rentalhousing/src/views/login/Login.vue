@@ -70,6 +70,11 @@
                   <i slot="suffix" class="el-input__icon el-icon-key"></i>
                 </el-input>
               </el-form-item>
+               <el-form-item prop="mail">
+                <el-input placeholder="请输入邮箱" v-model="ruleFormRegist.mail" type="text">
+                  <i slot="suffix" class="el-input__icon el-icon-bank-card"></i>
+                </el-input>
+              </el-form-item>
             </el-form>
           </label>
           <button type="button" class="submit" @click="loginClick('ruleFormRegist')">注 册</button>
@@ -120,6 +125,7 @@ export default {
       }
       callback();
     };
+    // let 
     return {
       loginType: false,
       ruleFormLogin: {
@@ -130,7 +136,8 @@ export default {
       ruleFormRegist: {
         rePhone: "",
         rePassword: "",
-        repeat: ""
+        repeat: "",
+        mail: ""
       },
       rulesLogin: {
         phone: [{ validator: validateName, trigger: "blur" }],
@@ -139,7 +146,8 @@ export default {
       rulesRegist: {
         rePhone: [{ validator: validateName, trigger: "blur" }],
         rePassword: [{ validator: validatePass, trigger: "blur" }],
-        repeat: [{ validator: validateRepeat, trigger: "blur" }]
+        repeat: [{ validator: validateRepeat, trigger: "blur" }],
+        mail: []
       }
     };
   },
@@ -151,64 +159,29 @@ export default {
       this.saveClick();
       this.$refs[fromName].validate(valid => {
         if (valid) {
-          this.$message("通过验证");
           this.loading = true;
-          //     let data = {
-          //       user_phone: this.ruleFormLogin.phone,
-          //       user_password: this.ruleFormLogin.password
-          //     };
-          //     sign(data).then(res => {
-          //       this.$confirm(res.msg, '提示', {
-          //         confirmButtonText: '确定',
-          //         cancelButtonText: '取消',
-          //         type: 'info'
-          //       }).then(() => {
-          //         this.loading = false;
-          //         if( res.code === "000") {
-          //           this.$store.commit("setUserInfo",res.user);
-          //           if (!this.checkInfo()) {
-          //             this.drawer = true
-          //           } else {
-          //             this.$router.push("/home")
-          //           }
-          //         }
-          //       })
-          //     }).catch(() => {
-          //       this.$message("网络错误")
-          //     })
-          //   } else {
-          //     return false
+          let data = {
+            "landlord_phone": this.ruleFormLogin.phone,
+            "landlord_password": this.ruleFormLogin.password
+          };
+          this.$post("/loginLandlord", data).then(res => {
+            console.log(res)
+          })
         }
       });
     },
     registClick(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$message("通过验证");
           this.loading = true;
-          //   let data = {
-          //     user_phone: this.ruleFormRegist.rePhone,
-          //     user_password: this.ruleFormRegist.rePassword
-          //   };
-          //   regist(data).then(res => {
-          //     this.$confirm(res.msg, '提示', {
-          //       confirmButtonText: '确定',
-          //       cancelButtonText: '取消',
-          //       type: 'info'
-          //     }).then(() => {
-          //       this.loading = false;
-          //       if( res.code === "000") {
-          //         this.$store.commit("setUserInfo",res.user);
-          //         if (!this.checkInfo()) {
-          //           this.drawer = true
-          //         } else {
-          //           this.$router.push("/home")
-          //         }
-          //       }
-          //     })
-          //   }).catch(err => {
-          //     this.$message("网络错误");
-          //   })
+            let data = {
+              "landlord_phone": this.ruleFormRegist.rePhone,
+              "landlord_password": this.ruleFormRegist.rePassword,
+              "landlord_mail": this.ruleFormRegist.mail
+            };
+            this.$post("/registLandlord", data).then(res => {
+              console.log(res)
+            })
         }
       });
     },

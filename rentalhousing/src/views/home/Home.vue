@@ -13,7 +13,9 @@
           <el-avatar
             :size="45"
             :src="avatar"
+            v-if="userInfo.landlord_id"
           ></el-avatar>
+          <el-button type="primary" plain v-else size="mini" @click="goLogin">去登陆</el-button>
         </div>
       </el-header>
       <el-header class="home-header" v-else>
@@ -36,8 +38,8 @@
             <el-menu-item index="error" :class="{active: showActive === 'error'}">报障处理</el-menu-item>
           </el-menu>
         </div>
-        <div class="header-avatar">
-          <el-popover placement="bottom" width="100" trigger="hover">
+        <div class="header-avatar" >
+          <el-popover placement="bottom" width="100" trigger="hover" v-if="userInfo.landlord_id">
             <div class="avatar-menu">
               <div class="avatar-menu-item" @click="showProfile">个人信息</div>
               <div class="avatar-menu-item" @click="changePassword">修改密码</div>
@@ -49,8 +51,11 @@
               :size="45"
               slot="reference"
               :src="avatar"
+              
             ></el-avatar>
+           
           </el-popover>
+           <el-button type="primary" plain v-else size="mini" @click="goLogin">去登陆</el-button>
         </div>
       </el-header>
       <router-view></router-view>
@@ -70,7 +75,7 @@
     <transition name="slide-fade">
       <div class="menu-box-mobile" v-if="mobileMenu">
         <el-menu
-          default-active="1"
+          default-active="/"
           class="el-menu-demo"
           mode="vertical"
           background-color="#fff"
@@ -87,7 +92,7 @@
       </div>
     </transition>
     <transition name="slide-fade">
-      <div class="avatar-box-mobile" v-if="showAvatarMenu">
+      <div class="avatar-box-mobile" v-if="showAvatarMenu && userInfo.landlord_id">
         <div class="avatar-menu-mobile">
           <div class="avatar-menu-mobile-item" @click="showProfile">个人信息</div>
           <div class="avatar-menu-mobile-item" @click="changePassword">修改密码</div>
@@ -105,6 +110,9 @@ import Profile from "../../components/Profile";
 import ChangePassword from "../../components/ChangePassword";
 import IdentifyValite from "../../components/IdentifyValite";
 import Houser from "../../components/Houser";
+
+import {mapGetters} from 'vuex'
+
 export default {
   name: "Home",
   components: {
@@ -134,6 +142,9 @@ export default {
     };
   },
   methods: {
+    goLogin() {
+      this.$router.push("/login")
+    },
     closeMune() {
       this.mobileMenu = false;
       this.showAvatarMenu = false;
@@ -185,6 +196,7 @@ export default {
     logout() {}
   },
   computed: {
+    ...mapGetters(["userInfo"]),
     widthWindow() {
       return window.screen.width > 500;
     }

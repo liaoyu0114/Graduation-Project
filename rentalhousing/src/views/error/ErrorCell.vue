@@ -7,7 +7,7 @@
       </div>
       <el-row class="card-body">
         <el-col :span="24" class="card-body-line">
-          详情有啥。。。。要不你给设计一下？？？详情、状态、报障时间、处理完成时间都怎么放
+          
         </el-col>
         <el-col :span="24"></el-col>
       </el-row>
