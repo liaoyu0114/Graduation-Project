@@ -2,7 +2,7 @@
   <div class="my-house">
     <div class="bg"></div>
     <div class="house-box limit">
-      <my-house-cell></my-house-cell>
+      <my-house-cell ></my-house-cell>
     </div>
   </div>
 </template>

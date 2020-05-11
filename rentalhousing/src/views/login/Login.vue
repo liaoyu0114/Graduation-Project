@@ -77,7 +77,7 @@
               </el-form-item>
             </el-form>
           </label>
-          <button type="button" class="submit" @click="loginClick('ruleFormRegist')">注 册</button>
+          <button type="button" class="submit" @click="registClick('ruleFormRegist')">注 册</button>
           <button type="button" class="fb-btn">
             使用
             <span>
@@ -129,8 +129,8 @@ export default {
     return {
       loginType: false,
       ruleFormLogin: {
-        phone: "",
-        password: "",
+        phone: "18382389882",
+        password: "123456",
         isSave: false
       },
       ruleFormRegist: {
@@ -165,12 +165,17 @@ export default {
             "landlord_password": this.ruleFormLogin.password
           };
           this.$post("/loginLandlord", data).then(res => {
-            console.log(res)
+            if (res.code === "000") {
+              this.$message.success("登陆成功");
+              this.$store.commit("setUserInfo",res.Landlord)
+              this.$router.push("/")
+            }
           })
         }
       });
     },
     registClick(formName) {
+      console.log(formName);
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.loading = true;

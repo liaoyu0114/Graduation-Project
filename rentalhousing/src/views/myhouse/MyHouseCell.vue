@@ -1,16 +1,10 @@
 <template>
   <div class="house-cell">
     <el-row>
-      <!-- <el-col :span="24">
-        <div class="house-header">
-          <el-button type="primary" size="small">发布新房源</el-button>
-        </div>
-      </el-col>-->
-      <el-col :span="24">
+      <el-col :span="24" v-if="userInfo.landlord_id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="house-title">衣冠庙地铁口 西南民大旁200米 出行便利 家具家电齐全</span>
-            <el-button style="float: right; padding: 3px 0" type="text">编辑</el-button>
           </div>
           <el-row :gutter="20">
             <el-col :span="6">
@@ -48,67 +42,81 @@
                   </div>
                 </el-col>
                 <el-col :span="4" :offset="20" class="price-box">
-                   <div class>
-            <span class="price">920</span>
-            <span>元/每月</span>
-          </div>
+                  <div class>
+                    <span class="price">920</span>
+                    <span>元/每月</span>
+                  </div>
                 </el-col>
               </el-row>
             </el-col>
           </el-row>
         </el-card>
       </el-col>
+      <el-col>
+        <div class="no-more">
+          <el-image style="width: 50%" src="https://assets.hhh233.xyz/iPhone_cff6e_RPReplay_Final1589202378.gif"></el-image>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-export default {
-  name: "MyHouseCell",
-  data() {
-    return {
-      url: "https://s1.ax1x.com/2020/04/13/GvcrND.jpg",
-      ur1: "https://s1.ax1x.com/2020/05/08/YnUMwR.jpg"
-    };
-  }
-};
+  import {mapGetters} from 'vuex'
+  export default {
+    name: "MyHouseCell",
+    data() {
+      return {
+        url: "https://s1.ax1x.com/2020/04/13/GvcrND.jpg",
+        ur1: "https://s1.ax1x.com/2020/05/08/YnUMwR.jpg"
+      };
+    },
+    computed: {
+        ...mapGetters(["userInfo"])
+    }
+  };
 </script>
 
 <style scoped>
-.house-cell {
-  padding: 10px;
-}
-.house-header {
-  margin-bottom: 10px;
-  margin-left: 10px;
-}
-.image {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.image-icon {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 2px 4px;
-  background: rgba(0, 0, 0, 0.2);
-}
-.icon-pics {
-  color: white;
-}
-.user-info {
-  display: flex;
-  justify-content: flex-start;
-  line-height: 50px;
-}
-.user-info-name {
-  padding: 0 10px;
-  font-size: 15px;
-  font-weight: 500;
-}
-.vr-line {
+  .house-cell {
+    padding: 10px;
+  }
+  .no-more {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  .house-header {
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+  .image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .image-icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2px 4px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .icon-pics {
+    color: white;
+  }
+  .user-info {
+    display: flex;
+    justify-content: flex-start;
+    line-height: 50px;
+  }
+  .user-info-name {
+    padding: 0 10px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .vr-line {
     position: relative;
   }
   .vr-line:before {

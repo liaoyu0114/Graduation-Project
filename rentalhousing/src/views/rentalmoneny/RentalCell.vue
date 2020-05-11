@@ -2,7 +2,7 @@
   <div class="rantal-cell">
     <el-row  >
       <el-col :span="24"></el-col>
-      <el-col :span="24">
+      <el-col :span="24" v-if="userInfo.landlord_id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="rental-title">订单id: 15000141881147845</span>
@@ -21,17 +21,31 @@
           </el-row>
         </el-card>
       </el-col>
+      <el-col>
+        <div class="no-more">
+          <el-image style="width: 50%" src="https://assets.hhh233.xyz/iPhone_cff6e_RPReplay_Final1589202378.gif"></el-image>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
 export default {
-  name: "RentalCell"
+  name: "RentalCell",
+  computed: {
+      ...mapGetters(["userInfo"])
+  }
 };
 </script>
 
 <style scoped>
+  .no-more {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
 .rantal-cell {
   padding: 10px;
 }

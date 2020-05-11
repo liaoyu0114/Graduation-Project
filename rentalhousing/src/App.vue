@@ -13,7 +13,20 @@
 export default {
   name: "app",
   created () {
-    this.showParticles = window.screen.width > 500
+    this.showParticles = window.screen.width > 500;
+    if (localStorage.phone !== "" && localStorage.password !== "") {
+      let data = {
+        "landlord_phone": localStorage.phone,
+        "landlord_password": localStorage.password
+      };
+      this.$post("/loginLandlord", data).then(res => {
+        if (res.code === "000") {
+          this.$store.commit("setUserInfo",res.Landlord);
+          this.$router.push("/")
+        }
+      })
+    }
+
   }
 };
 </script>
