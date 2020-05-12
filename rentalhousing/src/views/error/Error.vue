@@ -9,13 +9,28 @@
           </el-input>
           <div class="header-button">
             <el-button type="primary" size="small" class="button">搜索</el-button>
-            <el-button type="primary" size="small" class="button" @click="dialogTableVisible = true">新建报障</el-button>
+            <el-button
+              type="primary"
+              size="small"
+              class="button"
+              @click="dialogTableVisible = true"
+            >新建报障</el-button>
           </div>
         </el-col>
       </el-row>
-      <el-row class="form-box">
-        <el-col :span="24" v-for="item in 10" :key="item">
-          <error-cell></error-cell>
+      <el-row class="form-box" v-if="userInfo.tenant_id">
+        <el-col :span="24" v-for="(item,index) in errores" :key="index">
+          <error-cell :error="item"></error-cell>
+        </el-col>
+      </el-row>
+      <el-row v-else>
+        <el-col :span="24">
+          <div class="no-more">
+            <el-image
+              style="width: 50%"
+              src="https://assets.hhh233.xyz/iPhone_cff6e_RPReplay_Final1589202378.gif"
+            ></el-image>
+          </div>
         </el-col>
       </el-row>
       <el-dialog title="新建报障" :visible.sync="dialogTableVisible">
@@ -28,6 +43,7 @@
 <script>
 import ErrorCell from "./ErrorCell";
 import ErrorForm from "./ErrorForm";
+import { mapGetters } from "vuex";
 export default {
   name: "Error",
   components: {
@@ -39,7 +55,7 @@ export default {
       isCollapse: true,
       dialogTableVisible: false,
       search: "",
-      house: [
+      houseT: [
         {
           id: 111,
           name: "① 高升桥地铁站 应届生免押 无中介 可月付 可短租 衣冠庙"
@@ -52,8 +68,51 @@ export default {
           id: 333,
           name: "③ 高升桥地铁站 应届生免押 无中介 可月付 可短租 衣冠庙"
         }
+      ],
+      errores: [
+        {
+          obstacle_id: 191111,
+          obstacle_time: new Date().getTime() - 24 * 3600 * 10,
+          obstacle_state: 0, // 状态（0未处理、1正在处理、2已完成）
+          obstacle_detail: "备注信息",
+          obstacle_completiontime: new Date().getTime(), //完成时间
+          obstacle_pic: [
+            "https://assets.hhh233.xyz/markus-spiske-ypNLP0-ZB6E-unsplash.jpg"
+          ],
+          landlord: {},
+          // house: this.house[0],
+          tenant: {}
+        },
+        {
+          obstacle_id: 192222,
+          obstacle_time: new Date().getTime() - 24 * 3600 * 10,
+          obstacle_state: 1, // 状态（0未处理、1正在处理、2已完成）
+          obstacle_detail: "备注信息",
+          obstacle_completiontime: new Date().getTime(), //完成时间
+          obstacle_pic: [
+            "https://assets.hhh233.xyz/nathan-dumlao-a3ra9eXUjvo-unsplash.jpg"
+          ],
+          landlord: {},
+          // house: this.house[0],
+          tenant: {}
+        },{
+          obstacle_id: 193333,
+          obstacle_time: new Date().getTime() - 24 * 3600 * 10,
+          obstacle_state: 2, // 状态（0未处理、1正在处理、2已完成）
+          obstacle_detail: "备注信息",
+          obstacle_completiontime: new Date().getTime(), //完成时间
+          obstacle_pic: [
+             "https://assets.hhh233.xyz/markus-spiske-ypNLP0-ZB6E-unsplash.jpg"
+          ],
+          landlord: {},
+          // house: this.house[0],
+          tenant: {}
+        }
       ]
     };
+  },
+  computed: {
+    ...mapGetters(["userInfo", "landlord", "house"])
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -63,13 +122,20 @@ export default {
       console.log(key, keyPath);
     },
     onSubmit(form) {
-      console.log(form)
-      this.dialogTableVisible = false
-      this.$message(form.house.toString())
+      console.log(form);
+      this.dialogTableVisible = false;
+      this.$message(form.house.toString());
     },
     canelClick() {
-this.dialogTableVisible = false
+      this.dialogTableVisible = false;
     }
+  },
+  created () {
+    this.errores.map( item => { 
+      item.house = this.house[0]
+      item.landlord = this.landlord
+      item.tenant = this.userInfo
+    })
   }
 };
 </script>
@@ -113,8 +179,9 @@ this.dialogTableVisible = false
   height: calc(100vh - 60px);
   background: white;
 }
-</style>
-
-<style>
-
+.no-more {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 </style>

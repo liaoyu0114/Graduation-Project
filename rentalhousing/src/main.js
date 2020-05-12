@@ -8,12 +8,15 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import VueParticles from 'vue-particles'
+import moment from 'moment'
 
 import postMessage from "./network/request"
 
 Vue.config.productionTip = false;
 Vue.prototype.$post = postMessage
-
+Vue.filter('formatDate', function (input, fmtstring) {
+  return moment(Number(input)).format(fmtstring)
+});
 Vue.use(ElementUI);
 Vue.use(VueParticles)
 

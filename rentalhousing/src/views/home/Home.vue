@@ -39,7 +39,7 @@
           </el-menu>
         </div>
         <div class="header-avatar" >
-          <el-popover placement="bottom" width="100" trigger="hover" v-if="userInfo.landlord_id">
+          <el-popover placement="bottom" width="100" trigger="hover" v-if="userInfo.tenant_id">
             <div class="avatar-menu">
               <div class="avatar-menu-item" @click="showProfile">个人信息</div>
               <div class="avatar-menu-item" @click="changePassword">修改密码</div>
@@ -92,7 +92,7 @@
       </div>
     </transition>
     <transition name="slide-fade">
-      <div class="avatar-box-mobile" v-if="showAvatarMenu && userInfo.landlord_id">
+      <div class="avatar-box-mobile" v-if="showAvatarMenu && userInfo.tenant_id">
         <div class="avatar-menu-mobile">
           <div class="avatar-menu-mobile-item" @click="showProfile">个人信息</div>
           <div class="avatar-menu-mobile-item" @click="changePassword">修改密码</div>

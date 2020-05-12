@@ -161,13 +161,13 @@ export default {
         if (valid) {
           this.loading = true;
           let data = {
-            "landlord_phone": this.ruleFormLogin.phone,
-            "landlord_password": this.ruleFormLogin.password
+            "tenant_phone": this.ruleFormLogin.phone,
+            "tenant_password": this.ruleFormLogin.password
           };
-          this.$post("/loginLandlord", data).then(res => {
+          this.$post("/loginTenant", data).then(res => {
             if (res.code === "000") {
               this.$message.success("登陆成功");
-              this.$store.commit("setUserInfo",res.Landlord)
+              this.$store.commit("setUserInfo",res.Tenant)
               this.$router.push("/")
             }
           })
@@ -180,11 +180,11 @@ export default {
         if (valid) {
           this.loading = true;
             let data = {
-              "landlord_phone": this.ruleFormRegist.rePhone,
-              "landlord_password": this.ruleFormRegist.rePassword,
-              "landlord_mail": this.ruleFormRegist.mail
+              "tenant_phone": this.ruleFormRegist.rePhone,
+              "tenant_password": this.ruleFormRegist.rePassword,
+              "tenant_mail": this.ruleFormRegist.mail
             };
-            this.$post("/registLandlord", data).then(res => {
+            this.$post("/registTenant", data).then(res => {
               console.log(res)
             })
         }

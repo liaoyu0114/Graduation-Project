@@ -26,8 +26,8 @@
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
-        <el-button @click="canelClick">取消</el-button>
+        <el-button type="primary" @click="onSubmit('form')" size="small">立即创建</el-button>
+        <el-button @click="canelClick" size="small" type="danger">取消</el-button>
       </el-form-item>
     </el-form>
   </div>

@@ -16,13 +16,15 @@ export default {
     this.showParticles = window.screen.width > 500;
     if (localStorage.phone !== "" && localStorage.password !== "") {
       let data = {
-        "landlord_phone": localStorage.phone,
-        "landlord_password": localStorage.password
+        "tenant_phone": localStorage.phone,
+        "tenant_password": localStorage.password
       };
-      this.$post("/loginLandlord", data).then(res => {
+      this.$post("/loginTenant", data).then(res => {
         if (res.code === "000") {
-          this.$store.commit("setUserInfo",res.Landlord);
-          this.$router.push("/")
+          this.$store.commit("setUserInfo",res.Tenant);
+          if (this.$route.path === '/login') {
+            this.$router.push("/") 
+          }
         }
       })
     }
