@@ -11,22 +11,13 @@
           v-if="error.obstacle_state === 2"
         >完成时间： {{error.obstacle_completiontime | formatDate("YYYY-MM-DD HH:mm")}}</span>
         <div class="error-status">
-          <span v-if="error.obstacle_state === 0">未处理</span>
-          <span v-else-if="error.obstacle_state === 1">正在处理</span>
-          <span v-else>已完成</span>
+          <span v-if="error.obstacle_state === 0" class="willdo">未处理</span>
+          <span v-else-if="error.obstacle_state === 1" class="doing">正在处理</span>
+          <span v-else class="finished">已完成</span>
         </div>
       </div>
       <el-row class="card-body" :gutter="10">
         <el-col :span="12" class="card-body-line">
-          <!-- <el-col :span="24" style="display:flex; justify-content: flex-start"> -->
-          <!-- <div> -->
-          <el-image
-            fit="contain"
-            style="width: 412px; height: 128px"
-            :src="error.house.housingresources_pic[0]"
-            :preview-src-list="error.house.housingresources_pic"
-          ></el-image>
-          <!-- </div> -->
           <div class="info-box">
             <div>房源: {{error.house.housingresources_name}}</div>
             <div>地址: {{error.house.housingresources_address}}</div>
@@ -37,22 +28,22 @@
               <span style="padding: 10px">{{error.landlord.landlord_nickname}}</span>
             </div>
           </div>
-          <!-- </el-col> -->
-          <!-- <el-col :span="4"></el-col> -->
         </el-col>
-        <el-col :span="12">
-          <!-- <el-col :span="24" style="display:flex; justify-content: flex-start"> -->
-       
-            <el-image
-              fit="contain"
-              style="width: 412px; height: 128px"
-              :src="error.obstacle_pic[0]"
-              :preview-src-list="error.obstacle_pic"
-            ></el-image>
-            <div>报障图片</div>
+        <el-col :span="12" class="card-body-line">
+        <div style="width: 200px;text-align: center">
+          <el-image
+                  fit="contain"
+                  style="width: 200px;height: 128px"
+                  :src="error.obstacle_pic[0]"
+                  :preview-src-list="error.obstacle_pic"
+          ></el-image>
+          <div style="color: #999; font-size: 12px">点击图片查看更多</div>
+        </div>
 
-          <!-- </el-col> -->
-          <!-- <el-col :span="4"></el-col> -->
+          <div class="info-box">
+            <div class="error-remark">备注信息</div>
+            <div class="error-remark-detail">{{error.obstacle_detail}}</div>
+          </div>
         </el-col>
       </el-row>
     </el-card>
@@ -69,6 +60,24 @@ export default {
 </script>
 
 <style scoped>
+  .error-remark {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .error-remark-detail {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .willdo {
+    color: #f56c6c;
+  }
+  .doing {
+    color: #E6A23C;
+  }
+  .finished {
+    color: #67C23A;
+  }
 .card-title {
   font-size: 14px;
   color: #0090fa;

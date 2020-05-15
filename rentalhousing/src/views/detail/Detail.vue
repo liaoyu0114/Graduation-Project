@@ -166,9 +166,7 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-container>
-        <el-footer>© Copyright 2018 Footer Template- All Rights Reserved</el-footer>
-      </el-container>
+
     </div>
     <el-dialog :title="diaTitle" :visible.sync="dialogVisible" width="60%">
       <apply></apply>
@@ -231,10 +229,10 @@ export default {
 .bg {
   position: absolute;
   top: 0;
-  left: calc((100vw - 1215px) / 2);
-  max-width: 1200px;
+  left: calc((100vw - 1220px) / 2);
+  max-width: 1220px;
   width: 100%;
-  height: calc(100vh - 60px);
+  height: 100vh;
   background: white;
   z-index: -1;
 }

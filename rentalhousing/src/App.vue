@@ -6,6 +6,9 @@
       v-if="showParticles"
     ></vue-particles>
     <router-view />
+    <!--<el-container style="background: white">-->
+      <!--<el-footer style="text-align: center; line-height: 30px">© Copyright 2020 CUIT.zhaoboling- All Rights Reserved</el-footer>-->
+    <!--</el-container>-->
   </div>
 </template>
 

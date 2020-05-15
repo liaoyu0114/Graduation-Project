@@ -34,7 +34,7 @@
         </el-col>
       </el-row>
       <el-dialog title="新建报障" :visible.sync="dialogTableVisible">
-        <error-form :house="house" @onSubmit="onSubmit" @canelClick="canelClick"></error-form>
+        <error-form :house="houseT" @onSubmit="onSubmit" @canelClick="canelClick"></error-form>
       </el-dialog>
     </div>
   </div>
@@ -124,7 +124,22 @@ export default {
     onSubmit(form) {
       console.log(form);
       this.dialogTableVisible = false;
-      this.$message(form.house.toString());
+      this.$message.success("创建成功");
+      this.errores =  [
+          {
+        obstacle_id: 194444,
+        obstacle_time: new Date().getTime() - 24 * 3600 * 10,
+        obstacle_state:0, // 状态（0未处理、1正在处理、2已完成）
+        obstacle_detail: form.detail,
+        obstacle_completiontime: new Date().getTime(), //完成时间
+        obstacle_pic: [
+          "https://assets.hhh233.xyz/markus-spiske-ypNLP0-ZB6E-unsplash.jpg"
+        ],
+        landlord: this.landlord,
+        tenant: this.userInfo,
+        house: this.house[0]
+      }
+      ].concat(this.errores)
     },
     canelClick() {
       this.dialogTableVisible = false;
