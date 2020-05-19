@@ -4,7 +4,7 @@
       <el-col :span="6">
         <div class="image">
           <el-image
-                  :src="url"
+                  :src="scope.housingresources_pic"
           ></el-image>
           <div class="image-icon">
             <i class="iconfont icon-pics"></i>
@@ -15,22 +15,39 @@
         <el-col :span="20">
           <div class="cell-title">
             <b class="strongbox">
-              <a>高升桥地铁站 应届生免押 无中介 可月付 可短租 衣冠庙</a>
+              <!--housingresources_address: (...)-->
+              <!--housingresources_area: (...)-->
+              <!--housingresources_category: (...)-->
+              <!--housingresources_floor: (...)-->
+              <!--housingresources_id: (...)-->
+              <!--housingresources_introduce: (...)-->
+              <!--housingresources_latitude: (...)-->
+              <!--housingresources_longitude: (...)-->
+              <!--housingresources_name: (...)-->
+              <!--housingresources_orientations: (...)-->
+              <!--housingresources_pic: (...)-->
+              <!--housingresources_price: (...)-->
+              <!--housingresources_renttype: (...)-->
+              <!--housingresources_state: (...)-->
+              <!--housingresources_type: (...)-->
+              <!--housingresources_village: (...)-->
+              <!--landlord_id: (...)-->
+              <a>{{scope.housingresources_name}}</a>
             </b>
           </div>
           <div class="cell-describe">
             <div class="des-box">
-              <span class="vr-line">3室1厅</span>
-              <span class="vr-line">15平米</span>
-              <span class="vr-line">高层(共17层)</span>
+              <span class="vr-line">{{scope.housingresources_type}}</span>
+              <span class="vr-line">{{scope.housingresources_area}}平米</span>
+              <span class="vr-line">{{scope.housingresources_floor}}层</span>
               <span>
-                <i class="iconfont icon-profile"></i>李双全
+                {{scope.housingresources_category}}
               </span>
             </div>
 
             <div class="dec-address">
-              <span class="vr-line">武侯名园</span>
-              <span class="vr-line">武侯-武侯祠大街</span>
+              <span class="vr-line">{{scope.housingresources_village}}</span>
+              <span class="vr-line">{{scope.housingresources_address}}</span>
               <span>武侯祠横街18号</span>
             </div>
             <div class="tag-group">
@@ -46,7 +63,7 @@
         </el-col>
         <el-col :span="4" class="price-box">
           <div class>
-            <span class="price">920</span>
+            <span class="price">{{scope.housingresources_price}}</span>
             <span>元/每月</span>
           </div>
         </el-col>
@@ -56,7 +73,7 @@
       <el-col :span="24">
         <el-card :body-style="{ padding: '0px' }">
           <el-image
-                  :src="url"
+                  :src="scope.housingresources_pic"
                   class="image"
           ></el-image>
           <div class="cardbox">
@@ -101,6 +118,9 @@
 <script>
   export default {
     name: "HomeCell",
+    props: {
+      scope: {}
+    },
     data() {
       return {
         items: [

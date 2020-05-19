@@ -29,7 +29,10 @@
           <div class="line"></div>
           <el-row>
             <el-col :span="24">
-                            <home-cell v-for="item in 10" :key="item" @click.native="pushDetail"></home-cell>
+              <home-cell v-for="(item,index) in houseArr"
+                         :key="index"
+                         :scope="item"
+                         @click.native="pushDetail(index)"></home-cell>
             </el-col>
           </el-row>
         </el-main>
@@ -110,10 +113,11 @@ export default {
             "1500-2000元",
             "2000-3000元",
             "3000-4000元",
-            "4500元以上"
+            "4000元以上"
           ]
         }
-      ]
+      ],
+      houseArr: []
     };
   },
   computed: {
@@ -130,17 +134,89 @@ export default {
       return flag
     }
   },
+  created() {
+    this.getHouse();
+  },
   methods: {
-    pushDetail() {
-      console.log(1);
-      this.$router.push("/detail");
+    pushDetail(index) {
+      this.$router.push({
+        path: "/detail",
+        // query: {
+        //   id: this.houseArr[index].housingresources_id
+        // }
+      });
+      console.log(index);
     },
     detailClick(index, dIndex) {
-      console.log(this.form[this.formIndex[dIndex]])
-      console.log(this.category[index].detail[dIndex])
       this.form[this.formIndex[index]] = this.category[index].detail[dIndex]
-      console.log(this.form[this.formIndex[dIndex]])
-      console.log(index, dIndex);
+      this.getHouse()
+    },
+    getHouse() {
+      let data = this.getData();
+      this.$post("/selectHousingresourcesList", data).then(res => {
+        if (res.code === "000") {
+          this.houseArr = res.housingresourceslist
+        } else {
+          this.$message.error("出现了一些系统错误！！！")
+        }
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+        this.$message.error("无网络！！！")
+      })
+    },
+    getData() {
+      let data = {};
+      switch (this.form.price) {
+        case "500以下":
+          data.housingresources_price_max = 500;
+          break;
+        case "500-1000元":
+          data.housingresources_price_max = 1000;
+          data.housingresources_price_min = 500;
+          break;
+        case "1000-1500元":
+          data.housingresources_price_max = 1500;
+          data.housingresources_price_min = 1000;
+          break;
+        case "1500-2000元":
+          data.housingresources_price_max = 2000;
+          data.housingresources_price_min = 1500;
+          break;
+        case "2000-3000元":
+          data.housingresources_price_max = 3000;
+          data.housingresources_price_min = 2000;
+          break;
+        case "3000-4000元":
+          data.housingresources_price_max = 4000;
+          data.housingresources_price_min = 3000;
+          break;
+        case "4000元以上":
+          data.housingresources_price_min = 4000;
+          break;
+        default:
+          break;
+      }
+      data.currIndex = this.form.currIndex;
+      data.pageSize = this.form.pageSize;
+      data.housingresources_name = this.form.name;
+
+      if (this.form.category !== "不限") {
+        data.housingresources_category = this.form.category;
+      }
+      if (this.form.type !== "不限") {
+        data.housingresources_type = ""
+      }
+      if (this.form.floor !== "不限") {
+        data.housingresources_floor = this.form.floor
+      }
+      if (this.form.orientations !== "不限") {
+        data.housingresources_orientations = this.form.orientations
+      }
+      if (this.form.renttype !== "不限") {
+        data.housingresources_renttype = this.form.renttype
+      }
+      return data
     }
   }
 };

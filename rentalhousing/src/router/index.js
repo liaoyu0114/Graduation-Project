@@ -23,22 +23,22 @@ const Homing = () => import('../views/homing/Homing');
         component: Homing
       },
       {
-        path: '/detail',
+        path: 'detail',
         name: 'Detail',
         component: Detail
       },
       {
-        path: "/error",
+        path: "error",
         name: "Error",
         component: Error
       },
       {
-        path: "/rentalmoneny",
+        path: "rentalmoneny",
         name: "RentalMoneny",
         component: RentalMoneny
       },
       {
-        path: "/myhouse",
+        path: "myhouse",
         name: "MyHouse",
         component: MyHouse
       }
