@@ -61,7 +61,7 @@
       <router-view></router-view>
     </el-container>
     <el-dialog
-      title="个人信息"
+      :title="title"
       :visible.sync="dialogVisible"
       :width="dialogWidth"
       :before-close="handleClose"
@@ -138,7 +138,8 @@ export default {
       profileVisible: false,
       passwordVisible: false,
       identifyVisible: false,
-      houserVisible: false
+      houserVisible: false,
+      title: ""
     };
   },
   methods: {
@@ -180,20 +181,29 @@ export default {
     showProfile() {
       this.dialogVisible = true;
       this.profileVisible = true;
+      this.title = "个人信息"
     },
     changePassword() {
       this.dialogVisible = true;
       this.passwordVisible = true;
+      this.title = "修改密码"
     },
     identifyValite() {
       this.dialogVisible = true;
       this.identifyVisible = true;
+      this.title = "身份验证"
+
     },
     becomeHouser() {
       this.dialogVisible = true;
       this.houserVisible = true;
+      this.title = "注册房东"
     },
-    logout() {}
+    logout() {
+      localStorage.phone = "";
+      localStorage.password = "";
+      this.$store.state.userInfo = {};
+    }
   },
   computed: {
     ...mapGetters(["userInfo"]),

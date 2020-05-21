@@ -17,6 +17,10 @@
       <el-form-item :label="label.repeat" prop="repeat">
         <el-input v-model="password.repeat" placeholder="输入"></el-input>
       </el-form-item>
+      <el-form-item>
+        <el-button type="primary" style="width: 45%" @click="changePass">确定</el-button>
+        <el-button type="danger" style="width: 45%" @click="cancel">取消</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -50,6 +54,14 @@ export default {
       for (let item in this.label) {
         this.label[item] = "";
       }
+    }
+  },
+  methods: {
+    cancel() {
+      this.$emit("cancelChangePass")
+    },
+    changePass() {
+
     }
   }
 };

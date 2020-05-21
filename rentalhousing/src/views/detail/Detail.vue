@@ -198,6 +198,18 @@ export default {
       diaTitle: "",
       dialogVisible: false
     };
+  },
+  created() {
+    this.getHouseDetail()
+  },
+  methods: {
+    getHouseDetail() {
+      this.$post("/selectHousingresourcesById", {"housingresources_id": this.$route.query.id}).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    }
   }
 };
 </script>

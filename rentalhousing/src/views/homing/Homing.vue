@@ -27,12 +27,15 @@
             </el-col>
           </el-row>
           <div class="line"></div>
-          <el-row>
+          <el-row v-loading="loading">
             <el-col :span="24">
               <home-cell v-for="(item,index) in houseArr"
                          :key="index"
                          :scope="item"
-                         @click.native="pushDetail(index)"></home-cell>
+                         @click.native="pushDetail(index)" ref="house"></home-cell>
+              <div class="no-data" v-if="houseArr.length === 0">
+                暂无数据
+              </div>
             </el-col>
           </el-row>
         </el-main>
@@ -52,6 +55,7 @@ export default {
     return {
       activeName: "second",
       showData: [],
+      loading: false,
       price: 0,
       formIndex: ["category","type","floor","orientations","renttype","price"],
       form: {
@@ -137,13 +141,43 @@ export default {
   created() {
     this.getHouse();
   },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
   methods: {
+    handleScroll () {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop ||
+          document.body.scrollTop
+      if (scrollTop > this.$refs.house.clientHeight - 200) {
+        this.loadMore();
+      }
+      console.log(scrollTop);
+      console.log(this.$refs.house[this.houseArr.length - 1].$el.offsetTop)
+    },
+    loadMore() {
+      console.log("loadmore");
+      this.form.currIndex += 1;
+      let data = this.getData();
+      this.$post("/selectHousingresourcesList", data).then(res => {
+        if (res.code === "000") {
+          this.houseArr.concat(res.housingresourceslist)
+        } else {
+          this.$message.error("出现了一些系统错误！！！")
+        }
+        this.loading = false;
+        console.log(res);
+      }).catch(err => {
+        console.log(err);
+        this.$message.error("无网络！！！");
+        this.loading = false
+      })
+    },
     pushDetail(index) {
       this.$router.push({
         path: "/detail",
-        // query: {
-        //   id: this.houseArr[index].housingresources_id
-        // }
+        query: {
+          id: this.houseArr[index].housingresources_id
+        }
       });
       console.log(index);
     },
@@ -153,16 +187,19 @@ export default {
     },
     getHouse() {
       let data = this.getData();
+      this.loading = true
       this.$post("/selectHousingresourcesList", data).then(res => {
         if (res.code === "000") {
           this.houseArr = res.housingresourceslist
         } else {
           this.$message.error("出现了一些系统错误！！！")
         }
+        this.loading = false
         console.log(res);
       }).catch(err => {
         console.log(err);
-        this.$message.error("无网络！！！")
+        this.$message.error("无网络！！！");
+        this.loading = false
       })
     },
     getData() {
@@ -170,6 +207,7 @@ export default {
       switch (this.form.price) {
         case "500以下":
           data.housingresources_price_max = 500;
+          data.housingresources_price_min = 0
           break;
         case "500-1000元":
           data.housingresources_price_max = 1000;
@@ -192,6 +230,7 @@ export default {
           data.housingresources_price_min = 3000;
           break;
         case "4000元以上":
+          data.housingresources_price_max = 9999999;
           data.housingresources_price_min = 4000;
           break;
         default:
@@ -223,6 +262,12 @@ export default {
 </script>
 
 <style scoped>
+  .no-data {
+    text-align: center;
+    padding: 20px 0;
+    color: #999999;
+    /*border-bottom: dashed #999999 1px;*/
+  }
 .categpry-search {
   display: flex;
   justify-content: space-between;

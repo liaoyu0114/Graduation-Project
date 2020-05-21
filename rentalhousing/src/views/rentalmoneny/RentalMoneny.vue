@@ -1,10 +1,10 @@
 <template>
   <div class="rentail-moneny">
     <div class="bg"></div>
-    <div class="rental-body">
+    <div class="rental-body" v-if="rentOrderOne === 0">
       <rental-cell v-for="(item, index) in rentOrder" :key="index" :rent="item"></rental-cell>
     </div>
-    <el-row v-if="!userInfo.tenant_id">
+    <el-row v-if="rentOrderOne.length === 0 && rentOrderTwo.length === 0">
       <el-col :span="24">
         <div class="no-more">
           <el-image style="width: 50%" src="https://assets.hhh233.xyz/iPhone_cff6e_RPReplay_Final1589202378.gif"></el-image>
@@ -24,39 +24,59 @@ export default {
   },
   data() {
     return {
-      rentOrder: [
-        {
-          rent_id: 123930,
-          landlord: {},
-          house: {},
-          tenant: {},
-          rent_price: 888,
-          rent_time: new Date().getTime(),
-          rent_endtime: new Date().getTime(),
-          rent_type: 0
-        },
-        {
-          rent_id: 198376,
-          landlord: {},
-          house: {},
-          tenant: {},
-          rent_price: 999,
-          rent_time: new Date().getTime(),
-          rent_endtime: new Date().getTime(),
-          rent_type: 1
-        }
-      ]
+      rentOrderOne: [
+      ],
+      rentOrderTwo: [],
+      queryStateOne: {
+        "tenant_id": "",
+        "rent_type": 0, //未缴纳
+        "currIndex": 1,
+        "pageSize": 15
+      },
+      queryStateTwo: {
+        "tenant_id": "",
+        "rent_type": 1, //已缴纳
+        "currIndex": 1,
+        "pageSize": 15
+      }
+
     };
   },
   created () {
-    this.rentOrder.map( item => { 
-      item.house = this.house[0]
-      item.landlord = this.landlord
-      item.tenant = this.userInfo
-    })
+    // this.rentOrder.map( item => {
+    //   item.house = this.house[0]
+    //   item.landlord = this.landlord;
+    //   item.tenant = this.userInfo
+    // })
+    this.loadRentOne()
   },
   computed: {
     ...mapGetters(["userInfo", "landlord", "house"])
+  },
+  methods: {
+    loadRentOne() {
+      this.queryStateOne.tenant_id = this.userInfo.tenant_id;
+      this.$post("/selectRentListByTenantId", this.queryStateOne)
+          .then(res => {
+
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
+    },
+    loadRentTwo() {
+      this.queryStateTwo.tenant_id = this.userInfo.tenant_id;
+      this.$post("/selectRentListByTenantId", this.queryStateTwo)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
+    }
   }
 };
 </script>
