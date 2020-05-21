@@ -7,9 +7,13 @@
           <el-row>
             <el-col :span="24" style="margin: 10px 0">
               <div class="categpry-search">
-                <el-input v-model="form.housingresources_name" placeholder="输入关键字搜索" size="small"></el-input>
+                <el-input v-model="form.housingresources_name" clearable placeholder="输入关键字搜索" size="small"></el-input>
                 <div>
-                  <el-button type="primary" plain size="small" style="width: 100px">搜索</el-button>
+                  <el-button type="primary"
+                             plain
+                             size="small"
+                             @click="getHouse"
+                             style="width: 100px">搜索</el-button>
                 </div>
               </div>
             </el-col>
@@ -141,21 +145,8 @@ export default {
   created() {
     this.getHouse();
   },
-  mounted () {
-    window.addEventListener('scroll', this.handleScroll)
-  },
   methods: {
-    handleScroll () {
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop ||
-          document.body.scrollTop
-      if (scrollTop > this.$refs.house.clientHeight - 200) {
-        this.loadMore();
-      }
-      console.log(scrollTop);
-      console.log(this.$refs.house[this.houseArr.length - 1].$el.offsetTop)
-    },
     loadMore() {
-      console.log("loadmore");
       this.form.currIndex += 1;
       let data = this.getData();
       this.$post("/selectHousingresourcesList", data).then(res => {
