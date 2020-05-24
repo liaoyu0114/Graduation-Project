@@ -10,7 +10,7 @@ import 'element-ui/lib/theme-chalk/display.css';
 import VueParticles from 'vue-particles'
 import moment from 'moment'
 
-import postMessage from "./network/request"
+
 
 Vue.config.productionTip = false;
 Vue.prototype.$post = postMessage

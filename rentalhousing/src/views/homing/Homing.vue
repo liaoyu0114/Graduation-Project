@@ -25,7 +25,7 @@
                   :key="dIndex"
                   @click="detailClick(index,dIndex)"
                   class="category-detail"
-                  :class="{active: form[formIndex[index]] == detail}"
+                  :class="{active: form[formIndex[index]] === detail}"
                 >{{detail}}</div>
               </div>
             </el-col>
