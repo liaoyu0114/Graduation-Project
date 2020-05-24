@@ -15,9 +15,12 @@
         >
           <i class="el-icon-edit el-input__icon" slot="suffix" @click="handleIconClick"></i>
           <template slot-scope="{ item }">
-            <div class="name">{{ item.name }}</div>
+            <div>
+              <div class="name" @click="pushDetail(item.shop_id)">{{ item.shop_name }}</div>
 
-            <span class="addr">{{ item.address }}</span>
+              <span class="addr">{{ item.shop_address }}</span>
+            </div>
+
           </template>
         </el-autocomplete>
       </el-col>
@@ -68,33 +71,50 @@ export default {
     };
   },
   watch: {
-    state(val, oldVal) {
-      selectshoprandom({"shop_name": val}).then(res => {
-        if (res.shoplist.length === 0 ) {
-          this.resState = true
-          this.resText = "搜索不到了"
-        } else {
-           this.resState = false
-          this.searchRes = res.shoplist
-        }
-      }).catch(() => {
-        this.resState = true
-          this.resText = "网络错误"
-      })
-    }
+    // state(val, oldVal) {
+    //   selectshoprandom({"shop_name": val}).then(res => {
+    //     if (res.shoplist.length === 0 ) {
+    //       this.resState = true
+    //       this.resText = "搜索不到了"
+    //     } else {
+    //        this.resState = false
+    //       this.searchRes = res.shoplist
+    //     }
+    //   }).catch(() => {
+    //     this.resState = true
+    //       this.resText = "网络错误"
+    //   })
+    // }
   },
   methods: {
     handleIconClick(ev) {
       console.log(ev);
     },
+    pushDetail(id) {
+      this.$router.push('/detail/shop' +id);
+    },
     querySearch(queryString, cb) {
-      var restaurants = this.restaurants;
-      var results = queryString
-        ? restaurants.filter(this.createFilter(queryString))
-        : restaurants;
-      // 调用 callback 返回建议列表的数据
-      this.searchRes = results;
-      cb();
+      // var restaurants = this.restaurants;
+      // var results = queryString
+      //   ? restaurants.filter(this.createFilter(queryString))
+      //   : restaurants;
+      // // 调用 callback 返回建议列表的数据
+      // this.searchRes = results;
+      this.$post("/selectshoprandom", {
+        "shop_name": queryString
+      }).then(res => {
+        console.log(res);
+        if (res.code === "000") {
+          cb(res.shoplist)
+        } else {
+          this.$message.warning(res.msg)
+          cb()
+        }
+      }).catch(err => {
+        console.log(err);
+        this.$message.error("网络错误！！")
+        cb()
+      });
     },
     createFilter(queryString) {
       return restaurant => {
@@ -225,7 +245,7 @@ export default {
       ];
     },
     handleSelect(item) {
-      this.state = item.name;
+      this.state = item.shop_name;
       this.searchRes = [item];
     }
   }

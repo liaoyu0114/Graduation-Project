@@ -6,11 +6,13 @@ import './registerServiceWorker'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/7b13e9176e'
+import postMessage from 'network'
 
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.prototype.$bus = new Vue();
+Vue.prototype.$post = postMessage
 
 /**
  * 重写路由的push方法

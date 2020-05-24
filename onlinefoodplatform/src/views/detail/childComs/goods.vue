@@ -96,7 +96,7 @@ export default {
       this.$store.dispatch("addCart", {
         dishes: [this.goods[index]],
         shop_id: this.shop.shop_id,
-        shop_name: this.shop.shop_name
+        shop_name: this.shop.shop_name,
       });
     },
     refresh() {

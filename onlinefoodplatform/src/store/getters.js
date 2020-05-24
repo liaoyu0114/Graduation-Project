@@ -20,7 +20,9 @@ export default {
     }
   },
   cartLength(state) {
-    return state.cartList.length;
+    return state.cartList.reduce((total, val) => {
+      return total + val.dishes.length
+    }, 0);
   },
   cartList(state) {
     return state.cartList;

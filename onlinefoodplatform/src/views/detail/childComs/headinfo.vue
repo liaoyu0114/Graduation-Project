@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="24">
         <div class="header-bg">
-          <el-image :src="bgUrl"></el-image>
+          <el-image style="height: 150px" fit="cover" :src="bgUrl"></el-image>
           <div class="avatar">
             <div>
               <el-avatar :src="shopInfo.shop_pic" :size="100" class="e-avatar"></el-avatar>
@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      bgUrl: "https://assets.hhh233.xyz/045%20%282%29.jpg"
+      bgUrl: "https://assets.hhh233.xyz/brooke-lark-08bOYnH_r_E-unsplash.jpg"
     };
   }
 };

@@ -20,9 +20,9 @@ export default {
       //2.判断是否有这个店铺
       if (oldShop) {
         //数量加1
-        let oldProduct = oldShop.dishes.find(item => { return item.dishes_id === payload.dishes.dishes_id});
+        let oldProduct = oldShop.dishes.find(item => { return item.dishes_id === payload.dishes[0].dishes_id});
         if (oldProduct) {
-          context.commit(ADD_COUNTER, oldProduct)
+          context.commit(ADD_COUNTER, oldProduct);
           resolve();
         } else {
           payload.dishes[0].count = 1;

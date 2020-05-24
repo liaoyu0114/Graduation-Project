@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <span>收货人地址</span>
             <el-button style="float: right; padding: 3px 0" type="text" v-if="currentAddress.receiving_name">更改收货人</el-button>
-             <el-button style="float: right; padding: 3px 0" type="text" v-else>添加地址</el-button>
+             <el-button style="float: right; padding: 3px 0" type="text" v-else @click="showTips">添加地址</el-button>
           </div>
           <div class="order-address" v-if="currentAddress.receiving_name">
             <div class="address-add">地址：{{currentAddress.receiving_address}}</div>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { selectReceivingByUserId,addOrder } from "network/user";
+import { selectReceivingByUserId, addOrder } from "network/user";
 export default {
   name: "CreateOrder",
   props: {
@@ -90,49 +90,68 @@ export default {
     );
   },
   methods: {
+    showTips() {
+      this.$confirm('请前往个人信息页添加地址', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+    },
     getOrder() {
-      this.fullscreenLoading = true
-      if(this.currentAddress.length === 0) {
+
+      if(!this.currentAddress.receiving_name) {
         this.$notify({
           title: '警告',
           message: '添加地址！！！！',
           type: 'warning'
         });
-        return
-      } 
-      if(!this.$store.state.userInfo.id) {
-        this.$router.push("/sign")
-        return
+      } else if(!this.$store.state.userInfo.id) {
+        this.$router.push("/sign");
+        this.$emit("closeDia")
+      } else {
+        // this.fullscreenLoading = true;
+
+        let data = {
+          "user_id": this.$store.state.userInfo.id,
+          "shop_id": this.orderItem.shop_id,
+          "orderDishesList": this.orderItem.dishes.map(item => {
+            let dish = {
+              "dishes_id": item.dishes_id,
+              "orderdishes_number": item.count
+            }
+            return dish
+          }),
+          "remark": this.remark,
+          "tableware_number": this.tablewareNumber,
+          "consignee_phone": this.currentAddress.receiving_phone,
+          "consignee_address": this.currentAddress.receiving_address
+        };
+        this.$post("/addOrder", data).then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log(err);
+        })
+        // addOrder(data).then(res => {
+        //
+        //   // this.fullscreenLoading = false;
+        //   if (res.code === "000") {
+        //     this.$emit("createSuccess", )
+        //   } else {
+        //     this.$notify({
+        //       title: '警告',
+        //       message: '下单失败!!!!',
+        //       type: 'warning'
+        //     });
+        //   }
+        // }).catch(err => {
+        //   // this.fullscreenLoading = false
+        //   this.$notify({
+        //     title: '警告',
+        //     message: '网络出错！！！',
+        //     type: 'warning'
+        //   });
+        // })
       }
-      let data = {
-        "user_id": this.$store.state.userInfo.id,
-        "dishes_id": this.orderItem.dish.dishes_id,
-        "number": this.orderItem.count,
-        "remark": this.remark,
-        "tableware_number": this.tablewareNumber,
-        "consignee_phone": this.currentAddress.receiving_phone,
-        "consignee_address": this.currentAddress.receiving_address
-      }
-      addOrder(data).then(res => {
-        
-        this.fullscreenLoading = false
-        if (res.code === "000") {
-          this.$emit("createSuccess", )
-        } else {
-           this.$notify({
-          title: '警告',
-          message: '下单失败!!!!',
-          type: 'warning'
-        });
-        }
-      }).catch(err => {
-        this.fullscreenLoading = false
-         this.$notify({
-          title: '警告',
-          message: '下单失败!!!!',
-          type: 'warning'
-        });
-      })
     }
   }
 };

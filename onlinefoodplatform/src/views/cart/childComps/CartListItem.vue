@@ -7,7 +7,7 @@
       <el-col v-for="(item,index) in cartItem.dishes" :key="index">
         <el-col :span="8" >
           <div class="item-img">
-            <el-image :src="item.dishes_pic" @click="increase(item)"></el-image>
+            <el-image :src="item.dishes_pic"></el-image>
           </div>
         </el-col>
         <el-col :span="16">
@@ -32,7 +32,9 @@
                     </el-button>
                   </div>
                   <div class="input-box">
-                    <input class="input" type="text" v-model="item.count" />
+                    <label>
+                      <input class="input" type="text" v-model="countArr[index]" />
+                    </label>
                   </div>
                   <div class="number-increase">
                     <el-button type="text" @click="increase(index)">
@@ -43,13 +45,13 @@
               </div>
             </el-col>
             <el-col :span="4">
-              <el-button @click="deleteClick" type="text">
+              <el-button @click="deleteClick(index)" type="text">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
               </el-button>
             </el-col>
           </div>
         </el-col>
-        
+
       </el-col>
       <el-col :span="24" class="price-calc">
           <div class="order-info" style="height: 100%">总计：{{totalPrice}}</div>
@@ -79,12 +81,16 @@ export default {
   },
   data() {
     return {
-      cartItem: this.product,
-      active: this.product.checked
+      cartItem: [],
+      active: this.product.checked,
+      countArr:[]
     };
   },
   created() {
-    // this.cartItem = this.product
+    this.cartItem = this.product
+    this.product.dishes.forEach(item => {
+      this.countArr.push(item.count)
+    })
   },
   computed: {
     totalPrice() {
@@ -94,9 +100,6 @@ export default {
     }
   },
   watch: {
-    cartItem(val) {
-      this.active = val.checked;
-    }
   },
   methods: {
     checkedChange: function() {
@@ -117,7 +120,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.$emit("deleteClick");
+          this.$emit("deleteClick", this.cartItem[index].dishes_id,index);
           this.$message({
             type: "success",
             message: "删除成功!"
@@ -131,12 +134,13 @@ export default {
         });
     },
     decrease(index) {
-      console.log(index)
-      this.$set(object, key, value)
-      this.cartItem.dishes[index].count--;
+      // this.$set(object, key, value)
+      // this.$set(this.cartItem, dishes[index], this.cartItem.dishes[index].count--)
+      this.countArr[index]--;
     },
     increase(index) {
-      this.cartItem.dishes[index].count++;
+      // this.$set(this.cartItem, dishes[index], this.cartItem.dishes[index].count++)
+      this.product.dishes[index].count++;
     }
   }
 };

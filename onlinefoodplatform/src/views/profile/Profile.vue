@@ -7,7 +7,7 @@
     <tologin v-if="!userInfo.id" ></tologin>
     <div class v-else>
       <tourists :user-info="userInfo"></tourists>
-      <el-button @click="logoutClick">退出</el-button>
+      <el-button @click="logoutClick" style="width: 100%" plain type="danger">退出</el-button>
     </div>
   </div>
 </template>
