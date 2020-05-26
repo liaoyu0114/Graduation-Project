@@ -25,14 +25,14 @@
                       text-color="#ff9900"
                     ></el-rate>
                     <div class="dish-info-detal">
-                      <div class="dish-price">{{item.dishes_price}}</div>
-                      <div class="dishes-sales">销量{{item.sales_volume}}</div>
+                      <div class="dish-price">${{item.dishes_price}}</div>
+                      <div class="dishes-sales" >销量{{item.sales_volume}}</div>
                     </div>
                   </div>
                   <el-col :span="24">
-                    <div @click="addCart(index)">
+                    <el-button @click="addCart(index)" style="float: right;font-size: 18px" type="primary" plain size="mini">
                       <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    </div>
+                    </el-button>
                   </el-col>
                 </el-col>
               </el-row>
@@ -148,6 +148,13 @@ export default {
 </script>
 
 <style scoped>
+  .dish-info-detal {
+    display: flex;
+      justify-content: space-between;
+  }
+  .dishes-sales {
+    color: orange;
+  }
 .scroll-left,
 .scroll-right {
   position: relative;

@@ -2,36 +2,49 @@
   <div class="order-list">
     <el-row :gutter="5">
       <el-col :span="3">
-        <el-image :src="orderItem.shop.url"></el-image>
+        <el-image :src="shop.shop_pic"></el-image>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="16">
         <div class="order-text">
-          {{orderItem.shop.name}}
+          {{shop.shop_name}}
           <i class="el-icon-arrow-right icon-order"></i>
         </div>
-        <div class="order-time">{{orderItem.time}}</div>
+        <div class="order-time">
+          <el-rate :value="shop.shop_score" disabled></el-rate>
+        </div>
       </el-col>
-      <el-col :span="9">
+      <el-col :span="5">
         <div class="order-state">{{state}}</div>
       </el-col>
     </el-row>
-    <el-row :gutter="5" class="order-item-money">
+    <el-row :gutter="5" class="order-item-money" v-for="(item, index) in dishesList">
       <el-col :span="14" :offset="4">
-        <div class="order-item">{{orderItem.good}}</div>
+        <div class="order-item">{{item.dishname}} <span>x{{orderDisheslist[index].orderdishes_number}}</span>  </div>
       </el-col>
       <el-col :span="5">
-        <div class="order-money">￥{{orderItem.moneny}}</div>
+        <div class="order-money">￥{{item.dishes_price}}</div>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="12" :offset="12">
         <div class="button">
-          <el-button type="primary" plain size="small">再来一单</el-button>
-          <el-button type="warning" plain size="small">评价此单</el-button>
+          <el-button type="primary" plain size="small" v-if="orderItem.state === 3">再来一单</el-button>
+          <el-button type="primary" plain size="small" v-else @click="showDetail">查看详情</el-button>
+          <el-button type="warning" plain size="small" @click="rating = true">评价此单</el-button>
+        </div>
+      </el-col>
+      <el-col v-if="rating">
+        <div class="block">
+          <el-rate
+            v-model="value2"
+            @change="rated"
+            :colors="colors">
+          </el-rate>
         </div>
       </el-col>
     </el-row>
     <div class="bottom-line"></div>
+
   </div>
 </template>
 
@@ -46,30 +59,72 @@ export default {
   },
   data () {
     return {
-      state: ""
+      state: "",
+      order: {},
+      shop: {},
+      orderDisheslist: [],
+      dishesList: [],
+      visible2: false,
+      rating: false,
+      value2: null,
+      colors: ['#99A9BF', '#F7BA2A', '#FF9900']
     }
   },
+  created() {
+    this.$post("/selectOrderById", {"order_id": this.orderItem.order_id}).then(res => {
+      if (res.code === "000") {
+        this.order = res.order;
+        this.orderDisheslist = res.orderDisheslist;
+        this.shop = res.shop;
+        this.dishesList = res.dishesList;
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  },
   mounted () {
-    
       switch (this.orderItem.state) {
-        case 1:
+        case 0:
           this.state = "已下单";
           break;
-        case 2:
+        case 1:
           this.state = "制作中";
           break;
-        case 3:
+        case 2:
           this.state = "配送中";
           break;
-        case 4:
+        case 3:
           this.state = "已收货";
           break;
         default:
           this.state = "";
           break;
       }
-      console.log(this.state)
-  }
+  },
+   methods: {
+     showDetail() {
+       let data = {
+         order: this.order,
+         dishesList: this.dishesList,
+         shop: this.shop,
+         orderDisheslist: this.orderDisheslist
+       }
+       this.$emit("showDig", data)
+     },
+     rated() {
+       this.$post("/updateshopinfo", {
+         "business_id": this.shop.business_id,
+         "shop_score": this.value2
+       }).then(res => {
+         this.$message.success("成功评分")
+         this.rating = false;
+         console.log(res);
+       }).catch(err => {
+         this.rating = false;
+         console.log(err);
+       })
+     }
+   }
 };
 </script>
 

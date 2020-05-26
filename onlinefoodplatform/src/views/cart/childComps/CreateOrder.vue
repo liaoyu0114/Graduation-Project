@@ -34,6 +34,7 @@
             <el-col :span="4">
               <div class="total-price">￥{{item.dishes_price * item.count}}</div>
             </el-col>
+            <el-col><div  style="height: 100%">总计：<span class="order-info">￥{{totalPrice}}</span></div></el-col>
           </el-row>
         </el-card>
       </el-col>
@@ -77,17 +78,26 @@ export default {
       fullscreenLoading: false
     };
   },
+  computed: {
+    totalPrice() {
+      return this.orderItem.dishes.reduce((total, val) => {
+        return total + val.count * val.dishes_price;
+      }, 0);
+    }
+  },
   mounted() {
-    selectReceivingByUserId({ user_id: this.$store.state.userInfo.id }).then(
-      res => {
-        if (res.code === "000") {
-          this.addresses = res.receivinglist;
-          if (this.addresses.length !== 0) {
-            this.currentAddress = this.addresses[0];
-          }
+    selectReceivingByUserId({ "user_id": this.$store.state.userInfo.id }).then(res => {
+      if (res.code === "000") {
+        this.addresses = res.receivinglist;
+        if (this.addresses.length !== 0) {
+          this.currentAddress = this.addresses[0];
         }
+      } else {
+        this.$message.warning(res.msg)
       }
-    );
+    }).catch(() => {
+      this.$message.error("网络错误")
+    });
   },
   methods: {
     showTips() {
@@ -110,26 +120,31 @@ export default {
         this.$emit("closeDia")
       } else {
         // this.fullscreenLoading = true;
-
+        let orderString = this.orderItem.dishes.map(item => {
+          let dish = {
+            "dishes_id": item.dishes_id,
+            "orderdishes_number": item.count
+          }
+          return dish
+        })
         let data = {
           "user_id": this.$store.state.userInfo.id,
           "shop_id": this.orderItem.shop_id,
-          "orderDishesList": this.orderItem.dishes.map(item => {
-            let dish = {
-              "dishes_id": item.dishes_id,
-              "orderdishes_number": item.count
-            }
-            return dish
-          }),
+          "orderDishesListParams": JSON.stringify(orderString) ,
           "remark": this.remark,
           "tableware_number": this.tablewareNumber,
           "consignee_phone": this.currentAddress.receiving_phone,
           "consignee_address": this.currentAddress.receiving_address
         };
         this.$post("/addOrder", data).then(res => {
-          console.log(res);
+          if (res.code === "000") {
+            this.$message.success("下单成功")
+          }
+           else {
+            this.$message.warning(res.msg)
+          }
         }).catch(err => {
-          console.log(err);
+          this.$message.error("网络错误")
         })
         // addOrder(data).then(res => {
         //
@@ -193,4 +208,10 @@ export default {
   color: #999;
   padding-top: 10px;
 }
+  .order-info {
+    color: var(--star-color);
+    font-weight: 600;
+    padding: 10px 0;
+    font-size: 14px;
+  }
 </style>
