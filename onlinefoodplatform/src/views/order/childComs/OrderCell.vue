@@ -70,7 +70,7 @@ export default {
       colors: ['#99A9BF', '#F7BA2A', '#FF9900']
     }
   },
-  created() {
+  activated() {
     this.$post("/selectOrderById", {"order_id": this.orderItem.order_id}).then(res => {
       if (res.code === "000") {
         this.order = res.order;

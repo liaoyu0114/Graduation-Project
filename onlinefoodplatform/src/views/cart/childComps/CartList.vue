@@ -20,6 +20,11 @@
                   <span class="dishes-me">{{dish.material}}</span><br>
                   <span class="dishes-count">数量 x {{dish.count}}</span><br>
                   <span class="dishes-price">￥{{dish.dishes_price}}</span>
+                  <span style="margin-left: 10px">
+                    <el-button @click="deleteClick(index, dishIndex)" type="text">
+                <i class="fa fa-trash-o" style="font-size: 14px" aria-hidden="true"></i>
+              </el-button>
+                  </span>
                   <!--<el-input-number v-model="dish.count" :step="1" size="mini" :min="1"></el-input-number>-->
                 </div>
               </el-col>
@@ -36,7 +41,9 @@
       </el-row>
     </scroll>
     <el-dialog title="生成订单" :visible.sync="dialogVisible" v-loading="loading" width="90%">
-      <create-order :order-item="orderItem" @closeDia="dialogVisible = false" />
+      <create-order :order-item="orderItem"
+                    @deleteCart="deleteCart"
+                    @closeDia="dialogVisible = false" />
     </el-dialog>
   </div>
 </template>
@@ -81,13 +88,23 @@
       })
     },
     methods: {
-      deleteClick(payload) {
-        console.log(payload);
-        this.cartList.find(item => {return item.shop_id === payload[0].id}).dishes.splice(payload[0].index, 1)
-      },
+      // deleteClick(payload) {
+      //   console.log(payload);
+      //   this.cartList.find(item => {return item.shop_id === payload[0].id}).dishes.splice(payload[0].index, 1)
+      // },
       createOrder(index) {
         this.orderItem = this.cartList[index];
         this.dialogVisible = true
+      },
+      deleteCart(shopId) {
+        this.$store.commit("deleCartByShop", {shop_id: shopId})
+        this.dialogVisible = false
+      },
+      deleteClick(index, dishIndex) {
+        this.$store.commit("deletById", {
+          index,
+          dishIndex
+        })
       }
     }
   }

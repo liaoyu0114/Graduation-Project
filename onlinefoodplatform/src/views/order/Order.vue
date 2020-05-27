@@ -72,12 +72,12 @@
         detail: null
       }
     },
-    created() {
+    activated() {
       this.userInfo = this.$store.state.userInfo
       if(this.userInfo.id) {
         selectOrderByState({"user_id": this.userInfo.id}).then(res => {
           if (res.code === "000") {
-            this.orders = res.orderDTO
+            this.orders = res.orderDTO.reverse()
           }
         })
       }

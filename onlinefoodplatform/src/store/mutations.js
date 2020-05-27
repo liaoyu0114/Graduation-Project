@@ -16,6 +16,20 @@ export default {
   [ADD_TO_SHOP](state,payload) {
     state.cartList.find(item => {return item.shop_id === payload.shop_id}).dishes.push(payload.dishes[0])
   },
+  deleCartByShop(state, payload) {
+    let index = state.cartList.findIndex(item => {
+      return item.shop_id === payload.shop_id
+    })
+    state.cartList.splice(index, 1)
+  },
+  deletById(state, payload) {
+    if (state.cartList[payload.index].dishes.length === 1) {
+      state.cartList.splice(payload.index,1)
+    }  else {
+      state.cartList[payload.index].dishes.splice(payload.dishIndex, 1)
+    }
+
+  },
   changeHomeScrollHeight(state, position) {
     state.homeScrollHeight = position;
   },

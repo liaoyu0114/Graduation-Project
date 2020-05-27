@@ -121,12 +121,11 @@ export default {
       } else {
         // this.fullscreenLoading = true;
         let orderString = this.orderItem.dishes.map(item => {
-          let dish = {
+          return {
             "dishes_id": item.dishes_id,
             "orderdishes_number": item.count
           }
-          return dish
-        })
+        });
         let data = {
           "user_id": this.$store.state.userInfo.id,
           "shop_id": this.orderItem.shop_id,
@@ -138,12 +137,14 @@ export default {
         };
         this.$post("/addOrder", data).then(res => {
           if (res.code === "000") {
-            this.$message.success("下单成功")
+            this.$message.success("下单成功");
+            this.$emit("deleteCart", this.orderItem.shop_id)
           }
            else {
             this.$message.warning(res.msg)
           }
         }).catch(err => {
+          console.log(err);
           this.$message.error("网络错误")
         })
         // addOrder(data).then(res => {
