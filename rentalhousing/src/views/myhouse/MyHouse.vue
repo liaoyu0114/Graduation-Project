@@ -42,7 +42,12 @@ export default {
         house: {},
         tenant: {}
       }
-      ]
+      ],
+      query: {
+        page: 1,
+        pageSize: 10
+      },
+      type: 0,
     };
   },
   computed: {
@@ -56,6 +61,18 @@ export default {
     this.leaseOrder[1].tenant = this.userInfo
     this.leaseOrder[1].landlord = this.landlord
     
+  },
+  activated() {
+    this.$post("/selectRentListByTenantId", {
+        "tenant_id": this.userInfo.tanant_id,
+        "rent_type": this.type,
+        "currIndex": this.query.page,
+      "pageSize": this.query.pageSize
+    }).then(res => {
+      if (res.code === "000") {
+        console.log(res);
+      }
+    })
   }
 };
 </script>

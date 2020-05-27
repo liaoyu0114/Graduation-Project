@@ -1,7 +1,7 @@
 <template>
   <div class="detail-page">
     <div class="bg"></div>
-    <div class="detail-box">
+    <div class="detail-box" v-loading="loading">
       <el-row>
         <el-col>
           <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -10,18 +10,18 @@
           </el-breadcrumb>
         </el-col>
         <el-col>
-          <div class="detail-title">衣冠庙地铁口 西南民大旁200米 出行便利 家具家电齐全</div>
+          <div class="detail-title">{{house.housingresources_name}}</div>
         </el-col>
         <el-col :span="24">
           <div class="detail-title-down">
             <div class="price-box">
-              <span class="price-count">1840</span>
+              <span class="price-count">{{house.housingresources_price}}</span>
               <span class="price-d">元/月</span>
             </div>
             <span class="line"></span>
-            <div class="detail-house-type">1室0厅</div>
+            <div class="detail-house-type">{{house.housingresources_type}}</div>
             <span class="line"></span>
-            <div class="detail-house-rect">28平方米</div>
+            <div class="detail-house-rect">{{house.housingresources_area}}平方米</div>
             <span class="line hidden-sm-and-down"></span>
             <div class="detail-tags hidden-sm-and-down">
               <el-tag
@@ -51,7 +51,7 @@
       <el-row :gutter="10">
         <el-col :lg="18" :md="24">
           <el-carousel height="400px" class="detail-carousel">
-            <el-carousel-item v-for="(item, index) in urls" :key="index">
+            <el-carousel-item v-for="(item, index) in house.housingresources_pic" :key="index">
               <el-image :src="item" fit="cover">
                 <div slot="placeholder" class="image-slot-placeholder">
                   <div>
@@ -75,13 +75,13 @@
           <div class="user-border">
             <el-col :lg="{span: 24, offset: 0}" :md="{span: 6, offset: 6}" class="user-icon-box">
               <div class="user-icon">
-                <el-image src="https://s1.ax1x.com/2020/04/14/GzMjzj.png"></el-image>
+                <el-image :src="landlord.landlord_pic"></el-image>
               </div>
             </el-col>
             <el-col :lg="24" :md="6">
-              <div class="user-name">Name</div>
+              <div class="user-name">{{landlord.landlord_nickname}}</div>
               <div class="user-button">
-                <el-button type="primary" size="mini">联系ta</el-button>
+                <el-button type="primary" size="mini">联系TA</el-button>
                 <el-button type="primary" size="mini">预约看房</el-button>
                 <el-button type="primary" size="mini" @click="dialogVisible = true">租房申请</el-button>
               </div>
@@ -100,30 +100,30 @@
             <el-row>
               <el-col :span="24">
                 <div class="price-box-info">
-                  <span class="price price-count-info">840</span>
+                  <span class="price price-count-info">{{house.housingresources_price}}</span>
                   <span class="price price-d-info">元/月</span>
-                  <span>付1押1</span>
+                  <span>{{house.housingresources_renttype}}</span>
                 </div>
               </el-col>
               <el-col :span="24">
                 <div class="house-info-1">
                   <div>
                     <span class="title">户型:</span>
-                    <span class="title-dec">2室1厅1卫</span>
+                    <span class="title-dec">{{house.housingresources_type}}</span>
                   </div>
                   <div>
                     <span class="title">面积:</span>
-                    <span class="title-dec">21平方米</span>
+                    <span class="title-dec">{{house.housingresources_area}}平方米</span>
                   </div>
                   <div>
                     <span class="title">朝向:</span>
-                    <span class="title-dec">朝南</span>
+                    <span class="title-dec">朝{{house.housingresources_orientations}}</span>
                   </div>
                 </div>
                 <div class="house-info-2">
                   <div>
                     <span class="title">楼层:</span>
-                    <span class="title-dec">中层(共21层)</span>
+                    <span class="title-dec">{{house.housingresources_floor}}层</span>
                   </div>
                   <div>
                     <span class="title">装修:</span>
@@ -137,11 +137,11 @@
                 <div class="house-info-3">
                   <div>
                     <span class="title">地址:</span>
-                    <span class="title-dec">Location</span>
+                    <span class="title-dec">{{house.housingresources_address}}</span>
                   </div>
                   <div>
-                    <span class="title">要求:</span>
-                    <span class="title-dec">男女不限</span>
+                    <span class="title">小区:</span>
+                    <span class="title-dec">{{house.housingresources_village}}</span>
                   </div>
                   <div>
                     <span class="title"></span>
@@ -157,15 +157,25 @@
               <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, assumenda.</div>
             </div>
             <div class="more-info">
-              1：租房没有中介费完全零费用
-              <br />2：高素质室友，让你拥有高质量的合住伙伴和生活中的朋友
-              <br />3：‘一房一锁’让你安心的工作，学习和生活
-              <br />4：专业维修，及时上门维修，避免影响正常生活
-              <br />
+             {{house.housingresources_introduce}}
             </div>
           </el-card>
         </el-col>
+        <el-col style="max-width: 1200px">
+          <div class="one">
+            {{one.hitokoto}}
+          </div>
+        </el-col>
+        <el-col :offset="16" :span="8" style="max-width: 1200px">
+          <div class="one-api">
+            ————   {{one.from}}
+            <span style="padding-left: 10px">{{one.from_who}}</span>
+          </div>
+        </el-col>
       </el-row>
+      <!--<el-row>-->
+
+      <!--</el-row>-->
 
     </div>
     <el-dialog :title="diaTitle" :visible.sync="dialogVisible" width="60%">
@@ -176,6 +186,7 @@
 
 <script>
 import Apply from "./Apply"
+import axios from "axios"
 export default {
   name: "Detail",
   components: {
@@ -195,19 +206,41 @@ export default {
         "https://s1.ax1x.com/2020/04/14/GznAK0.jpg",
         "https://s1.ax1x.com/2020/04/14/Gznlx1.jpg"
       ],
+      loading: true,
       diaTitle: "",
-      dialogVisible: false
+      dialogVisible: false,
+      house: {},
+      landlord: {},
+      one: {
+
+      }
     };
   },
   created() {
     this.getHouseDetail()
+    axios.get("https://v1.hitokoto.cn/", {
+      c: "d"
+    }).then( res => {
+        this.one = res.data
+    })
   },
   methods: {
     getHouseDetail() {
       this.$post("/selectHousingresourcesById", {"housingresources_id": this.$route.query.id}).then(res => {
-        console.log(res);
+        if (res.code === "000") {
+
+          this.house = res.housingresources;
+          this.house.housingresources_pic = JSON.parse(res.housingresources.housingresources_pic)
+          this.landlord = res.landlord;
+          this.loading = false
+        } else {
+          this.$message.warning(res.msg);
+        }
+
       }).catch(err => {
         console.log(err);
+        this.$message.error("网络错误");
+        // this.loading = false
       })
     }
   }
@@ -238,6 +271,20 @@ export default {
 }
 </style>
 <style scoped>
+  .one {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #b9e1dc;
+    margin-top: 10px;
+  }
+  .one-api {
+
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--TIMBERWOLF);
+  }
 .bg {
   position: absolute;
   top: 0;

@@ -106,15 +106,38 @@ export default {
           ],
           landlord: {},
           // house: this.house[0],
-          tenant: {}
+          tenant: {},
+
         }
-      ]
+      ],
+      query: {
+        "tenant_id": "",
+        "currIndex": 1,
+        "pageSize": 10
+      }
+
     };
+  },
+  activated() {
+    // if (this.errores.length === 0) {
+      this.loadError()
+    // }
+
   },
   computed: {
     ...mapGetters(["userInfo", "landlord", "house"])
   },
   methods: {
+    loadError() {
+      this.$post("/selectObstacleListByTenantId", this.query).then(res => {
+        console.log(res);
+        if (res.code === "000") {
+          console.log(res);
+        }
+      }).catch(err => {
+        console.log(err);
+      })
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -151,6 +174,8 @@ export default {
       item.landlord = this.landlord
       item.tenant = this.userInfo
     })
+    this.query.tenant_id = this.userInfo.tenant_id
+    this.loadError()
   }
 };
 </script>
