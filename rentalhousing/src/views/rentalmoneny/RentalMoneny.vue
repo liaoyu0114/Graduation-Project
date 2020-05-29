@@ -1,13 +1,19 @@
 <template>
   <div class="rentail-moneny">
     <div class="bg"></div>
-    <div class="rental-body" v-if="rentOrderOne === 0">
-      <rental-cell v-for="(item, index) in rentOrder" :key="index" :rent="item"></rental-cell>
+    <div class="rental-body" v-if="rentOrderOne.length !== 0">
+      <rental-cell v-for="(item, index) in rentOrderOne" :key="index" :rent="item"></rental-cell>
+    </div>
+    <div class="rental-body" v-if="rentOrderTwo.length !== 0">
+      <rental-cell v-for="(item, index) in rentOrderTwo" :key="index" :rent="item"></rental-cell>
     </div>
     <el-row v-if="rentOrderOne.length === 0 && rentOrderTwo.length === 0">
       <el-col :span="24">
         <div class="no-more">
-          <el-image style="width: 50%" src="https://assets.hhh233.xyz/iPhone_cff6e_RPReplay_Final1589202378.gif"></el-image>
+          <el-image
+            style="width: 50%"
+            src="https://assets.hhh233.xyz/iPhone_cff6e_RPReplay_Final1589202378.gif"
+          ></el-image>
         </div>
       </el-col>
     </el-row>
@@ -16,7 +22,7 @@
 
 <script>
 import RentalCell from "./RentalCell";
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   name: "RentalMoneny",
   components: {
@@ -24,31 +30,36 @@ export default {
   },
   data() {
     return {
-      rentOrderOne: [
-      ],
+      rentOrderOne: [],
       rentOrderTwo: [],
       queryStateOne: {
-        "tenant_id": "",
-        "rent_type": 0, //未缴纳
-        "currIndex": 1,
-        "pageSize": 15
+        tenant_id: "",
+        rent_type: 0, //未缴纳
+        currIndex: 1,
+        pageSize: 15
       },
       queryStateTwo: {
-        "tenant_id": "",
-        "rent_type": 1, //已缴纳
-        "currIndex": 1,
-        "pageSize": 15
+        tenant_id: "",
+        rent_type: 1, //已缴纳
+        currIndex: 1,
+        pageSize: 15
       }
-
     };
   },
-  created () {
+  created() {
     // this.rentOrder.map( item => {
     //   item.house = this.house[0]
     //   item.landlord = this.landlord;
     //   item.tenant = this.userInfo
     // })
-    this.loadRentOne()
+    if (this.userInfo.tenant_id) {
+      this.loadRentOne();
+    }
+  },
+  activated() {
+    if (this.userInfo.tenant_id) {
+      this.loadRentOne();
+    }
   },
   computed: {
     ...mapGetters(["userInfo", "landlord", "house"])
@@ -57,25 +68,32 @@ export default {
     loadRentOne() {
       this.queryStateOne.tenant_id = this.userInfo.tenant_id;
       this.$post("/selectRentListByTenantId", this.queryStateOne)
-          .then(res => {
-
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          })
-
+        .then(res => {
+          if (res.code === "000") {
+            this.rentOrderOne = res.rentList
+          } else {
+            this.$message.warning(res.msg)
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.warning("网络错误")
+        });
     },
     loadRentTwo() {
       this.queryStateTwo.tenant_id = this.userInfo.tenant_id;
       this.$post("/selectRentListByTenantId", this.queryStateTwo)
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          })
-
+        .then(res => {
+           if (res.code === "000") {
+            this.rentOrderTwo = res.rentList
+          } else {
+            this.$message.warning(res.msg)
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.warning("网络错误")
+        });
     }
   }
 };
@@ -103,9 +121,9 @@ export default {
   background: white;
   z-index: -1;
 }
-  .no-more {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
+.no-more {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 </style>

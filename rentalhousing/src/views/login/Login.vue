@@ -185,7 +185,14 @@ export default {
               "tenant_mail": this.ruleFormRegist.mail
             };
             this.$post("/registTenant", data).then(res => {
-              console.log(res)
+              if (res.code === "000") {
+                this.$message.success("注册成功，切换到登录页登录")
+              } else {
+                this.$message.error(res.msg)
+              }
+            }).catch(err => {
+              console.log(err)
+              this.$message.error("网络错误")
             })
         }
       });

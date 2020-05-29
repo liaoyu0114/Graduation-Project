@@ -12,8 +12,8 @@
         <div class="ava-box" @click="avatarClick">
           <el-avatar
             :size="45"
-            :src="avatar"
-            v-if="userInfo.landlord_id"
+            :src="userInfo.tenant_pic"
+            v-if="userInfo.tenant_id"
           ></el-avatar>
           <el-button type="primary" plain v-else size="mini" @click="goLogin">去登陆</el-button>
         </div>
@@ -50,7 +50,7 @@
             <el-avatar
               :size="45"
               slot="reference"
-              :src="avatar"
+              :src="userInfo.tenant_pic"
               
             ></el-avatar>
            
@@ -66,10 +66,10 @@
       :width="dialogWidth"
       :before-close="handleClose"
     >
-      <profile v-if="profileVisible"></profile>
-      <change-password v-if="passwordVisible"></change-password>
-      <identify-valite v-if="identifyVisible"></identify-valite>
-      <houser v-if="houserVisible"></houser>
+      <profile v-if="profileVisible" @cancelProfile="clearForm"></profile>
+      <change-password v-if="passwordVisible" @cancelChangePass="clearForm"></change-password>
+      <identify-valite v-if="identifyVisible" @cancel="clearForm"></identify-valite>
+      <houser v-if="houserVisible" @cancel="clearForm"></houser>
     </el-dialog>
 
     <transition name="slide-fade">
@@ -143,6 +143,13 @@ export default {
     };
   },
   methods: {
+    clearForm() {
+       this.dialogVisible = false
+      this.profileVisible = false
+      this.passwordVisible = false
+      this.identifyVisible = false
+      this.houserVisible = false
+    },
     goLogin() {
       this.$router.push("/login")
     },

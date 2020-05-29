@@ -4,7 +4,7 @@
       <el-col :span="6">
         <div class="image">
           <el-image
-                  :src="scope.housingresources_pic"
+                  :src="scope.housingresources_pic[0]"
           ></el-image>
           <div class="image-icon">
             <i class="iconfont icon-pics"></i>
@@ -153,11 +153,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 10px;
   }
   .image-icon {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 10px;
     padding: 2px 4px;
     background: rgba(0, 0, 0, 0.2);
   }
@@ -168,9 +169,6 @@
     color: #0090fa;
   }
   @media screen and (min-width: 500px) {
-    .home-cell:hover {
-      background: #eeeeee;
-    }
     .home-cell:hover a {
 
       color: #f45f21;

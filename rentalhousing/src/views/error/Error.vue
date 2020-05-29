@@ -4,17 +4,12 @@
     <div class="error-body">
       <el-row>
         <el-col :span="24" class="error-header">
-          <el-input placeholder="请输入内容" size="small" v-model="search" class="header-input">
+          <!-- <el-input placeholder="请输入内容" size="small" v-model="search" class="header-input">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
-          </el-input>
+          </el-input>-->
           <div class="header-button">
-            <el-button type="primary" size="small" class="button">搜索</el-button>
-            <el-button
-              type="primary"
-              size="small"
-              class="button"
-              @click="dialogTableVisible = true"
-            >新建报障</el-button>
+            <!-- <el-button type="primary" size="small" class="button" @click="search">搜索</el-button> -->
+            <el-button type="danger" plain size="small" class="button" @click="showForm">新建报障</el-button>
           </div>
         </el-col>
       </el-row>
@@ -23,7 +18,7 @@
           <error-cell :error="item"></error-cell>
         </el-col>
       </el-row>
-      <el-row v-else>
+      <el-row v-if="errores.length === 0 || userInfo.tenant_id">
         <el-col :span="24">
           <div class="no-more">
             <el-image
@@ -69,74 +64,71 @@ export default {
           name: "③ 高升桥地铁站 应届生免押 无中介 可月付 可短租 衣冠庙"
         }
       ],
-      errores: [
-        {
-          obstacle_id: 191111,
-          obstacle_time: new Date().getTime() - 24 * 3600 * 10,
-          obstacle_state: 0, // 状态（0未处理、1正在处理、2已完成）
-          obstacle_detail: "备注信息",
-          obstacle_completiontime: new Date().getTime(), //完成时间
-          obstacle_pic: [
-            "https://assets.hhh233.xyz/markus-spiske-ypNLP0-ZB6E-unsplash.jpg"
-          ],
-          landlord: {},
-          // house: this.house[0],
-          tenant: {}
-        },
-        {
-          obstacle_id: 192222,
-          obstacle_time: new Date().getTime() - 24 * 3600 * 10,
-          obstacle_state: 1, // 状态（0未处理、1正在处理、2已完成）
-          obstacle_detail: "备注信息",
-          obstacle_completiontime: new Date().getTime(), //完成时间
-          obstacle_pic: [
-            "https://assets.hhh233.xyz/nathan-dumlao-a3ra9eXUjvo-unsplash.jpg"
-          ],
-          landlord: {},
-          // house: this.house[0],
-          tenant: {}
-        },{
-          obstacle_id: 193333,
-          obstacle_time: new Date().getTime() - 24 * 3600 * 10,
-          obstacle_state: 2, // 状态（0未处理、1正在处理、2已完成）
-          obstacle_detail: "备注信息",
-          obstacle_completiontime: new Date().getTime(), //完成时间
-          obstacle_pic: [
-             "https://assets.hhh233.xyz/markus-spiske-ypNLP0-ZB6E-unsplash.jpg"
-          ],
-          landlord: {},
-          // house: this.house[0],
-          tenant: {},
-
-        }
-      ],
+      errores: [],
       query: {
-        "tenant_id": "",
-        "currIndex": 1,
-        "pageSize": 10
-      }
-
+        tenant_id: "",
+        currIndex: 1,
+        pageSize: 10
+      },
+      leaseOrder: []
     };
   },
   activated() {
-    // if (this.errores.length === 0) {
-      this.loadError()
-    // }
-
+    if (this.userInfo.tenant_id) {
+      this.loadError();
+      this.$post("/selectHousingresourcesByTenantId", {
+        tenant_id: this.userInfo.tenant_id
+      })
+        .then(res => {
+          if (res.code === "000") {
+            this.leaseOrder = res.housingresourceslist.reverse();
+          } else {
+            this.$message.warning(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.error("网络错误");
+        });
+    }
   },
   computed: {
     ...mapGetters(["userInfo", "landlord", "house"])
   },
   methods: {
-    loadError() {
-      this.$post("/selectObstacleListByTenantId", this.query).then(res => {
-        console.log(res);
-        if (res.code === "000") {
-          console.log(res);
+    showForm() {
+      if (!this.userInfo.tenant_id) {
+        this.$confirm("登录后才可以申请哦, 是否前往登录?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push("/login");
+          })
+          .catch(() => {});
+      } else {
+        if (this.leaseOrder.length === 0) {
+          this.$message.warning("还没有租过房，不能建立报障");
+        } else {
+          this.dialogTableVisible = true;
         }
-      }).catch(err => {
-        console.log(err);
-      })
+      }
+    },
+    loadError() {
+      this.$post("/selectObstacleListByTenantId", this.query)
+        .then(res => {
+          console.log(res);
+          if (res.code === "000") {
+            this.errores = res.obstacleList.reverse();
+          } else {
+            this.$message.warning(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.error("网络错误");
+        });
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -146,36 +138,65 @@ export default {
     },
     onSubmit(form) {
       console.log(form);
-      this.dialogTableVisible = false;
-      this.$message.success("创建成功");
-      this.errores =  [
-          {
-        obstacle_id: 194444,
-        obstacle_time: new Date().getTime() - 24 * 3600 * 10,
-        obstacle_state:0, // 状态（0未处理、1正在处理、2已完成）
+      this.$post("/AddObstacle", {
+        tenant_id: this.userInfo.tenant_id,
+        housingresources_id: "",
         obstacle_detail: form.detail,
-        obstacle_completiontime: new Date().getTime(), //完成时间
-        obstacle_pic: [
-          "https://assets.hhh233.xyz/markus-spiske-ypNLP0-ZB6E-unsplash.jpg"
-        ],
-        landlord: this.landlord,
-        tenant: this.userInfo,
-        house: this.house[0]
-      }
-      ].concat(this.errores)
+        obstacle_pic: JSON.stringify(form.pic)
+      })
+        .then(res => {
+          console.log(res);
+          if (res.code === "000") {
+            this.dialogTableVisible = false;
+            this.$message.success("创建成功");
+          } else {
+            this.$message.warning(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.error("网络错误");
+        });
+
+      // this.errores = [
+      //   {
+      //     obstacle_id: 194444,
+      //     obstacle_time: new Date().getTime() - 24 * 3600 * 10,
+      //     obstacle_state: 0, // 状态（0未处理、1正在处理、2已完成）
+      //     obstacle_detail: form.detail,
+      //     obstacle_completiontime: new Date().getTime(), //完成时间
+      //     obstacle_pic: [
+      //       "https://assets.hhh233.xyz/markus-spiske-ypNLP0-ZB6E-unsplash.jpg"
+      //     ],
+      //     landlord: this.landlord,
+      //     tenant: this.userInfo,
+      //     house: this.house[0]
+      //   }
+      // ].concat(this.errores);
     },
     canelClick() {
       this.dialogTableVisible = false;
     }
   },
-  created () {
-    this.errores.map( item => { 
-      item.house = this.house[0]
-      item.landlord = this.landlord
-      item.tenant = this.userInfo
-    })
-    this.query.tenant_id = this.userInfo.tenant_id
-    this.loadError()
+  created() {
+    if (this.userInfo.tenant_id) {
+      this.query.tenant_id = this.userInfo.tenant_id;
+      this.loadError();
+      this.$post("/selectHousingresourcesByTenantId", {
+        tenant_id: this.userInfo.tenant_id
+      })
+        .then(res => {
+          if (res.code === "000") {
+            this.leaseOrder = res.housingresourceslist.reverse();
+          } else {
+            this.$message.warning(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message.error("网络错误");
+        });
+    }
   }
 };
 </script>

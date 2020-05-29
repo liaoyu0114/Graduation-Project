@@ -14,7 +14,7 @@
         <el-input v-model="identify.idv" placeholder="输入身份证号码"></el-input>
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" style="width: 45%" @click="changePass">确定</el-button>
+      <el-button type="primary" style="width: 45%" @click="changeID">确定</el-button>
       <el-button type="danger" style="width: 45%" @click="cancel">取消</el-button>
     </el-form-item>
 
@@ -32,6 +32,7 @@ export default {
       }
       callback()
     };
+    
     return {
       identify: {
         password: "",
@@ -65,11 +66,11 @@ export default {
       ...mapGetters(["userInfo"])
   },
   methods: {
-    changePass() {
+    changeID() {
 
     },
     cancel() {
-
+      this.$emit("cancel")
     }
   }
 };

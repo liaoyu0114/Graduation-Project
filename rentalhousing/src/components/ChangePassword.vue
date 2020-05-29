@@ -61,7 +61,7 @@ export default {
       this.$emit("cancelChangePass")
     },
     changePass() {
-
+      this.$message.success("修改成功")
     }
   }
 };

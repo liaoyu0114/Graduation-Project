@@ -81,9 +81,9 @@
             <el-col :lg="24" :md="6">
               <div class="user-name">{{landlord.landlord_nickname}}</div>
               <div class="user-button">
-                <el-button type="primary" size="mini">联系TA</el-button>
-                <el-button type="primary" size="mini">预约看房</el-button>
-                <el-button type="primary" size="mini" @click="dialogVisible = true">租房申请</el-button>
+                <el-button type="primary" size="mini" @click="showPhone">联系TA</el-button>
+                <el-button type="primary" size="mini" @click="applyOne">预约看房</el-button>
+                <!-- <el-button type="primary" size="mini" @click="dialogVisible = true">租房申请</el-button> -->
               </div>
               <div class="user-describe"></div>
             </el-col>
@@ -178,8 +178,8 @@
       <!--</el-row>-->
 
     </div>
-    <el-dialog :title="diaTitle" :visible.sync="dialogVisible" width="60%">
-      <apply></apply>
+    <el-dialog title="看房申请" :visible.sync="dialogVisible" width="50%">
+      <apply @cancel="cancel"></apply>
     </el-dialog>
   </div>
 </template>
@@ -187,6 +187,7 @@
 <script>
 import Apply from "./Apply"
 import axios from "axios"
+import {mapGetters} from "vuex"
 export default {
   name: "Detail",
   components: {
@@ -224,6 +225,9 @@ export default {
         this.one = res.data
     })
   },
+  computed: {
+    ...mapGetters(["userInfo"])
+  },
   methods: {
     getHouseDetail() {
       this.$post("/selectHousingresourcesById", {"housingresources_id": this.$route.query.id}).then(res => {
@@ -242,6 +246,32 @@ export default {
         this.$message.error("网络错误");
         // this.loading = false
       })
+    },
+    showPhone() {
+       this.$confirm(`房东电话： ${this.landlord.landlord_contact ? this.landlord.landlord_contact : this.landlord.landlord_phone}`, '提示', {
+         showConfirmButton: false,
+          cancelButtonText: '确定',
+          type: 'info'
+        })
+    },
+    applyOne() {
+      if (!this.userInfo.tenant_id) {
+         this.$confirm('登录后才可以申请哦, 是否前往登录?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push("/login")
+        }).catch(() => {
+          
+        });
+      } else {
+this.dialogVisible = true
+      }
+      
+    },
+    cancel() {
+       this.dialogVisible = false
     }
   }
 };
