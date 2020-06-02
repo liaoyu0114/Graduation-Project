@@ -24,7 +24,12 @@
 export default {
   name: "Apply",
   props: {
-    scpoe: {}
+    scope: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
   },
   data() {
     //  let validateName = (rule, value, callback) => {
@@ -49,11 +54,13 @@ export default {
     };
   },
   created() {
-    this.form.tenant_id = this.scpoe.tenant_id;
-    this.form.housingresources_id = this.scpoe.housingresources_id;
+    this.form.tenant_id = this.scope.tenant_id;
+    this.form.housingresources_id = this.scope.housingresources_id;
   },
   methods: {
     sendApply() {
+      this.form.tenant_id = this.scope.tenant_id;
+      this.form.housingresources_id = this.scope.housingresources_id;
       this.$post("/AddApply", this.form)
         .then(res => {
           console.log(res);

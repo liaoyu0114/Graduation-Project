@@ -53,12 +53,12 @@
             <el-radio-button label="1">女</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="label.realName" prop="tenant_realname">
-          <el-input v-model="profile.tenant_realname" placeholder="输入real name"></el-input>
-        </el-form-item>
-        <el-form-item :label="label.idNum" prop="tenant_IDnumber">
-          <el-input v-model="profile.tenant_IDnumber" placeholder="输入身份证"></el-input>
-        </el-form-item>
+        <!--<el-form-item :label="label.realName" prop="tenant_realname">-->
+          <!--<el-input v-model="profile.tenant_realname" placeholder="输入real name"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="label.idNum" prop="tenant_IDnumber">-->
+          <!--<el-input v-model="profile.tenant_IDnumber" placeholder="输入身份证"></el-input>-->
+        <!--</el-form-item>-->
         <el-form-item class="item-button">
           <el-button type="primary" @click="sureChangeProfile('profile')">确定</el-button>
           <el-button @click="cancelProfile">取消</el-button>
@@ -121,16 +121,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-export default {
+  import {mapGetters} from "vuex";
+
+  export default {
   name: "Profile",
   data() {
-    let valitIDCard = (rule, value, callback) => {
-      if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value)) {
-        callback("请输入正确身份证号码");
-      }
-      callback();
-    };
+    // let valitIDCard = (rule, value, callback) => {
+    //   if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value)) {
+    //     callback("请输入正确身份证号码");
+    //   }
+    //   callback();
+    // };
     let validateName = (rule, value, callback) => {
       if (
         !/^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/.test(
@@ -150,8 +151,8 @@ export default {
         tenant_pic: "",
         tenant_nickname: "",
         tenant_mail: "",
-        tenant_realname: "",
-        tenant_IDnumber: "",
+        // tenant_realname: "",
+        // tenant_IDnumber: "",
         tenant_sex: "",
         tenant_contact: ""
       },
@@ -159,8 +160,6 @@ export default {
         avatar: "头像",
         name: "昵称",
         mail: "邮箱",
-        realName: "姓名",
-        idNum: "身份证",
         sex: "性别",
         contact: "联系方式"
       },
@@ -179,13 +178,13 @@ export default {
             trigger: ["blur", "change"]
           }
         ],
-        tenant_realname: [
-          { required: true, message: "请输入真实姓名", trigger: "blur" }
-        ],
-        tenant_IDnumber: [
-          { required: true, message: "请输入身份证号码", trigger: "blur" },
-          { validator: valitIDCard, trigger: "blur" }
-        ],
+        // tenant_realname: [
+        //   { required: true, message: "请输入真实姓名", trigger: "blur" }
+        // ],
+        // tenant_IDnumber: [
+        //   { required: true, message: "请输入身份证号码", trigger: "blur" },
+        //   { validator: valitIDCard, trigger: "blur" }
+        // ],
         tenant_sex: [
           { required: true, message: "请选择性别", trigger: "change" }
         ],
@@ -230,13 +229,14 @@ export default {
               if (res.code === "000") {
                 this.$store.commit("setUserInfo", res.Tenant);
                 this.$message.success("修改成功");
+                this.$emit("cancelProfile");
               } else {
                 this.$message.warning(res.msg);
               }
             })
             .catch(err => {
               console.log(err);
-              this.$message.error("网络错误");
+              this.$message.error("未知错误");
             });
         }
       });
@@ -276,12 +276,10 @@ export default {
           .post(this.domin, formdata, config)
           .then(res => {
             console.log(res);
-            let urlN =
-              this.qiniuaddr +
-              "/" +
-              res.data.key +
-              "?imageView2/1/w/200/h/200/format/webp/q/75";
-            this.profile.tenant_pic = urlN;
+            this.profile.tenant_pic = this.qiniuaddr +
+                "/" +
+                res.data.key +
+                "?imageView2/1/w/200/h/200/format/webp/q/75";
             req.onSuccess(req.file);
           })
           .catch(err => {

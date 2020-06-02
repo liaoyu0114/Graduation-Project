@@ -3,7 +3,7 @@
     <el-form ref="form" :rules="formRules" :model="form" label-width="80px" label-position="left">
       <el-form-item label="选择活动" prop="house">
         <el-select v-model="form.house" placeholder="请选择" clearable class="error-form-select">
-          <el-option v-for="item in house" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          <el-option v-for="item in house" :key="item.housingresources_id" :label="item.housingresources_name" :value="item.housingresources_id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="详情描述" prop="detail">
@@ -48,19 +48,6 @@ export default {
     }
   },
   data() {
-    let validateHouse = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请选择房源"));
-      }
-      callback();
-    };
-    let validatePic = (rule, value, callback) => {
-    
-      if (this.form.pic.length === 0) {
-        callback(new Error("至少上传一张图片"));
-      }
-      callback();
-    };
     return {
       domin: "https://upload-z2.qiniup.com",
       qiniuaddr: "https://assets.hhh233.xyz",
@@ -70,11 +57,15 @@ export default {
         pic: []
       },
       formRules: {
-        house: [{ validator: validateHouse, trigger: "change" }],
+        house: [
+          { required: true, message: "必须选择一个房源", trigger: ["change", "blur"] }
+        ],
         detail: [
           { required: true, message: "请输入详情描述", trigger: "change" }
         ],
-        pic: [{ validator: validatePic, trigger: "change" }]
+        pic: [
+          { required: true, message: "请至少上传一张图片", trigger:  ["change", "blur"] }
+          ]
       }
     };
   },
@@ -155,7 +146,7 @@ export default {
             this.form.pic.push({
               name: req.file.name,
               url: urlN
-            })
+            });
             req.onSuccess(req.file);
           })
           .catch(err => {

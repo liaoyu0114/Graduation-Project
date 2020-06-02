@@ -6,7 +6,7 @@
         <label>
           <el-form ref="ruleFormLogin" :model="ruleFormLogin" size="small" :rules="rulesLogin">
             <el-form-item prop="phone">
-              <el-input placeholder="请输入账号" v-model="ruleFormLogin.phone">
+              <el-input placeholder="请输入手机号" v-model="ruleFormLogin.phone">
                 <i slot="suffix" class="el-input__icon el-icon-user-solid"></i>
               </el-input>
             </el-form-item>
@@ -129,8 +129,8 @@ export default {
     return {
       loginType: false,
       ruleFormLogin: {
-        phone: "18382389882",
-        password: "123456",
+        phone: "15291615730",
+        password: "86593721",
         isSave: false
       },
       ruleFormRegist: {
@@ -167,9 +167,14 @@ export default {
           this.$post("/loginTenant", data).then(res => {
             if (res.code === "000") {
               this.$message.success("登陆成功");
-              this.$store.commit("setUserInfo",res.Tenant)
+              this.$store.commit("setUserInfo",res.Tenant);
               this.$router.push("/")
+            } else {
+              this.$message.warning(res.msg)
             }
+          }).catch(err => {
+            console.log(err);
+            this.$message("发生了未知错误")
           })
         }
       });

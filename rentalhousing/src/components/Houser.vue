@@ -247,7 +247,7 @@ export default {
                     }
                   });
                 } else {
-                  this.$message.warning("注册成功但无用户信息")
+                  this.$message.warning("注册成功但无用户信息");
                    this.$refs[formName].clearValidate();
                       this.$emit("cancel");
                 }

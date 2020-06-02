@@ -45,6 +45,7 @@
               <div class="avatar-menu-item" @click="changePassword">修改密码</div>
               <div class="avatar-menu-item" @click="identifyValite">身份认证</div>
               <div class="avatar-menu-item" @click="becomeHouser">成为房东</div>
+              <div class="avatar-menu-item" @click="gohouse">房东后台</div>
               <div class="avatar-menu-item logout" @click="logout">注销登录</div>
             </div>
             <el-avatar
@@ -98,6 +99,7 @@
           <div class="avatar-menu-mobile-item" @click="changePassword">修改密码</div>
           <div class="avatar-menu-mobile-item" @click="identifyValite">身份认证</div>
           <div class="avatar-menu-mobile-item" @click="becomeHouser">成为房东</div>
+          <div class="avatar-menu-item" @click="gohouse">房东后台</div>
           <div class="avatar-menu-mobile-item logout" @click="logout">注销登录</div>
         </div>
       </div>
@@ -143,6 +145,9 @@ export default {
     };
   },
   methods: {
+    gohouse() {
+      window.open("https://radmin.hhh233.xyz")
+    },
     clearForm() {
        this.dialogVisible = false
       this.profileVisible = false

@@ -4,6 +4,7 @@
       <el-col :span="6">
         <div class="image">
           <el-image
+                  fit="cover"
                   :src="scope.housingresources_pic[0]"
           ></el-image>
           <div class="image-icon">
@@ -15,31 +16,14 @@
         <el-col :span="20">
           <div class="cell-title">
             <b class="strongbox">
-              <!--housingresources_address: (...)-->
-              <!--housingresources_area: (...)-->
-              <!--housingresources_category: (...)-->
-              <!--housingresources_floor: (...)-->
-              <!--housingresources_id: (...)-->
-              <!--housingresources_introduce: (...)-->
-              <!--housingresources_latitude: (...)-->
-              <!--housingresources_longitude: (...)-->
-              <!--housingresources_name: (...)-->
-              <!--housingresources_orientations: (...)-->
-              <!--housingresources_pic: (...)-->
-              <!--housingresources_price: (...)-->
-              <!--housingresources_renttype: (...)-->
-              <!--housingresources_state: (...)-->
-              <!--housingresources_type: (...)-->
-              <!--housingresources_village: (...)-->
-              <!--landlord_id: (...)-->
               <a>{{scope.housingresources_name}}</a>
             </b>
           </div>
           <div class="cell-describe">
             <div class="des-box">
-              <span class="vr-line">{{scope.housingresources_type}}</span>
+              <span class="vr-line">{{scope.housingresources_type.first}}室{{scope.housingresources_type.second}}厅{{scope.housingresources_type.third}}卫</span>
               <span class="vr-line">{{scope.housingresources_area}}平米</span>
-              <span class="vr-line">{{scope.housingresources_floor}}层</span>
+              <span class="vr-line">{{scope.housingresources_floor}}</span>
               <span>
                 {{scope.housingresources_category}}
               </span>
@@ -124,11 +108,11 @@
     data() {
       return {
         items: [
-          { type: "", label: "标签一" },
-          { type: "success", label: "标签二" },
-          { type: "info", label: "标签三" },
-          { type: "danger", label: "标签四" },
-          { type: "warning", label: "标签五" }
+          { type: "", label: "精装修" },
+          { type: "success", label: "拎包入住" },
+          { type: "info", label: "近地铁" },
+          { type: "danger", label: "空调" },
+          { type: "warning", label: "价格香" }
         ],
         url: "https://s1.ax1x.com/2020/04/13/GvcrND.jpg"
       };
@@ -154,6 +138,7 @@
     justify-content: center;
     align-items: center;
     padding-left: 10px;
+    height: 155px;
   }
   .image-icon {
     position: absolute;

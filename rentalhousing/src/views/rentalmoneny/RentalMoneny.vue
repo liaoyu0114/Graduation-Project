@@ -1,13 +1,25 @@
 <template>
   <div class="rentail-moneny">
     <div class="bg"></div>
-    <div class="rental-body" v-if="rentOrderOne.length !== 0">
-      <rental-cell v-for="(item, index) in rentOrderOne" :key="index" :rent="item"></rental-cell>
+    <div class="title-box">
+      <div  class="title">
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="未缴纳" name="first"></el-tab-pane>
+          <el-tab-pane label="已缴纳" name="second"></el-tab-pane>
+        </el-tabs>
+      </div>
     </div>
-    <div class="rental-body" v-if="rentOrderTwo.length !== 0">
-      <rental-cell v-for="(item, index) in rentOrderTwo" :key="index" :rent="item"></rental-cell>
+
+    <br>
+    <div class="rental-body" v-loading="loading" v-if="rentOrder.length !== 0">
+
+
+      <rental-cell v-for="(item, index) in rentOrder"
+                   @paySuccess="paySuccess"
+                   :key="index"
+                   :scope="item"></rental-cell>
     </div>
-    <el-row v-if="rentOrderOne.length === 0 && rentOrderTwo.length === 0">
+    <el-row v-if="rentOrder.length === 0">
       <el-col :span="24">
         <div class="no-more">
           <el-image
@@ -30,69 +42,69 @@ export default {
   },
   data() {
     return {
-      rentOrderOne: [],
-      rentOrderTwo: [],
-      queryStateOne: {
+      loading: true,
+      activeName: "first",
+      rentOrder: [],
+      queryState: {
         tenant_id: "",
         rent_type: 0, //未缴纳
         currIndex: 1,
-        pageSize: 15
+        pageSize: 9999
       },
-      queryStateTwo: {
-        tenant_id: "",
-        rent_type: 1, //已缴纳
-        currIndex: 1,
-        pageSize: 15
-      }
+      name: "first"
     };
   },
   created() {
-    // this.rentOrder.map( item => {
-    //   item.house = this.house[0]
-    //   item.landlord = this.landlord;
-    //   item.tenant = this.userInfo
-    // })
-    if (this.userInfo.tenant_id) {
-      this.loadRentOne();
-    }
+    setTimeout(this.loadRent(), 5000);
   },
   activated() {
     if (this.userInfo.tenant_id) {
-      this.loadRentOne();
+      this.loadRent();
     }
   },
   computed: {
-    ...mapGetters(["userInfo", "landlord", "house"])
+    ...mapGetters(["userInfo"])
   },
   methods: {
-    loadRentOne() {
-      this.queryStateOne.tenant_id = this.userInfo.tenant_id;
-      this.$post("/selectRentListByTenantId", this.queryStateOne)
+    handleClick() {
+      this.loading = true;
+      if (this.activeName === "first") {
+        this.queryState.currIndex = 1;
+        this.queryState.rent_type = 0;
+      } else {
+        this.queryState.currIndex = 1;
+        this.queryState.rent_type = 1;
+
+      }
+      this.loadRent()
+
+    },
+    paySuccess() {
+      this.loading = true;
+      if (this.activeName === "first") {
+        this.queryState.currIndex = 1;
+        this.queryState.rent_type = 0;
+      } else {
+        this.queryState.currIndex = 1;
+        this.queryState.rent_type = 1;
+      }
+      this.loadRent()
+    },
+    loadRent() {
+      this.queryState.tenant_id = this.userInfo.tenant_id;
+      this.$post("/selectRentListByTenantId", this.queryState)
         .then(res => {
           if (res.code === "000") {
-            this.rentOrderOne = res.rentList
+            this.rentOrder = res.rentInfoList
           } else {
             this.$message.warning(res.msg)
           }
+          this.loading = false
         })
         .catch(err => {
           console.log(err);
-          this.$message.warning("网络错误")
-        });
-    },
-    loadRentTwo() {
-      this.queryStateTwo.tenant_id = this.userInfo.tenant_id;
-      this.$post("/selectRentListByTenantId", this.queryStateTwo)
-        .then(res => {
-           if (res.code === "000") {
-            this.rentOrderTwo = res.rentList
-          } else {
-            this.$message.warning(res.msg)
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.$message.warning("网络错误")
+          this.$message.warning("未知错误");
+          this.loading = false
         });
     }
   }
@@ -104,6 +116,7 @@ export default {
   display: flex;
   position: relative;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .rental-body {
@@ -120,6 +133,14 @@ export default {
   height: calc(100vh - 60px);
   background: white;
   z-index: -1;
+}
+.title-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.title {
+  max-width: 1000px;
 }
 .no-more {
   display: flex;

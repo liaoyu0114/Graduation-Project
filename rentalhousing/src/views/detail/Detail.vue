@@ -19,17 +19,17 @@
               <span class="price-d">元/月</span>
             </div>
             <span class="line"></span>
-            <div class="detail-house-type">{{house.housingresources_type}}</div>
+            <div class="detail-house-type">{{house.housingresources_type.first}}室{{house.housingresources_type.second}}厅{{house.housingresources_type.third}}卫</div>
             <span class="line"></span>
             <div class="detail-house-rect">{{house.housingresources_area}}平方米</div>
             <span class="line hidden-sm-and-down"></span>
             <div class="detail-tags hidden-sm-and-down">
               <el-tag
-                size="mini"
-                v-for="item in items"
-                :key="item.label"
-                :type="item.type"
-                effect="plain"
+                      size="mini"
+                      v-for="item in items"
+                      :key="item.label"
+                      :type="item.type"
+                      effect="plain"
               >{{ item.label }}</el-tag>
             </div>
           </div>
@@ -38,11 +38,11 @@
           <div class="detail-title-down">
             <div class="detail-tags">
               <el-tag
-                size="mini"
-                v-for="item in items"
-                :key="item.label"
-                :type="item.type"
-                effect="plain"
+                      size="mini"
+                      v-for="item in items"
+                      :key="item.label"
+                      :type="item.type"
+                      effect="plain"
               >{{ item.label }}</el-tag>
             </div>
           </div>
@@ -109,7 +109,7 @@
                 <div class="house-info-1">
                   <div>
                     <span class="title">户型:</span>
-                    <span class="title-dec">{{house.housingresources_type}}</span>
+                    <span class="title-dec">{{house.housingresources_type.first}}室{{house.housingresources_type.second}}厅{{house.housingresources_type.third}}卫</span>
                   </div>
                   <div>
                     <span class="title">面积:</span>
@@ -157,7 +157,7 @@
               <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, assumenda.</div>
             </div>
             <div class="more-info">
-             {{house.housingresources_introduce}}
+              {{house.housingresources_introduce}}
             </div>
           </el-card>
         </el-col>
@@ -179,126 +179,131 @@
 
     </div>
     <el-dialog title="看房申请" :visible.sync="dialogVisible" width="50%">
-      <apply @cancel="cancel"></apply>
+      <apply @cancel="cancel" :scope="getId"></apply>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Apply from "./Apply"
-import axios from "axios"
-import {mapGetters} from "vuex"
-export default {
-  name: "Detail",
-  components: {
-    Apply
-  },
-  data() {
-    return {
-      items: [
-        { type: "", label: "标签一" },
-        { type: "success", label: "标签二" },
-        { type: "info", label: "标签三" },
-        { type: "danger", label: "标签四" },
-        { type: "warning", label: "标签五" }
-      ],
-      urls: [
-        "https://s1.ax1x.com/2020/04/14/Gxx9yR.jpg",
-        "https://s1.ax1x.com/2020/04/14/GznAK0.jpg",
-        "https://s1.ax1x.com/2020/04/14/Gznlx1.jpg"
-      ],
-      loading: true,
-      diaTitle: "",
-      dialogVisible: false,
-      house: {},
-      landlord: {},
-      one: {
+  import Apply from "./Apply"
+  import axios from "axios"
+  import {mapGetters} from "vuex"
+  export default {
+    name: "Detail",
+    components: {
+      Apply
+    },
+    data() {
+      return {
+        items: [
+          { type: "", label: "精装修" },
+          { type: "success", label: "拎包入住" },
+          { type: "info", label: "近地铁" },
+          { type: "danger", label: "空调" },
+          { type: "warning", label: "价格香" }
+        ],
+        urls: [
+          "https://s1.ax1x.com/2020/04/14/Gxx9yR.jpg",
+          "https://s1.ax1x.com/2020/04/14/GznAK0.jpg",
+          "https://s1.ax1x.com/2020/04/14/Gznlx1.jpg"
+        ],
+        loading: true,
+        diaTitle: "",
+        dialogVisible: false,
+        house: {},
+        landlord: {},
+        one: {
 
-      }
-    };
-  },
-  created() {
-    this.getHouseDetail()
-    axios.get("https://v1.hitokoto.cn/", {
-      c: "d"
-    }).then( res => {
-        this.one = res.data
-    })
-  },
-  computed: {
-    ...mapGetters(["userInfo"])
-  },
-  methods: {
-    getHouseDetail() {
-      this.$post("/selectHousingresourcesById", {"housingresources_id": this.$route.query.id}).then(res => {
-        if (res.code === "000") {
-
-          this.house = res.housingresources;
-          this.house.housingresources_pic = JSON.parse(res.housingresources.housingresources_pic)
-          this.landlord = res.landlord;
-          this.loading = false
-        } else {
-          this.$message.warning(res.msg);
         }
-
-      }).catch(err => {
-        console.log(err);
-        this.$message.error("网络错误");
-        // this.loading = false
+      };
+    },
+    created() {
+      this.getHouseDetail()
+      axios.get("https://v1.hitokoto.cn/", {
+        c: "d"
+      }).then( res => {
+        this.one = res.data
       })
     },
-    showPhone() {
-       this.$confirm(`房东电话： ${this.landlord.landlord_contact ? this.landlord.landlord_contact : this.landlord.landlord_phone}`, '提示', {
-         showConfirmButton: false,
+    computed: {
+      ...mapGetters(["userInfo"]),
+      getId() {
+        return {
+          tenant_id: this.userInfo.tenant_id,
+          housingresources_id: this.house.housingresources_id
+        }
+      }
+    },
+    methods: {
+      getHouseDetail() {
+        this.$post("/selectHousingresourcesById", {"housingresources_id": this.$route.query.id}).then(res => {
+          if (res.code === "000") {
+
+            this.house = res.housingresources;
+            this.house.housingresources_pic = JSON.parse(res.housingresources.housingresources_pic);
+            this.house.housingresources_type = JSON.parse(res.housingresources.housingresources_type);
+            this.landlord = res.landlord;
+            this.loading = false
+          } else {
+            this.$message.warning(res.msg);
+          }
+
+        }).catch(err => {
+          console.log(err);
+          this.$message.error("网络错误");
+          // this.loading = false
+        })
+      },
+      showPhone() {
+        this.$confirm(`房东电话： ${this.landlord.landlord_contact ? this.landlord.landlord_contact : this.landlord.landlord_phone}`, '提示', {
+          showConfirmButton: false,
           cancelButtonText: '确定',
           type: 'info'
         })
-    },
-    applyOne() {
-      if (!this.userInfo.tenant_id) {
-         this.$confirm('登录后才可以申请哦, 是否前往登录?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$router.push("/login")
-        }).catch(() => {
-          
-        });
-      } else {
-this.dialogVisible = true
+      },
+      applyOne() {
+        if (!this.userInfo.tenant_id) {
+          this.$confirm('登录后才可以申请哦, 是否前往登录?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$router.push("/login")
+          })
+        } else {
+          this.dialogVisible = true
+        }
+
+      },
+      cancel() {
+        this.dialogVisible = false
       }
-      
-    },
-    cancel() {
-       this.dialogVisible = false
     }
-  }
-};
+  };
 </script>
 <style scoped>
-.house-info-1,
-.house-info-2,
-.house-info-3 {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.house-info-1 div,
-.house-info-2 div,
-.house-info-3 div {
-  width: 33%;
-}
-.title {
-  color: #777;
-  font-size: 13px;
-}
-.title-dec {
-  color: #333;
-  padding: 0 10px;
-  font-size: 15px;
-  font-weight: 500;
-}
+  .house-info-1,
+  .house-info-2,
+  .house-info-3 {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .house-info-1 div,
+  .house-info-2 div,
+  .house-info-3 div {
+    width: 33%;
+  }
+  .title {
+    color: #777;
+    font-size: 13px;
+  }
+  .title-dec {
+    color: #333;
+    padding: 0 10px;
+    font-size: 15px;
+    font-weight: 500;
+  }
 </style>
 <style scoped>
   .one {
@@ -315,170 +320,170 @@ this.dialogVisible = true
     font-weight: 500;
     color: var(--TIMBERWOLF);
   }
-.bg {
-  position: absolute;
-  top: 0;
-  left: calc((100vw - 1220px) / 2);
-  max-width: 1220px;
-  width: 100%;
-  height: 100vh;
-  background: white;
-  z-index: -1;
-}
-.house-info {
-  display: flex;
-  justify-content: space-between;
-}
-.houser-info-title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #777;
-}
-.house-info:last-child {
-  font-size: 14px;
-  color: #888;
-}
-.price-box-info {
-  color: #666;
-  font-size: 12px;
-}
-.price-count-info {
-  font-size: 20px;
-  font-weight: 600;
-}
-.price-d-info {
-  font-size: 15px;
-  padding: 0 5px;
-}
-.price {
-  color: #f45f21;
-}
+  .bg {
+    position: absolute;
+    top: 0;
+    left: calc((100vw - 1220px) / 2);
+    max-width: 1220px;
+    width: 100%;
+    height: 100vh;
+    background: white;
+    z-index: -1;
+  }
+  .house-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  .houser-info-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #777;
+  }
+  .house-info:last-child {
+    font-size: 14px;
+    color: #888;
+  }
+  .price-box-info {
+    color: #666;
+    font-size: 12px;
+  }
+  .price-count-info {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .price-d-info {
+    font-size: 15px;
+    padding: 0 5px;
+  }
+  .price {
+    color: #f45f21;
+  }
 </style>
 <style scoped>
-.image-slot-placeholder,
-.image-slot-error {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.image-slot-placeholder div div,
-.image-slot-error div div {
-  text-transform: uppercase;
-  text-align: center;
-  color: #aaa;
-}
-.el-icon-loading,
-.el-icon-picture-outline {
-  font-size: 10rem;
-  color: #aaa;
-}
-.el-carousel__item .el-image {
-  width: 100%;
-  height: 100%;
-}
-.user-icon {
-  width: 120px;
-  height: 168px;
-  margin: 10px 0;
-}
-.user-icon-box {
-  display: flex;
-  justify-content: center;
-}
-.user-border {
-  border: solid #aaa 1px;
-  border-radius: 10px;
-  margin: 10px 0 0;
-  height: 400px;
-}
-.detail-carousel {
-  margin: 10px;
-}
-.user-name {
-  text-align: center;
-  line-height: 22px;
-}
-.user-button {
-  display: flex;
-  justify-content: center;
-  margin: 5px;
-}
-@media screen and (max-width: 992px) {
-  .user-border {
-    margin: 10px 0;
+  .image-slot-placeholder,
+  .image-slot-error {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .image-slot-placeholder div div,
+  .image-slot-error div div {
+    text-transform: uppercase;
+    text-align: center;
+    color: #aaa;
+  }
+  .el-icon-loading,
+  .el-icon-picture-outline {
+    font-size: 10rem;
+    color: #aaa;
+  }
+  .el-carousel__item .el-image {
+    width: 100%;
+    height: 100%;
   }
   .user-icon {
-    padding: 10px;
+    width: 120px;
+    height: 168px;
+    margin: 10px 0;
   }
-}
+  .user-icon-box {
+    display: flex;
+    justify-content: center;
+  }
+  .user-border {
+    border: solid #aaa 1px;
+    border-radius: 10px;
+    margin: 10px 0 0;
+    height: 400px;
+  }
+  .detail-carousel {
+    margin: 10px;
+  }
+  .user-name {
+    text-align: center;
+    line-height: 22px;
+  }
+  .user-button {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+  }
+  @media screen and (max-width: 992px) {
+    .user-border {
+      margin: 10px 0;
+    }
+    .user-icon {
+      padding: 10px;
+    }
+  }
 </style>
 <style>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
-}
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
 
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
+  .el-carousel__item:nth-child(2n + 1) {
+    background-color: #d3dce6;
+  }
 </style>
 <style scoped>
-.detail-page {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-.detail-box {
-  width: 100%;
-  padding: 10px 10px 0;
-  max-width: 1200px;
-  background: white;
-}
-.detail-title {
-  font-size: 24px;
-  margin: 10px 0;
-}
-.detail-title-down {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  line-height: 30px;
-}
-.line {
-  width: 1px;
-  background: #bbb;
-  height: 20px;
-}
-.price-box {
-  color: #f45f21;
-  font-size: 18px;
-  padding-right: 10px;
-}
-.price-count {
-  font-size: 20px;
-  font-weight: 700;
-  padding-right: 3px;
-}
-.detail-house-type,
-.detail-house-rect {
-  font-size: 18px;
-  padding: 0 10px;
-  font-weight: 500;
-}
-.detail-tags {
-  padding: 0 10px;
-}
-.detail-tags span {
-  margin: 0 5px;
-}
+  .detail-page {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .detail-box {
+    width: 100%;
+    padding: 10px 10px 0;
+    max-width: 1200px;
+    background: white;
+  }
+  .detail-title {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+  .detail-title-down {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    line-height: 30px;
+  }
+  .line {
+    width: 1px;
+    background: #bbb;
+    height: 20px;
+  }
+  .price-box {
+    color: #f45f21;
+    font-size: 18px;
+    padding-right: 10px;
+  }
+  .price-count {
+    font-size: 20px;
+    font-weight: 700;
+    padding-right: 3px;
+  }
+  .detail-house-type,
+  .detail-house-rect {
+    font-size: 18px;
+    padding: 0 10px;
+    font-weight: 500;
+  }
+  .detail-tags {
+    padding: 0 10px;
+  }
+  .detail-tags span {
+    margin: 0 5px;
+  }
 </style>

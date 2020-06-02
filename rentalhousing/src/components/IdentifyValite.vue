@@ -3,15 +3,19 @@
     <el-form
       class="form-limit"
       label-position="left"
+      ref="IDnum"
       :model="identify"
       :label-width="labelWidth"
       :rules="identifyRules"
     >
       <el-form-item :label="label.password" prop="password">
-        <el-input v-model="identify.password" placeholder="输入当前密码"></el-input>
+        <el-input v-model="identify.password" placeholder="输入当前密码" type="password"></el-input>
       </el-form-item>
-      <el-form-item :label="label.idv" prop="idv">
-        <el-input v-model="identify.idv" placeholder="输入身份证号码"></el-input>
+      <el-form-item :label="label.name" prop="tenant_realname">
+        <el-input v-model="identify.tenant_realname" placeholder="输入姓名"></el-input>
+      </el-form-item>
+      <el-form-item :label="label.idv" prop="tenant_IDnumber">
+        <el-input v-model="identify.tenant_IDnumber" placeholder="输入身份证号码"></el-input>
       </el-form-item>
       <el-form-item>
       <el-button type="primary" style="width: 45%" @click="changeID">确定</el-button>
@@ -36,17 +40,22 @@ export default {
     return {
       identify: {
         password: "",
-        idv: ""
+        tenant_realname: "",
+        tenant_IDnumber: ""
       },
       label: {
         password: "身份验证",
+        name: "姓名",
         idv: "身份证号"
       },
       identifyRules: {
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
         ],
-        idv: [
+        tenant_realname: [
+          { required: true, message: "请输入真实姓名", trigger: "blur" }
+        ],
+        tenant_IDnumber: [
           { required: true, message: '请输入身份证号', trigger: 'blur' },
           { validator: valitIDCard, trigger: 'blur' }
         ]
@@ -67,7 +76,30 @@ export default {
   },
   methods: {
     changeID() {
-
+      this.$refs.IDnum.validate(valid => {
+        if (valid) {
+          let data = {
+            "tenant_id": this.userInfo.tenant_id,
+            "tenant_realname": this.identify.tenant_realname,
+            "tenant_IDnumber":this.identify.tenant_IDnumber
+          }
+          this.$post("/updateTenant", data)
+              .then(res => {
+                console.log(res);
+                if (res.code === "000") {
+                  this.$store.commit("setUserInfo", res.Tenant);
+                  this.$message.success("修改成功");
+                  this.$emit("cancel");
+                } else {
+                  this.$message.warning(res.msg);
+                }
+              })
+              .catch(err => {
+                console.log(err);
+                this.$message.error("未知错误");
+              });
+        }
+      });
     },
     cancel() {
       this.$emit("cancel")
