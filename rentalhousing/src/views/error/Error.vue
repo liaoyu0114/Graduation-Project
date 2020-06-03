@@ -54,13 +54,11 @@
       };
     },
     created() {
-
-      setTimeout(() => {
-
-        this.query.tenant_id = this.userInfo.tenant_id;
+      this.query.tenant_id = this.userInfo.tenant_id;
+      if (this.userInfo.tenant_id) {
         this.loadError();
-        this.loadHouse();
-      }, 1000)
+        this.loadHouse()
+      }
     },
     activated() {
       if (this.userInfo.tenant_id) {
@@ -140,15 +138,15 @@
           obstacle_detail: form.detail,
           obstacle_pic: JSON.stringify(url)
         }).then(res => {
-              console.log(res);
-              if (res.code === "000") {
-                this.dialogTableVisible = false;
-                this.$message.success("创建成功");
-                this.loadError()
-              } else {
-                this.$message.warning(res.msg);
-              }
-            })
+          console.log(res);
+          if (res.code === "000") {
+            this.dialogTableVisible = false;
+            this.$message.success("创建成功");
+            this.loadError()
+          } else {
+            this.$message.warning(res.msg);
+          }
+        })
             .catch(err => {
               console.log(err);
               this.$message.error("网络错误");

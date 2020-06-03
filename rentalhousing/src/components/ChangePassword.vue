@@ -9,13 +9,13 @@
       class="form-limit"
     >
       <el-form-item :label="label.old" prop="old">
-        <el-input v-model="password.old" placeholder="输入"></el-input>
+        <el-input v-model="password.old" placeholder="输入旧密码"></el-input>
       </el-form-item>
       <el-form-item :label="label.new" prop="new">
-        <el-input v-model="password.new" placeholder="输入"></el-input>
+        <el-input v-model="password.new" placeholder="输入新密码"></el-input>
       </el-form-item>
       <el-form-item :label="label.repeat" prop="repeat">
-        <el-input v-model="password.repeat" placeholder="输入"></el-input>
+        <el-input v-model="password.repeat" placeholder="再次输入新密码"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width: 45%" @click="changePass">确定</el-button>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import {mapGetters } from "vuex"
 export default {
   name: "ChangePassword",
   data() {
@@ -56,12 +57,32 @@ export default {
       }
     }
   },
+  computed: {
+      ...mapGetters(["userInfo"])
+  },
   methods: {
     cancel() {
       this.$emit("cancelChangePass")
     },
     changePass() {
-      this.$message.success("修改成功")
+      this.$post("/updateTenant", {
+        "tenant_id": this.userInfo.tenant_id,
+        "tenant_password": this.password.new
+      }).then(res => {
+        console.log(res);
+        if (res.code === "000") {
+          this.$message.success("修改成功, 请重新登录")
+          this.$store.commit("setUserInfo", {})
+          localStorage.removeItem("phone")
+          localStorage.removeItem("password")
+          this.$router.push("/login")
+        } else {
+          this.$message.warning(res.msg)
+        }
+      }).catch(err => {
+        console.log(err);
+        this.$message.error("未知错误")
+      })
     }
   }
 };

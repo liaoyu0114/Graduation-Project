@@ -156,8 +156,8 @@
               <div class="houser-info-title">房源概况</div>
               <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, assumenda.</div>
             </div>
-            <div class="more-info">
-              {{house.housingresources_introduce}}
+            <div class="more-info" v-html="house.housingresources_introduce">
+              
             </div>
           </el-card>
         </el-col>
