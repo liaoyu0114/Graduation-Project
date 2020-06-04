@@ -5,7 +5,7 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span class="house-title">租房订单ID: {{scope.lease.lease_id}}</span>
-            <span class="house-title">创建时间: {{scope.lease.lease_time}}</span>
+            <span class="house-title">创建时间: {{scope.lease.lease_time | formatDate("YYYY-MM-DD HH:mm")}}</span>
             <span class="lease-state leasing" v-if="scope.lease.lease_type === '0'  ">租赁中</span>
             <span class="lease-state leased" v-else>已结束租赁</span>
           </div>
@@ -32,7 +32,9 @@
                 </el-col>
                 <el-col :span="20">
                   <div class="cell-describe">
+                    <br>
                     <div class="des-box">
+                      <span class="vr-line"> 房源名称：{{scope.house.housingresources_name}}</span><br><br>
                       <span class="vr-line">{{getHType}}</span>|
                       <span class="vr-line">{{scope.house.housingresources_area}}平米</span>|
                       <span class="vr-line">{{scope.house.housingresources_floor}}</span>
@@ -130,8 +132,20 @@
               type: "warning",
             }
         ).then(() => {
-          this.lease.lease_type = 1;
-          this.$message.success("退房成功")
+          this.$post("/updateLease", {
+            "lease_id": this.scope.lease.lease_id,
+            "housingresources_id": this.scope.house.housingresources_id
+          }).then(res => {
+            console.log(res);
+            if (res.code === "000") {
+              this.$message.success("申请成功")
+            } else {
+              this.$message.warning(res.msg)
+            }
+          }).catch(err => {
+            console.log(err);
+            this.$message.error("未知错误")
+          })
         });
       },
       showDic() {

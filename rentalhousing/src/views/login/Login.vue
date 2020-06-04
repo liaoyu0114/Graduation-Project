@@ -192,6 +192,7 @@ export default {
             this.$post("/registTenant", data).then(res => {
               if (res.code === "000") {
                 this.$message.success("注册成功，切换到登录页登录")
+                this.changeType()
               } else {
                 this.$message.error(res.msg)
               }

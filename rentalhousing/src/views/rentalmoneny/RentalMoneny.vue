@@ -55,7 +55,9 @@ export default {
     };
   },
   created() {
-    setTimeout(this.loadRent(), 5000);
+    if (this.userInfo.tenant_id) {
+      this.loadRent();
+    }
   },
   activated() {
     if (this.userInfo.tenant_id) {

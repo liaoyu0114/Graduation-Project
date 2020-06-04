@@ -14,7 +14,7 @@
           <error-cell :scope="item"></error-cell>
         </el-col>
       </el-row>
-      <el-row v-if="errorOrder.length === 0 || userInfo.tenant_id">
+      <el-row v-if="errorOrder.length === 0 && userInfo.tenant_id">
         <el-col :span="24">
           <div class="no-more">
             <el-image
@@ -88,12 +88,15 @@
         }
       },
       loadHouse() {
-        this.$post("/selectHousingresourcesByTenantId", {
-          "tenant_id": this.userInfo.tenant_id
+        this.$post("/selectLeaseListByTenantId", {
+          "tenant_id": this.userInfo.tenant_id,
+          "lease_type": 0
         }).then(res => {
           console.log(res);
           if (res.code === "000") {
-            this.houseT = res.housingresourceslist
+            this.houseT = res.leaseInfoList.map(item => {
+              return item.housingresources
+            })
           } else {
             this.$message.warning(res.msg)
           }
@@ -129,28 +132,7 @@
       },
       onSubmit(form) {
         console.log(form);
-        let url = form.pic.map(item => {
-          return item.url
-        });
-        this.$post("/AddObstacle", {
-          tenant_id: this.userInfo.tenant_id,
-          housingresources_id: form.house,
-          obstacle_detail: form.detail,
-          obstacle_pic: JSON.stringify(url)
-        }).then(res => {
-          console.log(res);
-          if (res.code === "000") {
-            this.dialogTableVisible = false;
-            this.$message.success("创建成功");
-            this.loadError()
-          } else {
-            this.$message.warning(res.msg);
-          }
-        })
-            .catch(err => {
-              console.log(err);
-              this.$message.error("网络错误");
-            });
+        this.loadError()
       },
       canelClick() {
         this.dialogTableVisible = false;

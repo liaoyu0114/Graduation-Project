@@ -28,24 +28,7 @@
     },
     data() {
       return {
-        leaseOrder: [
-          //    {
-          //   lease_id: 117632713,
-          //   lease_time: new Date().getTime() - 1000 * 24 * 3600 * 10,
-          //   lease_type: 0,
-          //   landlord: {},
-          //   house: {},
-          //   tenant: {}
-          // },
-          //   {
-          //   lease_id: 117632713,
-          //   lease_time: new Date().getTime() - 1000 * 24 * 3600 * 10,
-          //   lease_type: 1,
-          //   landlord: {},
-          //   house: {},
-          //   tenant: {}
-          // }
-        ],
+        leaseOrder: [],
         house: [],
         query: {
           page: 1,
@@ -60,41 +43,9 @@
     created() {
 
       if (this.userInfo.tenant_id) {
-        // this.$post("/selectHousingresourcesByTenantId", {
-        //   tenant_id: this.userInfo.tenant_id
-        // })
-        //   .then(res => {
-        //     if (res.code === "000") {
-        //       this.leaseOrder = res.housingresourceslist.reverse();
-        //     } else {
-        //       this.$message.warning(res.msg);
-        //     }
-        //   })
-        //   .catch(err => {
-        //     console.log(err);
-        //     this.$message.error("网络错误");
-        //   });
         this.loadLease()
       }
     },
-    // activated() {
-    //   if (this.userInfo.tenant_id) {
-    //     this.$post("/selectLeaseListByTenantId", {
-    //       tenant_id: this.userInfo.tenant_id
-    //     })
-    //       .then(res => {
-    //         if (res.code === "000") {
-    //           this.leaseOrder = res.housingresourceslist.reverse();
-    //         } else {
-    //           this.$message.warning(res.msg);
-    //         }
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //         this.$message.error("网络错误");
-    //       });
-    //   }
-    // },
     methods: {
       loadLease() {
         this.$post("/selectLeaseListByTenantId", {

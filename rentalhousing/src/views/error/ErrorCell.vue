@@ -5,11 +5,11 @@
         <span>报障ID: {{scope.obstacle.obstacle_id}}</span>
         <span
                 style="padding-left: 10px"
-        >创建时间： {{scope.obstacle.obstacle_time}}</span>
+        >创建时间： {{scope.obstacle.obstacle_time | formatDate("YYYY-MM-DD HH:mm")}}</span>
         <span
                 style="padding-left: 10px"
                 v-if="scope.obstacle.obstacle_state === 2"
-        >完成时间： {{scope.obstacle.obstacle_completiontime}}</span>
+        >完成时间： {{scope.obstacle.obstacle_completiontime | formatDate("YYYY-MM-DD HH:mm")}}</span>
         <div class="error-status">
           <span v-if="scope.obstacle.obstacle_state === 0" class="willdo">未处理</span>
           <span v-else-if="scope.obstacle.obstacle_state === 1" class="doing">正在处理</span>
@@ -43,7 +43,7 @@
 
           <div class="info-box">
             <div class="error-remark">备注信息</div>
-            <div class="error-remark-detail">{{scope.obstacle.obstacle_detail}}</div>
+            <div class="error-remark-detail" v-html="scope.obstacle.obstacle_detail"></div>
           </div>
         </el-col>
         <el-col style="color: #999999">
@@ -71,7 +71,9 @@
   .error-remark-detail {
     margin-top: 5px;
     font-size: 14px;
+    width: 100%;
     font-weight: 500;
+
   }
   .willdo {
     color: #f56c6c;
@@ -93,6 +95,7 @@
   }
   .info-box {
     padding: 10px;
+    overflow: auto;
   }
   .error-status {
     height: 100%;

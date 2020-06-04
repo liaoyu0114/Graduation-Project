@@ -1,7 +1,7 @@
 <template>
   <div class="error-form">
     <el-form ref="form" :rules="formRules" :model="form" label-width="80px" label-position="left">
-      <el-form-item label="选择活动" prop="house">
+      <el-form-item label="选择房源" prop="house">
         <el-select v-model="form.house" placeholder="请选择" clearable class="error-form-select">
           <el-option v-for="item in house" :key="item.housingresources_id" :label="item.housingresources_name" :value="item.housingresources_id"></el-option>
         </el-select>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import { mapGetters } from "vuex"
 export default {
   name: "ErrorForm",
   props: {
@@ -69,13 +70,42 @@ export default {
       }
     };
   },
+  computed: {
+      ...mapGetters(["userInfo"])
+  },
   methods: {
     onSubmit(fromName) {
       this.$refs[fromName].validate(valid => {
         if (valid) {
+          let form = this.form;
+          let url = form.pic.map(item => {
+            return item.url
+          });
+          this.$post("/AddObstacle", {
+            tenant_id: this.userInfo.tenant_id,
+            housingresources_id: form.house,
+            obstacle_detail: this.preText(form.detail),
+            obstacle_pic: JSON.stringify(url)
+          }).then(res => {
+            console.log(res);
+            if (res.code === "000") {
+              this.$emit("canelClick");
+              this.$message.success("创建成功");
+              this.$refs[fromName].resetFields()
+            } else {
+              this.$message.warning(res.msg);
+            }
+          })
+              .catch(err => {
+                console.log(err);
+                this.$message.error("网络错误");
+              });
           this.$emit("onSubmit", this.form);
         }
       });
+    },
+    preText (pretext) {
+      return pretext.replace(/\r\n/g, "<br/>").replace(/\n/g, "<br/>").replace(/\s/g, "&nbsp;")
     },
     canelClick() {
       this.$emit("canelClick");

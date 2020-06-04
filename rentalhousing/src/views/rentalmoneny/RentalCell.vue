@@ -10,11 +10,11 @@
             <span class="rental-title">租金订单: {{scope.rent.rent_id}}</span>
             <span class="rental-date">
               创建日期:
-              <span>{{scope.rent.rent_time }}</span>
+              <span>{{scope.rent.rent_time | formatDate("YYYY-MM-DD HH:mm")}}</span>
             </span>
             <span class="rental-date2" v-if="scope.rent.rent_type === 1">
               缴纳日期:
-              <span>{{scope.rent.rent_endtime}}</span>
+              <span>{{scope.rent.rent_endtime | formatDate("YYYY-MM-DD HH:mm")}}</span>
             </span>
             <span class="rent-state finished" v-if="scope.rent.rent_type === 1">已缴纳</span>
             <span class="rent-state doing" v-else>未缴纳</span>
