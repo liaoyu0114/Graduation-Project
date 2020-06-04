@@ -3,7 +3,7 @@
     <el-form ref="form" :rules="formRules" :model="form" label-width="80px" label-position="left">
       <el-form-item label="选择房源" prop="house">
         <el-select v-model="form.house" placeholder="请选择" clearable class="error-form-select">
-          <el-option v-for="item in house" :key="item.housingresources_id" :label="item.housingresources_name" :value="item.housingresources_id"></el-option>
+          <el-option v-for="(item, index) in house" :key="index" :label="item.housingresources_name" :value="item.housingresources_id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="详情描述" prop="detail">
@@ -89,18 +89,17 @@ export default {
           }).then(res => {
             console.log(res);
             if (res.code === "000") {
-              this.$emit("canelClick");
+              // this.$emit("canelClick");
               this.$message.success("创建成功");
-              this.$refs[fromName].resetFields()
+              this.$refs[fromName].resetFields();
+              this.$emit("onSubmit")
             } else {
               this.$message.warning(res.msg);
             }
-          })
-              .catch(err => {
-                console.log(err);
-                this.$message.error("网络错误");
-              });
-          this.$emit("onSubmit", this.form);
+          }).catch(err => {
+            console.log(err);
+            this.$message.error("网络错误");
+          });
         }
       });
     },

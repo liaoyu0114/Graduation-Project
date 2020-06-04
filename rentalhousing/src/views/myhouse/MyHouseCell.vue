@@ -132,9 +132,10 @@
               type: "warning",
             }
         ).then(() => {
-          this.$post("/updateLease", {
-            "lease_id": this.scope.lease.lease_id,
-            "housingresources_id": this.scope.house.housingresources_id
+          this.$post("/AddApply", {
+            "tenant_id": this.userInfo.tenant_id,
+            "housingresources_id": this.scope.house.housingresources_id,
+            "apply_type":0
           }).then(res => {
             console.log(res);
             if (res.code === "000") {

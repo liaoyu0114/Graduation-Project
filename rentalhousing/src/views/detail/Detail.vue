@@ -123,7 +123,7 @@
                 <div class="house-info-2">
                   <div>
                     <span class="title">楼层:</span>
-                    <span class="title-dec">{{house.housingresources_floor}}层</span>
+                    <span class="title-dec">{{house.housingresources_floor}}</span>
                   </div>
                   <div>
                     <span class="title">装修:</span>

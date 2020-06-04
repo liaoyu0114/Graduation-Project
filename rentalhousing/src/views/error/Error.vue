@@ -80,7 +80,7 @@
             this.$router.push("/login");
           })
         } else {
-          if (this.errorOrder.length === 0) {
+          if (this.houseT.length === 0) {
             this.$message.warning("还没有租过房，不能建立报障");
           } else {
             this.dialogTableVisible = true;
@@ -130,9 +130,11 @@
       handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
-      onSubmit(form) {
-        console.log(form);
-        this.loadError()
+      onSubmit() {
+        console.log(2222);
+        this.dialogTableVisible = false;
+        // this.loadHouse();
+        this.loadError();
       },
       canelClick() {
         this.dialogTableVisible = false;
